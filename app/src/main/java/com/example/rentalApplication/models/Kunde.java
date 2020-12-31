@@ -1,4 +1,4 @@
-package com.example.viewpager_test.models;
+package com.example.rentalApplication.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

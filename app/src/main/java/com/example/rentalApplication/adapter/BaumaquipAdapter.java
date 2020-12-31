@@ -1,13 +1,13 @@
-package com.example.viewpager_test.adapter;
+package com.example.rentalApplication.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.viewpager_test.ui.main.BaumaschinenFragment;
-import com.example.viewpager_test.ui.main.KundenFragment;
-import com.example.viewpager_test.ui.main.VertraegeFragment;
+import com.example.rentalApplication.ui.main.BaumaschinenFragment;
+import com.example.rentalApplication.ui.main.KundenFragment;
+import com.example.rentalApplication.ui.main.VertraegeFragment;
 
 public class BaumaquipAdapter extends FragmentStateAdapter {
 

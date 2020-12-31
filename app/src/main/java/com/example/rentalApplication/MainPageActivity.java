@@ -1,4 +1,4 @@
-package com.example.viewpager_test;
+package com.example.rentalApplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
-import com.example.viewpager_test.adapter.BaumaquipAdapter;
+import com.example.rentalApplication.adapter.BaumaquipAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

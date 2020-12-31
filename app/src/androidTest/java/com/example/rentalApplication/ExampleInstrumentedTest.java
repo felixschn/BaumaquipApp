@@ -1,4 +1,4 @@
-package com.example.viewpager_test;
+package com.example.rentalApplication;
 
 import android.content.Context;
 

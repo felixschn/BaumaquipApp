@@ -1,6 +1,7 @@
-package com.example.viewpager_test.models;
+package com.example.rentalApplication.models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
@@ -23,14 +24,21 @@ public class Baumaschine {
     private String amountOfGas;
 
 
-    public Baumaschine(int rowid, @NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, Double operatingHours, String degreeOfWear, String amountOfGas) {
-        this.rowid = rowid;
+    public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, Double operatingHours, String degreeOfWear, String amountOfGas) {
         this.machineName = machineName;
         this.amount = amount;
         this.pricePerDay = pricePerDay;
         this.operatingHours = operatingHours;
         this.degreeOfWear = degreeOfWear;
         this.amountOfGas = amountOfGas;
+    }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
     }
 
     @NonNull
@@ -83,4 +91,6 @@ public class Baumaschine {
     public void setAmountOfGas(String amountOfGas) {
         this.amountOfGas = amountOfGas;
     }
+
+
 }

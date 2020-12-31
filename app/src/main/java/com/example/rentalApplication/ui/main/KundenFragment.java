@@ -1,4 +1,4 @@
-package com.example.viewpager_test.ui.main;
+package com.example.rentalApplication.ui.main;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.viewpager_test.R;
+import com.example.rentalApplication.R;
 
 /**
  * A simple {@link Fragment} subclass.
