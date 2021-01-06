@@ -3,6 +3,7 @@ package com.example.rentalApplication.ui.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BaumaschinenFragment#newInstance} factory method to
@@ -20,11 +23,14 @@ import com.example.rentalApplication.models.Baumaschine;
  */
 public class BaumaschinenFragment extends Fragment {
 
+    private ArrayList<Baumaschine> mBaumaschine = new ArrayList<>();
+    private BaumaschinenListAdapter baumaschinenListAdapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView recyclerView;
+    private BaumaschinenViewModel baumaschinenViewModel;
 
 
     // TODO: Rename and change types of parameters
@@ -60,6 +66,7 @@ public class BaumaschinenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -68,11 +75,16 @@ public class BaumaschinenFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_baumaschinen, container, false);
+        baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
+        baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), allBaumaschinen -> {
+
+        });
         recyclerView = view.findViewById(R.id.baumaschineRecyclerView);
         recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Baumaschine baumaschine = new Baumaschine("test",1,10.00, null,null,null);
-        recyclerView.setAdapter(new BaumaschinenListAdapter(baumaschine));
+        baumaschinenListAdapter = new BaumaschinenListAdapter(view.getContext(), mBaumaschine);
+        recyclerView.setAdapter(baumaschinenListAdapter);
 
         return inflater.inflate(R.layout.fragment_baumaschinen, container, false);
     }
