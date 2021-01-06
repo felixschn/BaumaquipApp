@@ -9,8 +9,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/baumaschineRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:itemCount="5"
         tools:listitem="@layout/recyclerview_baumaschinen_item"
         app:layout_constraintBottom_toBottomOf="parent"
