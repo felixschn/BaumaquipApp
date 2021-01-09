@@ -41,7 +41,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         if (baumaschineList != null){
             Baumaschine current = baumaschineList.get(position);
             holder.baumaschineName.setText(current.getMachineName());
-            holder.baumaschineAnzahl.setText(current.getAmount());
+            holder.baumaschineAnzahl.setText(current.getAmount().toString());
             holder.baumaschinePreis.setText(current.getPricePerDay().toString());
         }
         else{
