@@ -83,9 +83,10 @@ public class BaumaschinenFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Baumaschine baumaschine = new Baumaschine("test",1,10.00, null,null,null);
+        mBaumaschine.add(baumaschine);
         baumaschinenListAdapter = new BaumaschinenListAdapter(view.getContext(), mBaumaschine);
         recyclerView.setAdapter(baumaschinenListAdapter);
 
-        return inflater.inflate(R.layout.fragment_baumaschinen, container, false);
+        return view;
     }
 }
