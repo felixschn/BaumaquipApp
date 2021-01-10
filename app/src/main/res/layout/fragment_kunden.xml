@@ -6,7 +6,10 @@
     tools:context=".ui.main.KundenFragment">
 
   <androidx.recyclerview.widget.RecyclerView
-      android:layout_width=""
-      android:layout_height=""
+      android:id="@+id/kundenRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:itemCount="3"
+      tools:listitem="@layout/recyclerview_kunden_item"/>
 
 </FrameLayout>

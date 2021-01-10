@@ -19,6 +19,6 @@ public interface KundenDao {
     @Delete
     void delete(Kunde kunde);
 
-    @Query("SELECT *, rowid FROM Baumaschine")
+    @Query("SELECT *, rowid FROM Kunde")
     LiveData<List<Kunde>> getAllKunden();
 }

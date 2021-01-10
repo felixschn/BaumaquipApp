@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="9"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/kundenName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        tools:text="@sample/kundenName" />
+
+    <TextView
+        android:id="@+id/kundenStraße"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        tools:text="@sample/kundenStraße" />
+    <TextView
+        android:id="@+id/kundenStraßenNummer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@sample/kundenStraßeNummer"
+        android:layout_weight="0.3"/>
+    <TextView
+        android:id="@+id/kundenZip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@sample/kundenZip"
+        android:layout_weight="0.5"/>
+    <TextView
+        android:id="@+id/kundenOrt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@sample/kundenOrt"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/kundenTelefonnummer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@sample/kundenTelefonnummer"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/kundenBaustelle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@sample/kundenBaustelle"
+        android:layout_weight="1.2"/>
+    <TextView
+        android:id="@+id/kundenAnsprechpartner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@sample/kundenAnsprechpartner"
+        android:layout_weight="1"/>
+
+
+
+
+</LinearLayout>

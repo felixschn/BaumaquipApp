@@ -3,12 +3,17 @@ package com.example.rentalApplication.ui.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rentalApplication.R;
+import com.example.rentalApplication.models.Kunde;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +22,10 @@ import com.example.rentalApplication.R;
  */
 public class KundenFragment extends Fragment {
 
+    private ArrayList<Kunde> mKunde = new ArrayList<>();
+    private KundenListAdapter kundenListAdapter;
+    private RecyclerView recyclerView;
+    private KundenViewModel kundenViewModel;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +70,15 @@ public class KundenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kunden, container, false);
+        View view = inflater.inflate(R.layout.fragment_kunden, container, false);
+        recyclerView = view.findViewById(R.id.kundenRecyclerView);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Kunde testKunde = new Kunde("Berholz GmbH","Pausaer Straße","102","08529", "Pausa", "0123456789", "Straßengeschäft", "Klaus Bergholz");
+        mKunde.add(testKunde);
+        kundenListAdapter = new KundenListAdapter(view.getContext(), mKunde);
+        recyclerView.setAdapter(kundenListAdapter);
+
+        return view;
     }
 }

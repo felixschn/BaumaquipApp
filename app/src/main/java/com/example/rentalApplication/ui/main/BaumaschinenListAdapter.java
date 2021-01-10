@@ -44,12 +44,12 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             holder.baumaschineAnzahl.setText(current.getAmount().toString());
             holder.baumaschinePreis.setText(current.getPricePerDay().toString());
         }
-        else{
+        /*else{
             holder.baumaschinePreis.setText("TestMaschine");
             holder.baumaschineAnzahl.setText("1");
             holder.baumaschinePreis.setText("10");
         }
-
+*/
     }
 
     @Override
