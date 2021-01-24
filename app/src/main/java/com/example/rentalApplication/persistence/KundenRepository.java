@@ -20,6 +20,6 @@ public class KundenRepository {
     public LiveData<List<Kunde>> getAllKunden() {return allKunden;}
 
     public void insert(Kunde kunde){
-        RentDatabase.databaseWriteWxecutor.execute(() -> {kundenDao.insert(kunde);});
+
     }
 }

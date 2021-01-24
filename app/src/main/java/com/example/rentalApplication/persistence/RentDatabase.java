@@ -27,20 +27,20 @@ public abstract class RentDatabase extends RoomDatabase {
 
     static final ExecutorService databaseWriteWxecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static RentDatabase getDatabase(final Context context) {
+    public static RentDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             //synchronized: ensure that a crucial section of the code is never executed concurrently by two different threads
             synchronized (RentDatabase.class) {
                 if (INSTANCE == null) {
                     // TODO fallBackOnDestructiveMigration löscht bei Update die Datenbank Inhalte -> Migrationen verwenden
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RentDatabase.class, "rent_database").fallbackToDestructiveMigration().addCallback(sRoomDatabaseCallback).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RentDatabase.class, "rent_database").fallbackToDestructiveMigration().addCallback(roomCallback).build();
                 }
             }
         }
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+/*    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -61,17 +61,26 @@ public abstract class RentDatabase extends RoomDatabase {
         public void onDestructiveMigration(@NonNull SupportSQLiteDatabase db) {
             super.onDestructiveMigration(db);
         }
+    };*/
+
+    public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            new PopulateDbAsyncTask(INSTANCE).execute();
+        }
     };
 
-    public static class PopulateDbAsync extends AsyncTask<Void,Void,Void>{
+    public static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void>{
         private final KundenDao kundenDao;
         private final BaumaschinenDao baumaschinenDao;
-        PopulateDbAsync(RentDatabase db) {
+        PopulateDbAsyncTask(RentDatabase db) {
             kundenDao = db.kundenDao();
             baumaschinenDao = db.baumaschinenDao();}
 
         @Override
         protected Void doInBackground(Void... voids) {
+            baumaschinenDao.insert(new Baumaschine("Testmaschine", 1,10.00,20.00,30.00,null,null, null));
             return null;
         }
     }

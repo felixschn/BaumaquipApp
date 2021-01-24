@@ -20,29 +20,25 @@ import java.util.List;
 public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenListAdapter.BaumaschinenViewHolder> {
 
     private LayoutInflater mInflater;
-    private ArrayList<Baumaschine> baumaschineList;
-
-
-    public BaumaschinenListAdapter(Context context, ArrayList<Baumaschine> baumaschines) {
-        this.mInflater = LayoutInflater.from(context);
-        this.baumaschineList = baumaschines;
-    }
+    private List<Baumaschine> baumaschineList = new ArrayList<>();
 
     @NonNull
     @Override
     public BaumaschinenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_baumaschinen_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_baumaschinen_item, parent, false);
         return new BaumaschinenViewHolder(itemView);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(BaumaschinenViewHolder holder, int position) {
-        if (baumaschineList != null){
+        if (baumaschineList != null) {
             Baumaschine current = baumaschineList.get(position);
             holder.baumaschineName.setText(current.getMachineName());
             holder.baumaschineAnzahl.setText(current.getAmount().toString());
-            holder.baumaschinePreis.setText(current.getPricePerDay().toString());
+            holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
+            holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
+            holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
         }
         /*else{
             holder.baumaschinePreis.setText("TestMaschine");
@@ -54,36 +50,38 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
 
     @Override
     public int getItemCount() {
-        if(baumaschineList != null){
+        if (baumaschineList != null) {
             return baumaschineList.size();
-        }
-        else {
+        } else {
             return 0;
         }
     }
-
+    public void setBaumaschinen(List<Baumaschine> baumaschineList){
+        this.baumaschineList = baumaschineList;
+        notifyDataSetChanged();
+    }
 
 
     class BaumaschinenViewHolder extends RecyclerView.ViewHolder {
         private final TextView baumaschineName;
         private final TextView baumaschineAnzahl;
-        private final TextView baumaschinePreis;
+        private final TextView baumaschinePreisPerDay;
+        private final TextView baumaschinePreisPerWeekend;
+        private final TextView baumaschinePreisPerMonth;
+
 
         public BaumaschinenViewHolder(@NonNull View itemView) {
             super(itemView);
             baumaschineName = itemView.findViewById(R.id.baumaschineName);
             baumaschineAnzahl = itemView.findViewById(R.id.baumaschineAnzahl);
-            baumaschinePreis = itemView.findViewById(R.id.baumaschinePreis);
+            baumaschinePreisPerDay = itemView.findViewById(R.id.baumaschinePreisPerDay);
+            baumaschinePreisPerWeekend = itemView.findViewById(R.id.baumaschinePreisPerWeekend);
+            baumaschinePreisPerMonth = itemView.findViewById(R.id.baumaschinePreisPerMonth);
+
         }
 
-        public void bind(String name, @NonNull Integer anzahl, @NonNull Double preis){
-            baumaschineName.setText(name);
-            baumaschineAnzahl.setText(anzahl.toString());
-            baumaschinePreis.setText(preis.toString());
-        }
 
     }
-
 
 
 }

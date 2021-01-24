@@ -18,16 +18,21 @@ public class Baumaschine {
     private Integer amount;
     @NonNull
     private Double pricePerDay;
+    @NonNull
+    private Double pricePerWeekend;
+    @NonNull
+    private Double pricePerMonth;
 
     private Double operatingHours;
     private String degreeOfWear;
     private String amountOfGas;
 
-
-    public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, Double operatingHours, String degreeOfWear, String amountOfGas) {
+    public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, @NonNull Double pricePerWeekend, @NonNull Double pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
         this.machineName = machineName;
         this.amount = amount;
         this.pricePerDay = pricePerDay;
+        this.pricePerWeekend = pricePerWeekend;
+        this.pricePerMonth = pricePerMonth;
         this.operatingHours = operatingHours;
         this.degreeOfWear = degreeOfWear;
         this.amountOfGas = amountOfGas;
@@ -66,6 +71,24 @@ public class Baumaschine {
 
     public void setPricePerDay(@NonNull Double pricePerDay) {
         this.pricePerDay = pricePerDay;
+    }
+
+    @NonNull
+    public Double getPricePerWeekend() {
+        return pricePerWeekend;
+    }
+
+    public void setPricePerWeekend(@NonNull Double pricePerWeekend) {
+        this.pricePerWeekend = pricePerWeekend;
+    }
+
+    @NonNull
+    public Double getPricePerMonth() {
+        return pricePerMonth;
+    }
+
+    public void setPricePerMonth(@NonNull Double pricePerMonth) {
+        this.pricePerMonth = pricePerMonth;
     }
 
     public Double getOperatingHours() {

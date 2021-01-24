@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".MainPageActivity">
 
     <View
@@ -32,4 +33,80 @@
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
         app:layout_constraintVertical_bias="0.038"
         tools:layout_editor_absoluteX="0dp" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="36dp"
+        android:clickable="true"
+        app:icon="@drawable/ic_button_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBaumaschine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/fabViewPager"
+        app:layout_constraintEnd_toEndOf="@+id/fabViewPager"
+        />
+
+    <TextView
+        android:id="@+id/addBaumaschineFabString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Baumaschine hinzufügen"
+        app:layout_constraintBottom_toBottomOf="@+id/addBaumaschine"
+        app:layout_constraintEnd_toStartOf="@+id/addBaumaschine"
+        app:layout_constraintTop_toTopOf="@+id/addBaumaschine" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addKunde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/addBaumaschine"
+        app:layout_constraintEnd_toEndOf="@+id/addBaumaschine"
+        app:layout_constraintStart_toStartOf="@+id/addBaumaschine"/>
+
+    <TextView
+        android:id="@+id/addKundenFabString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Kunde hinzufügen"
+        app:layout_constraintBottom_toBottomOf="@+id/addKunde"
+        app:layout_constraintEnd_toStartOf="@+id/addKunde"
+        app:layout_constraintTop_toTopOf="@+id/addKunde"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addVertrag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/addKunde"
+        app:layout_constraintEnd_toEndOf="@+id/addKunde"
+        app:layout_constraintStart_toStartOf="@+id/addKunde"/>
+
+    />
+
+    <TextView
+        android:id="@+id/addVertragFabString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Vertrag hinzufügen"
+        app:layout_constraintBottom_toBottomOf="@+id/addVertrag"
+        app:layout_constraintEnd_toStartOf="@+id/addVertrag"
+        app:layout_constraintTop_toTopOf="@+id/addVertrag"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

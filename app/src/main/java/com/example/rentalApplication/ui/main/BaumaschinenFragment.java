@@ -3,6 +3,7 @@ package com.example.rentalApplication.ui.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +26,6 @@ import java.util.ArrayList;
 public class BaumaschinenFragment extends Fragment {
 
     private ArrayList<Baumaschine> mBaumaschine = new ArrayList<>();
-    private BaumaschinenListAdapter baumaschinenListAdapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,17 +76,25 @@ public class BaumaschinenFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_baumaschinen, container, false);
-        baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
-        baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), allBaumaschinen -> {
 
-        });
         recyclerView = view.findViewById(R.id.baumaschineRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Baumaschine baumaschine = new Baumaschine("test",1,10.00, null,null,null);
+        Baumaschine baumaschine = new Baumaschine("test",1,10.00, 25.00,100.00, null,null, null);
         mBaumaschine.add(baumaschine);
-        baumaschinenListAdapter = new BaumaschinenListAdapter(view.getContext(), mBaumaschine);
+        final  BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter();
         recyclerView.setAdapter(baumaschinenListAdapter);
+
+        baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
+     /*   baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), allBaumaschinen -> {
+
+        });*/
+        baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), new Observer<List<Baumaschine>>() {
+            @Override
+            public void onChanged(List<Baumaschine> baumaschines) {
+                baumaschinenListAdapter.setBaumaschinen(baumaschines);
+            }
+        });
 
         return view;
     }

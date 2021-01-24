@@ -23,7 +23,21 @@
         tools:text="@sample/baumaschinenAnzahl"
         />
     <TextView
-        android:id="@+id/baumaschinePreis"
+        android:id="@+id/baumaschinePreisPerDay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="@sample/baumaschinenPreis"
+        />
+    <TextView
+        android:id="@+id/baumaschinePreisPerWeekend"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="@sample/baumaschinenPreis"
+        />
+    <TextView
+        android:id="@+id/baumaschinePreisPerMonth"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
