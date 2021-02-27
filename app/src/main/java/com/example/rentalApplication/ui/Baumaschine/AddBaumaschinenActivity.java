@@ -1,23 +1,19 @@
-package com.example.rentalApplication.ui.main;
+package com.example.rentalApplication.ui.Baumaschine;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.rentalApplication.MainPageActivity;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
-import com.example.rentalApplication.persistence.BaumaschinenDao;
-import com.example.rentalApplication.persistence.BaumaschinenRepository;
 
 public class AddBaumaschinenActivity extends AppCompatActivity {
-    private EditText addBaumaschinenNameEditText, addBaumaschinenAnzahlEditText, addBaumaschinenPricePerDayEditText, addBaumaschinenPricePerWeekendEditText, addBaumaschinenPricePerMonthEditText;
+    private EditText addBaumaschinenNameEditText, addBaumaschinenAnzahlEditText, addBaumaschinenPricePerDayEditText, addBaumaschinenPricePerWeekendEditText, addBaumaschinenPricePerMonthEditText, addBaumaschinenOperatingHours, addBaumaschinenDegreeOfWear, addBaumaschinenAmountOfGas;
     private Button addBaumaschinenButton;
     private AddBaumaschinenViewModel addBaumaschinenViewModel;
 
@@ -31,12 +27,17 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenPricePerDayEditText = findViewById(R.id.addBaumaschinenPricePerDay);
         addBaumaschinenPricePerWeekendEditText = findViewById(R.id.addBaumaschinenPricePerWeekend);
         addBaumaschinenPricePerMonthEditText = findViewById(R.id.addBaumaschinenPricePerMonth);
+        addBaumaschinenOperatingHours = findViewById(R.id.addBaumaschinenOperatingHours);
+        addBaumaschinenDegreeOfWear =findViewById(R.id.addBaumaschinenDegreeOfWear);
+        addBaumaschinenAmountOfGas = findViewById(R.id.addBaumaschinenAmountOfGas);
 
         addBaumaschinenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 insertNewBaumaschine();
             }
+
+
         });
 
 
@@ -45,17 +46,29 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
     }
     private void insertNewBaumaschine(){
         String baumaschinenName = addBaumaschinenNameEditText.getText().toString();
-        Integer baumaschinenAnzahl = Integer.parseInt(addBaumaschinenAnzahlEditText.getText().toString());
-        Double baumaschinenPricePerDay = Double.parseDouble(addBaumaschinenPricePerDayEditText.getText().toString());
-        Double baumaschinenPricePerWeekend = Double.parseDouble(addBaumaschinenPricePerWeekendEditText.getText().toString());
-        Double baumaschinenPricePerMonth = Double.parseDouble(addBaumaschinenPricePerMonthEditText.getText().toString());
+        String baumaschinenAnzahl = addBaumaschinenAnzahlEditText.getText().toString();
+        String baumaschinenPricePerDay = addBaumaschinenPricePerDayEditText.getText().toString();
+        String baumaschinenPricePerWeekend = addBaumaschinenPricePerWeekendEditText.getText().toString();
+        String baumaschinenPricePerMonth = addBaumaschinenPricePerMonthEditText.getText().toString();
+        String baumaschinenOperatingHours = addBaumaschinenOperatingHours.getText().toString();
+        String baumaschinenDegreeOfWear = addBaumaschinenDegreeOfWear.getText().toString();
+        String baumaschinenAmountOfGas = addBaumaschinenAmountOfGas.getText().toString();
+
+
         addBaumaschinenViewModel = new ViewModelProvider(this).get(AddBaumaschinenViewModel.class);
-        if(baumaschinenName.trim().isEmpty() || baumaschinenAnzahl == null || baumaschinenPricePerDay == null || baumaschinenPricePerWeekend == null || baumaschinenPricePerMonth==null){
+        if(baumaschinenName.trim().isEmpty() || baumaschinenAnzahl.trim().isEmpty() || baumaschinenPricePerDay.trim().isEmpty() || baumaschinenPricePerWeekend.trim().isEmpty() || baumaschinenPricePerMonth.trim().isEmpty()){
             Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
             return;
         }
-        addBaumaschinenViewModel.insert(new Baumaschine(baumaschinenName,baumaschinenAnzahl,baumaschinenPricePerDay,baumaschinenPricePerWeekend,baumaschinenPricePerMonth, null,null,null));
 
+        Integer anzahl = Integer.parseInt(baumaschinenAnzahl);
+        Double pricePerDay = Double.parseDouble(baumaschinenPricePerDay);
+        Double pricePerWeekend = Double.parseDouble(baumaschinenPricePerWeekend);
+        Double pricePerMonth = Double.parseDouble(baumaschinenPricePerMonth);
+        Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
+
+        addBaumaschinenViewModel.insert(new Baumaschine(baumaschinenName,anzahl,pricePerDay,pricePerWeekend,pricePerMonth, operatingHours,baumaschinenDegreeOfWear,baumaschinenAmountOfGas));
+        finish();
         /*Integer addBaumaschinenAnzahlInteger = Integer.parseInt(addBaumaschinenAnzahlEditText.getText().toString());
         Double addBaumaschinenPricePerDayDouble = Double.parseDouble(addBaumaschinenPricePerDayEditText.getText().toString());
         Double addBaumaschinenPricePerWeekendDouble = Double.parseDouble(addBaumaschinenPricePerWeekendEditText.getText().toString());
