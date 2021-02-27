@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.rentalApplication.ui.main.BaumaschinenFragment;
-import com.example.rentalApplication.ui.main.KundenFragment;
+import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
+import com.example.rentalApplication.ui.Kunde.KundenFragment;
 import com.example.rentalApplication.ui.main.VertraegeFragment;
 
 public class BaumaquipAdapter extends FragmentStateAdapter {

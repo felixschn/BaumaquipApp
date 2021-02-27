@@ -1,4 +1,4 @@
-package com.example.rentalApplication.ui.main;
+package com.example.rentalApplication.ui.Baumaschine;
 
 import android.os.Bundle;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rentalApplication.R;
+import com.example.rentalApplication.adapter.BaumaschinenListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class BaumaschinenFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Baumaschine baumaschine = new Baumaschine("test",1,10.00, 25.00,100.00, null,null, null);
         mBaumaschine.add(baumaschine);
-        final  BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter();
+        final BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter();
         recyclerView.setAdapter(baumaschinenListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);

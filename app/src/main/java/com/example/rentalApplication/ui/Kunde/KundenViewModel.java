@@ -1,4 +1,4 @@
-package com.example.rentalApplication.ui.main;
+package com.example.rentalApplication.ui.Kunde;
 
 import android.app.Application;
 

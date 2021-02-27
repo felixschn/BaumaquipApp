@@ -1,4 +1,4 @@
-package com.example.rentalApplication.ui.main;
+package com.example.rentalApplication.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
+import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Kunde;
 
 import java.util.ArrayList;
@@ -18,17 +19,13 @@ import java.util.List;
 public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.KundenViewHolder> {
 
     private LayoutInflater mInflater;
-    private ArrayList<Kunde> kundeList;
+    private List<Kunde> kundeList = new ArrayList<>();
 
-    public KundenListAdapter(Context context, ArrayList<Kunde> kunde){
-        this.mInflater = LayoutInflater.from(context);
-        this.kundeList = kunde;
-    }
 
     @NonNull
     @Override
     public KundenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_kunden_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_kunden_item, parent, false );
         return new KundenViewHolder(itemView);
     }
 
@@ -48,6 +45,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
 
     }
 
+
     @Override
     public int getItemCount() {
         if(kundeList != null){
@@ -57,7 +55,10 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             return 0;
         }
     }
-
+    public void setKunden(List<Kunde> kundenList){
+        this.kundeList = kundenList;
+        notifyDataSetChanged();
+    }
 
     class KundenViewHolder extends RecyclerView.ViewHolder{
         private final TextView kundenName;

@@ -6,14 +6,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.rentalApplication.adapter.BaumaquipAdapter;
-import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.persistence.RentDatabase;
-import com.example.rentalApplication.ui.main.AddBaumaschinenActivity;
+import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
+import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -93,6 +92,14 @@ public class MainPageActivity extends AppCompatActivity {
                 MainPageActivity.this.startActivity(baumaschinenIntent);
             }
         });
+        mAddKundeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent kundenIntent = new Intent (MainPageActivity.this, AddKundenActivity.class);
+                MainPageActivity.this.startActivity(kundenIntent);
+            }
+        });
+
 
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
         viewPager2.setAdapter(new BaumaquipAdapter(this));
