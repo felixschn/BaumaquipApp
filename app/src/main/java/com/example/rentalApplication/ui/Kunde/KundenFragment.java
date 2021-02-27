@@ -1,8 +1,10 @@
-package com.example.rentalApplication.ui.main;
+package com.example.rentalApplication.ui.Kunde;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rentalApplication.R;
+import com.example.rentalApplication.adapter.KundenListAdapter;
 import com.example.rentalApplication.models.Kunde;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,8 +80,16 @@ public class KundenFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Kunde testKunde = new Kunde("Berholz GmbH","Pausaer Straße","102","08529", "Pausa", "0123456789", "Straßengeschäft", "Klaus Bergholz");
         mKunde.add(testKunde);
-        kundenListAdapter = new KundenListAdapter(view.getContext(), mKunde);
+        final KundenListAdapter kundenListAdapter = new KundenListAdapter();
         recyclerView.setAdapter(kundenListAdapter);
+        kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);
+        kundenViewModel.getAllKunden().observe(getViewLifecycleOwner(), new Observer<List<Kunde>>() {
+            @Override
+            public void onChanged(List<Kunde> kundes) {
+                kundenListAdapter.setKunden(kundes);
+
+            }
+        });
 
         return view;
     }
