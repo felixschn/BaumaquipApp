@@ -4,6 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.AddKundenActivity">
+    tools:context=".ui.Kunde.AddKundenActivity">
+
+    <EditText
+        android:id="@+id/addKundenName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addKundenTelefonNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenName" />
+
+    <EditText
+        android:id="@+id/addKundenStreetName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenTelefonNumber" />
+
+    <EditText
+        android:id="@+id/addKundenStreetNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenStreetName" />
+
+    <EditText
+        android:id="@+id/addKundenZip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenStreetNumber" />
+
+    <EditText
+        android:id="@+id/addKundenLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenZip" />
+
+    <EditText
+        android:id="@+id/addKundenConstructionSide"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenLocation" />
+
+    <EditText
+        android:id="@+id/addKundenContactPerson"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backwithborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenConstructionSide" />
+
+    <Button
+        android:id="@+id/addKundenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addKundenContactPerson" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

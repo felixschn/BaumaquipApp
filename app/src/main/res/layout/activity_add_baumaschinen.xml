@@ -63,6 +63,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addBaumaschinenPricePerWeekend" />
 
+    <EditText
+        android:id="@+id/addBaumaschinenOperatingHours"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:inputType="numberDecimal"
+        android:background="@drawable/backwithborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addBaumaschinenPricePerMonth" />
+
+    <EditText
+        android:id="@+id/addBaumaschinenDegreeOfWear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/backwithborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addBaumaschinenOperatingHours" />
+
+    <EditText
+        android:id="@+id/addBaumaschinenAmountOfGas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:inputType="numberDecimal"
+        android:background="@drawable/backwithborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addBaumaschinenDegreeOfWear" />
+
     <Button
         android:id="@+id/addBaumaschinenButton"
         android:layout_width="wrap_content"
@@ -71,7 +106,7 @@
         android:layout_marginTop="24dp"
         android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addBaumaschinenPricePerMonth" />
+        app:layout_constraintTop_toBottomOf="@+id/addBaumaschinenAmountOfGas" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
