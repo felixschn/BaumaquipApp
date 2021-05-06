@@ -4,17 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Fts4
 @Entity
 public class Vertrag {
+    @TypeConverters(Converters.class)
     @PrimaryKey
     public int rowid;
 
-    @NonNull
-    private String vertragBaumaschine;
+
+    private List<Baumaschine> vertragBaumaschineList;
 
     @NonNull
     private String vertragKunde;
@@ -25,25 +29,19 @@ public class Vertrag {
     @NonNull
     private String endeLeihe;
 
-
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
-    public Vertrag(@NonNull String vertragBaumaschine, @NonNull String vertragKunde, @NonNull String beginnLeihe, @NonNull String endeLeihe){
+    public Vertrag(@NonNull List<Baumaschine> vertragBaumaschineList, @NonNull String vertragKunde, @NonNull String beginnLeihe, @NonNull String endeLeihe) {
         this.rowid = rowid;
-        this.vertragBaumaschine = vertragBaumaschine;
+        this.vertragBaumaschineList = vertragBaumaschineList;
         this.vertragKunde = vertragKunde;
         this.beginnLeihe = beginnLeihe;
         this.endeLeihe = endeLeihe;
+
     }
 
-
-    @NonNull
-    public String getVertragBaumaschine() {
-        return vertragBaumaschine;
-    }
-
-    public void setVertragBaumaschine(@NonNull String vertragBaumaschine) {
-        this.vertragBaumaschine = vertragBaumaschine;
+    public List<Baumaschine> getVertragBaumaschineList() {
+        return vertragBaumaschineList;
     }
 
     @NonNull

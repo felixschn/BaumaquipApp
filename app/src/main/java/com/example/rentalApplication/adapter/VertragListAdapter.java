@@ -29,7 +29,7 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
     public void onBindViewHolder(@NonNull VertragViewHolder holder, int position) {
         if(vertragList != null){
             Vertrag current = vertragList.get(position);
-            holder.baumaschineVertrag.setText(current.getVertragBaumaschine());
+            holder.baumaschineVertrag.setText(current.getVertragBaumaschineList().);
             holder.kundenVertrag.setText(current.getVertragKunde());
             holder.beginnLeihe.setText(current.getBeginnLeihe());
             holder.endeLeihe.setText(current.getEndeLeihe());
