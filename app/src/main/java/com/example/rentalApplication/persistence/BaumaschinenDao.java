@@ -21,4 +21,8 @@ public interface BaumaschinenDao {
 
     @Query("SELECT *, rowid FROM Baumaschine")
     LiveData<List<Baumaschine>> getAllBaumaschinen();
+
+    @Query("SELECT *, rowid From Baumaschine")
+    List<Baumaschine> getBaumaschine();
+
 }

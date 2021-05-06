@@ -28,6 +28,7 @@ public class Kunde {
     @NonNull
     private String contactPerson;
 
+
     public Kunde(@NonNull String name, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String telefonNumber, @NonNull String constructionSide, @NonNull String contactPerson) {
 
         this.rowid = rowid;

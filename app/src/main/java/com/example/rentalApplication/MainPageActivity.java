@@ -13,6 +13,7 @@ import com.example.rentalApplication.adapter.BaumaquipAdapter;
 import com.example.rentalApplication.persistence.RentDatabase;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
+import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -97,6 +98,13 @@ public class MainPageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent kundenIntent = new Intent (MainPageActivity.this, AddKundenActivity.class);
                 MainPageActivity.this.startActivity(kundenIntent);
+            }
+        });
+        mAddVertragFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent vertragIntent = new Intent(MainPageActivity.this, AddVertragActivity.class);
+                MainPageActivity.this.startActivity(vertragIntent);
             }
         });
 

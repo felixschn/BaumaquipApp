@@ -11,15 +11,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Kunde;
+import com.example.rentalApplication.models.Vertrag;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Baumaschine.class, Kunde.class}, version = 1, exportSchema = false)
+@Database(entities = {Baumaschine.class, Kunde.class, Vertrag.class}, version = 1, exportSchema = false)
 public abstract class RentDatabase extends RoomDatabase {
 
     public abstract KundenDao kundenDao();
     public abstract BaumaschinenDao baumaschinenDao();
+    public abstract VertragDao vertragDao();
 
     private static final int NUMBER_OF_THREADS = 4;
 
@@ -74,13 +76,14 @@ public abstract class RentDatabase extends RoomDatabase {
     public static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void>{
         private final KundenDao kundenDao;
         private final BaumaschinenDao baumaschinenDao;
+        private final VertragDao vertragDao;
         PopulateDbAsyncTask(RentDatabase db) {
             kundenDao = db.kundenDao();
-            baumaschinenDao = db.baumaschinenDao();}
-
+            baumaschinenDao = db.baumaschinenDao();
+            vertragDao = db.vertragDao();}
         @Override
         protected Void doInBackground(Void... voids) {
-            baumaschinenDao.insert(new Baumaschine("Testmaschine", 1,10.00,20.00,30.00,null,null, null));
+            //baumaschinenDao.insert(new Baumaschine("Testmaschine", 1,10.00,20.00,30.00,null,null, null));
             return null;
         }
     }

@@ -23,6 +23,8 @@ public class BaumaschinenRepository {
 
     public LiveData<List<Baumaschine>> getAllBaumaschinen() {return allBaumaschinen;}
 
+    //public void getBaumaschinen(){return allBaumaschinen; }
+
     public void insert (Baumaschine baumaschine){
         //RentDatabase.databaseWriteWxecutor.execute(() -> {baumaschinenDao.insert(baumaschine);});
         new InsertAsyncTask(baumaschinenDao).execute(baumaschine);
@@ -38,4 +40,13 @@ public class BaumaschinenRepository {
             return null;
         }
     }
+    /*private static class FetchAsyncTask extends AsyncTask<Baumaschine, Void, Void>{
+        private BaumaschinenDao mAsyncTaskDao;
+        FetchAsyncTask(BaumaschinenDao dao){this.mAsyncTaskDao = dao;}
+        @Override
+        protected Void doInBackground (){
+            mAsyncTaskDao.getBaumaschinen();
+            return null;
+        }
+    }*/
 }

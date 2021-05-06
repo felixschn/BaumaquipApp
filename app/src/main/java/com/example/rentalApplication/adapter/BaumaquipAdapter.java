@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
 import com.example.rentalApplication.ui.Kunde.KundenFragment;
-import com.example.rentalApplication.ui.Vertraege.VertraegeFragment;
+import com.example.rentalApplication.ui.Vertraege.VertragFragment;
 
 public class BaumaquipAdapter extends FragmentStateAdapter {
 
@@ -24,7 +24,7 @@ public class BaumaquipAdapter extends FragmentStateAdapter {
             case 1:
                 return new KundenFragment();
             default:
-                return new VertraegeFragment();
+                return new VertragFragment();
 
         }
     }
