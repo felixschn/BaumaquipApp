@@ -82,8 +82,8 @@ public class BaumaschinenFragment extends Fragment {
         recyclerView = view.findViewById(R.id.baumaschineRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Baumaschine baumaschine = new Baumaschine("test",1,10.00, 25.00,100.00, null,null, null);
-        mBaumaschine.add(baumaschine);
+        //Baumaschine baumaschine = new Baumaschine("test",1,10.00, 25.00,100.00, null,null, null);
+        //mBaumaschine.add(baumaschine);
         final BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter();
         recyclerView.setAdapter(baumaschinenListAdapter);
 
