@@ -1,6 +1,7 @@
 package com.example.rentalApplication.ui.Vertraege;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,14 @@ import com.example.rentalApplication.ui.Baumaschine.BaumaschinenViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddVertragActivity extends AppCompatActivity {
+public class AddVertragActivity extends AppCompatActivity implements AddVertragBaumaschineListAdapter.IGetBaumaschinenFromAdapter{
 
     private BaumaschinenViewModel bViewModel;
     private List<String> baumaschineList = new ArrayList<String>();
     private AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter;
     private RecyclerView recyclerViewBaumaschine;
     private AddVertragViewModel addVertragViewModel;
+    private static final String sendedList = "receiving list";
 
 
     @Override
@@ -39,10 +41,10 @@ public class AddVertragActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_vertrag);
         recyclerViewBaumaschine = findViewById(R.id.addVertragBaumaschineRecyclerView);
         //recyclerViewBaumaschine.hasFixedSize();
+        recyclerViewBaumaschine.addItemDecoration(new SimpleItemDecoration(this));
         recyclerViewBaumaschine.setLayoutManager(new LinearLayoutManager(this));
-        final AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter = new AddVertragBaumaschineListAdapter();
+        final AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter = new AddVertragBaumaschineListAdapter(this);
         recyclerViewBaumaschine.setAdapter(addVertragBaumaschineListAdapter);
-
         bViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
         bViewModel.getAllBaumaschinen().observe(this, new Observer<List<Baumaschine>>() {
             @Override
@@ -50,28 +52,14 @@ public class AddVertragActivity extends AppCompatActivity {
                 addVertragBaumaschineListAdapter.setAddVertragBaumaschinen(baumaschines);
             }
         });
+        Log.d(sendedList, "" + addVertragBaumaschineListAdapter.sendBaumaschineList().size());
     }
 
 
+    //created interface to intercept data from the recyclerview adapter
+    @Override
+    public void getBaumaschinenFromAdapter(List<Baumaschine> baumaschineList) {
+        Log.d(sendedList, "Activity " + baumaschineList.size());
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_add_vertrag, container, false);
-        recyclerViewBaumaschine = view.findViewById(R.id.addVertragBaumaschineRecyclerView);
-        recyclerViewBaumaschine.hasFixedSize();
-        recyclerViewBaumaschine.setLayoutManager(new LinearLayoutManager(this));
-        final AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter = new AddVertragBaumaschineListAdapter();
-        recyclerViewBaumaschine.setAdapter(addVertragBaumaschineListAdapter);
-        bViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
-        bViewModel.getAllBaumaschinen().observe(this, baumaschines -> {
-            for (int i = 0; i < baumaschines.size(); i++) {
-                baumaschineList.add(baumaschines.get(i).getMachineName());
-                System.out.println(baumaschines.get(i).getRowid());
-            }
-        });
-        return inflater.inflate(R.layout.activity_add_vertrag, container,false);
     }
-
-
-
 }
