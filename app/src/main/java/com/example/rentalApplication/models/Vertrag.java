@@ -17,7 +17,7 @@ public class Vertrag {
     @PrimaryKey
     public int rowid;
 
-
+    @TypeConverters(Converters.class)
     private List<Baumaschine> vertragBaumaschineList;
 
     @NonNull

@@ -14,14 +14,13 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVertragBaumaschineListAdapter.AddVertragViewHolder> {
     private List<Baumaschine> baumaschineList = new ArrayList<>();
-    private List<Baumaschine> selectedBaumaschinenList = new ArrayList<>();
+    private HashMap<Integer, Baumaschine> baumaschineHashMap = new HashMap<>();
     IGetBaumaschinenFromAdapter mBaumaschinenListListener;
-
-    private String amountBaumaschineString;
     private static final String TAG = "no machine left";
     private static final String selectedAdded = "added machine";
     private static final String selectedRemoved = "removed machine";
@@ -43,10 +42,11 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     public void onBindViewHolder(@NonNull AddVertragBaumaschineListAdapter.AddVertragViewHolder holder, int position) {
         if (baumaschineList != null) {
             Baumaschine current = baumaschineList.get(position);
-            if (current.getAmount() > 0) {
+            if (current.getAmount() < 1) {
+                baumaschineList.remove(current);
+            } else {
                 holder.baumaschineName.setText(current.getMachineName().toString());
                 holder.amountBaumaschine.setText(current.getAmount().toString());
-            } else {
                 Log.d(TAG, current.getMachineName() + " schon verliehen");
             }
         }
@@ -54,12 +54,12 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     }
 
     //method to get the object Baumaschine when an selection is set
-    public Baumaschine getBaumaschine(int position){
+    public Baumaschine getBaumaschine(int position) {
         return baumaschineList.get(position);
     }
 
-    public List<Baumaschine> sendBaumaschineList(){
-        return selectedBaumaschinenList;
+    public HashMap<Integer, Baumaschine> sendBaumaschineList() {
+        return sendBaumaschineList();
     }
 
     @Override
@@ -75,8 +75,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         this.baumaschineList = baumaschineList;
         notifyDataSetChanged();
     }
-
-
 
 
     class AddVertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -104,20 +102,20 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
                 selectedItems.delete(getAdapterPosition());
                 itemView.setSelected(false);
                 System.out.println("Zweiter Klick");
-                selectedBaumaschinenList.remove(getAdapterPosition());
-                Log.d(selectedRemoved,"" + selectedBaumaschinenList.size());
-                mBaumaschinenListListener.getBaumaschinenFromAdapter(selectedBaumaschinenList);
+                baumaschineHashMap.remove(getAdapterPosition());
+                Log.d(selectedRemoved, "" + baumaschineHashMap.get(getAdapterPosition()));
+                mBaumaschinenListListener.getBaumaschinenFromAdapter(baumaschineHashMap);
 
 
-            //is called when selection is set
+                //is called when selection is set
             } else {
 
                 selectedItems.put(getAdapterPosition(), true);
                 itemView.setSelected(true);
                 System.out.println(baumaschineName.getText());
-                selectedBaumaschinenList.add(getBaumaschine(getAdapterPosition()));
-                Log.d(selectedAdded,  "" +selectedBaumaschinenList.size());
-                mBaumaschinenListListener.getBaumaschinenFromAdapter(selectedBaumaschinenList);
+                baumaschineHashMap.put(getAdapterPosition(), baumaschineList.get(getAdapterPosition()));
+                Log.d(selectedAdded, "" + baumaschineHashMap.size());
+                mBaumaschinenListListener.getBaumaschinenFromAdapter(baumaschineHashMap);
 
 
             }
@@ -126,6 +124,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
 
     }
+
     /*created interface to intercept data from the recyclerview adapter
         - adding an interface variable to the adapter class (in this case: mBaumaschinenListListener)
         - also expand the constructor of the adapter class with an parameter of this interface (in this case:     public AddVertragBaumaschineListAdapter(IGetBaumaschinenFromAdapter mBaumaschinenListListener) {
@@ -133,8 +132,8 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     }
 
     * */
-    public interface IGetBaumaschinenFromAdapter{
-        void getBaumaschinenFromAdapter(List<Baumaschine> baumaschineList);
+    public interface IGetBaumaschinenFromAdapter {
+        void getBaumaschinenFromAdapter(HashMap<Integer, Baumaschine> baumaschineList);
     }
 
 }

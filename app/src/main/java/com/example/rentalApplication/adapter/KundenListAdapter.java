@@ -45,6 +45,10 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
 
     }
 
+    private void insertNewVertrag(){
+
+    }
+
 
     @Override
     public int getItemCount() {
