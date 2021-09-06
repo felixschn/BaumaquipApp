@@ -36,7 +36,7 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return baumaschineList.get(position);
         //return baumaschineList.get(position).getMachineName();
     }
 
@@ -59,6 +59,7 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
         TextView amount = (TextView) view.findViewById(R.id.customSpinnerBaumaschinenAmount);
         name.setText(current.getMachineName());
         amount.setText(current.getAmount().toString());
+
         return view;
     }
 }

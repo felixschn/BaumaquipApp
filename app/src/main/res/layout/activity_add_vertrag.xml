@@ -7,8 +7,9 @@
 
     <Spinner
         android:id="@+id/spinnerBaumaschinen"
-        android:layout_width="423dp"
-        android:layout_height="29dp"
+        android:layout_width="543dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +27,6 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/spinnerBaumaschinen"
         app:layout_constraintTop_toTopOf="parent" />

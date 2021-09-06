@@ -38,6 +38,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AddVertragActivity extends AppCompatActivity implements AddVertragBaumaschineListAdapter.IGetBaumaschinenFromAdapter, AddVertragKundeListAdapter.IGetKundeFromAdapter, AdapterView.OnItemSelectedListener {
 
@@ -57,9 +58,11 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
     private String text = "";
     private Button increaseButton, decreaseButton;
     private TextView amountTextView;
-    Integer amountInt = 3;
+    int amountInt;
+    int maxAmount;
     String amount;
-
+    private Boolean isUserAction = false;
+    private CustomBaumaschinenAdapter customBaumaschinenAdapter;
 
 
     @Override
@@ -72,12 +75,12 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
         Spinner baumaschinenSpinner = (Spinner) findViewById(R.id.spinnerBaumaschinen);
         Spinner kundenSpinner = (Spinner) findViewById(R.id.spinnerKunden);
         baumaschinenSpinner.setOnItemSelectedListener(this);
-        baumaschinenSpinner.setOnItemSelectedListener(this);
+        kundenSpinner.setOnItemSelectedListener(this);
 
         //create new customAdapter object and link Spinner with adapter
-        CustomBaumaschinenAdapter customBaumaschinenAdapter = new CustomBaumaschinenAdapter(getApplicationContext());
+        customBaumaschinenAdapter = new CustomBaumaschinenAdapter(getApplicationContext());
         baumaschinenSpinner.setAdapter(customBaumaschinenAdapter);
-        baumaschinenSpinner.
+
 
         //create new ViewModel and get all instances of the database entry
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
@@ -94,29 +97,29 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
         decreaseButton = findViewById(R.id.baumaschinenAmountDecreaseButton);
         increaseButton = findViewById(R.id.baumschinenAmountIncreaseButton);
         amountTextView = findViewById(R.id.baumaschinenAmountTextView);
-        amountTextView.setText(amountInt.toString());
+        amountTextView.setText(String.valueOf(1));
 
         decreaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "decreasing Baumaschinen amount");
+                amountInt--;
+                amountTextView.setText(String.valueOf(amountInt));
 
-                Log.d(TAG,"decreasing Baumaschinen amount");
-                if(amountInt > 1){
-                    amountInt = amountInt - 1;
-                    amount = String.valueOf(amountInt);
-                    amountTextView.setText(amount);
-                }
-                else{
-                    decreaseButton.setVisibility(View.INVISIBLE);
-                    //Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
-                }
+                buttonVisibility();
             }
         });
 
         increaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"increasing Baumaschinen amount");
+                Log.d(TAG, "increasing Baumaschinen amount");
+                amountInt++;
+                amountTextView.setText(String.valueOf(amountInt));
+
+                buttonVisibility();
+
+
                 //if(amountInt < kundenSpinner.getSelectedItem().)
 
             }
@@ -186,7 +189,6 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
     }
 
 
-
     private void updateCalendarDateBeginnLeihe() {
         String format = "dd/MM/yy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.GERMAN);
@@ -202,12 +204,28 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
     private void insertNewVertag() {
         List<Baumaschine> list = new ArrayList<Baumaschine>(baumaschineHashMap.values());
         List<Kunde> kundenList = new ArrayList<Kunde>(kundeHashMap.values());
-        if(list.size() != 0){
+        if (list.size() != 0) {
 
         }
         addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
 
-        addVertragViewModel.insert(new Vertrag(list, kundenList.get(0).getName(),beginnLeihe.toString(), endeLeihe.toString()));
+        addVertragViewModel.insert(new Vertrag(list, kundenList.get(0).getName(), beginnLeihe.toString(), endeLeihe.toString()));
+
+    }
+
+    private void buttonVisibility(){
+        if(amountInt >= maxAmount) {
+            increaseButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            increaseButton.setVisibility(View.VISIBLE);
+        }
+        if(amountInt == 1) {
+            decreaseButton.setVisibility(View.INVISIBLE);
+        }
+        else{
+            decreaseButton.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -230,6 +248,24 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch(parent.getId()){
+            case R.id.spinnerBaumaschinen:
+                String selected = parent.getItemAtPosition(position).toString();
+                maxAmount = ((Baumaschine) parent.getAdapter().getItem(position)).getAmount();
+                amountInt = 1;
+                amountTextView.setText(String.valueOf(amountInt));
+                buttonVisibility();
+
+
+
+                Log.d(TAG,"Amount: " + amount);
+                break;
+            case R.id.spinnerKunden:
+                break;
+
+        }
+
+
 
     }
 
@@ -237,4 +273,5 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }
