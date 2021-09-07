@@ -22,13 +22,13 @@ public class Baumaschine {
     @NonNull
     private Integer amount;
     @NonNull
-    @TypeConverters(BigDecimalConverter.class)
+    @TypeConverters(Converters.class)
     private BigDecimal pricePerDay;
     @NonNull
-    @TypeConverters(BigDecimalConverter.class)
+    @TypeConverters(Converters.class)
     private BigDecimal pricePerWeekend;
     @NonNull
-    @TypeConverters(BigDecimalConverter.class)
+    @TypeConverters(Converters.class)
     private BigDecimal pricePerMonth;
 
     private Double operatingHours;

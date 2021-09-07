@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,4 +37,16 @@ public class Converters implements Serializable {
         List<Baumaschine> vertragBaumaschineList = gson.fromJson(vertragBaumaschineString, type);
         return vertragBaumaschineList;
     }
+
+    @TypeConverter
+    public static String BigDecimalToString(BigDecimal price) {
+        return price.toString();
+    }
+
+    @TypeConverter
+    public static BigDecimal stringToBigDecimal(String priceAsString) {
+        return new BigDecimal(priceAsString);
+    }
+
+
 }
