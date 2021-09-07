@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
@@ -36,6 +37,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
             holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
+
+            boolean isExpanded = baumaschineList.get(position).getExpanded();
+            holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         }
         /*else{
             holder.baumaschinePreis.setText("TestMaschine");
@@ -65,6 +69,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         private final TextView baumaschinePreisPerDay;
         private final TextView baumaschinePreisPerWeekend;
         private final TextView baumaschinePreisPerMonth;
+        private final ConstraintLayout expandableConstraintLayout;
+
+
 
 
         public BaumaschinenViewHolder(@NonNull View itemView) {
@@ -74,7 +81,16 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             baumaschinePreisPerDay = itemView.findViewById(R.id.baumaschinePreisPerDay);
             baumaschinePreisPerWeekend = itemView.findViewById(R.id.baumaschinePreisPerWeekend);
             baumaschinePreisPerMonth = itemView.findViewById(R.id.baumaschinePreisPerMonth);
+            expandableConstraintLayout = itemView.findViewById(R.id.expandableConstraintLayout);
 
+            baumaschineName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
+                    baumaschine.setExpanded(!baumaschine.getExpanded());
+                    notifyItemChanged(getAdapterPosition());
+                }
+            });
         }
 
 

@@ -27,6 +27,8 @@ public class Baumaschine {
     private String degreeOfWear;
     private String amountOfGas;
 
+    private Boolean expanded;
+
     public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, @NonNull Double pricePerWeekend, @NonNull Double pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
         this.machineName = machineName;
         this.amount = amount;
@@ -36,6 +38,7 @@ public class Baumaschine {
         this.operatingHours = operatingHours;
         this.degreeOfWear = degreeOfWear;
         this.amountOfGas = amountOfGas;
+        this.expanded = false;
     }
 
     public int getRowid() {
@@ -115,5 +118,11 @@ public class Baumaschine {
         this.amountOfGas = amountOfGas;
     }
 
+    public Boolean getExpanded() {
+        return expanded;
+    }
 
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
+    }
 }

@@ -3,45 +3,117 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
-    <TextView
-        android:id="@+id/baumaschineName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="@sample/baumaschineName"
-        />
 
-    <TextView
-        android:id="@+id/baumaschineAnzahl"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="@sample/baumaschinenAnzahl"
-        />
-    <TextView
-        android:id="@+id/baumaschinePreisPerDay"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="@sample/baumaschinenPreis"
-        />
-    <TextView
-        android:id="@+id/baumaschinePreisPerWeekend"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="@sample/baumaschinenPreis"
-        />
-    <TextView
-        android:id="@+id/baumaschinePreisPerMonth"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="@sample/baumaschinenPreis"
-        />
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/baumaschineName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@sample/baumaschineName" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textBaumaschinenAnzahl"
+                android:text="Anzahl: "
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/baumaschineName"/>
+
+            <TextView
+                android:id="@+id/baumaschineAnzahl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textBaumaschinenAnzahl"
+                tools:text="@sample/baumaschinenAnzahl" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:id="@+id/expandableConstraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/baumaschineName">
+
+                <TextView
+                    android:id="@+id/textPreisPerDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preis pro Tag"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/baumaschinePreisPerDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/textPreisPerDay"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@sample/baumaschinenPreis" />
+
+                <TextView
+                    android:id="@+id/textPreisPerWeekend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="92dp"
+                    android:text="Preis pro Wochenende"
+                    app:layout_constraintStart_toStartOf="@id/baumaschinePreisPerDay"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/baumaschinePreisPerWeekend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/textPreisPerWeekend"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@sample/baumaschinenPreis" />
+
+                <TextView
+                    android:id="@+id/textPreisPerMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="92dp"
+                    android:text="Preis pro Monat"
+                    app:layout_constraintStart_toStartOf="@id/baumaschinePreisPerWeekend"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/baumaschinePreisPerMonth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/textPreisPerMonth"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@sample/baumaschinenPreis" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>
