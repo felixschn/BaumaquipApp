@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 
+import java.math.BigDecimal;
+
 public class AddBaumaschinenActivity extends AppCompatActivity {
     private EditText addBaumaschinenNameEditText, addBaumaschinenAnzahlEditText, addBaumaschinenPricePerDayEditText, addBaumaschinenPricePerWeekendEditText, addBaumaschinenPricePerMonthEditText, addBaumaschinenOperatingHours, addBaumaschinenDegreeOfWear, addBaumaschinenAmountOfGas;
     private Button addBaumaschinenButton;
@@ -62,9 +64,9 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         }
 
         Integer anzahl = Integer.parseInt(baumaschinenAnzahl);
-        Double pricePerDay = Double.parseDouble(baumaschinenPricePerDay);
-        Double pricePerWeekend = Double.parseDouble(baumaschinenPricePerWeekend);
-        Double pricePerMonth = Double.parseDouble(baumaschinenPricePerMonth);
+        BigDecimal pricePerDay = new BigDecimal(baumaschinenPricePerDay);
+        BigDecimal pricePerWeekend = new BigDecimal(baumaschinenPricePerWeekend);
+        BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
         Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
 
         addBaumaschinenViewModel.insert(new Baumaschine(baumaschinenName,anzahl,pricePerDay,pricePerWeekend,pricePerMonth, operatingHours,baumaschinenDegreeOfWear,baumaschinenAmountOfGas));
