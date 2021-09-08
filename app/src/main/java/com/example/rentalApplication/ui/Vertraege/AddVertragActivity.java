@@ -1,6 +1,7 @@
 package com.example.rentalApplication.ui.Vertraege;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -24,6 +26,7 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.AddVertragBaumaschineListAdapter;
 import com.example.rentalApplication.adapter.AddVertragKundeListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.persistence.BaumaschinenRepository;
@@ -32,6 +35,7 @@ import com.example.rentalApplication.ui.Kunde.KundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomBaumaschinenAdapter;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -178,6 +182,7 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
         });
         addVertragButton = findViewById(R.id.addVertragButton);
         addVertragButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 insertNewVertag();
@@ -201,15 +206,14 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
         endeLeihe.setText(simpleDateFormat.format(rentCalendar.getTime()));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertNewVertag() {
         List<Baumaschine> list = new ArrayList<Baumaschine>(baumaschineHashMap.values());
         List<Kunde> kundenList = new ArrayList<Kunde>(kundeHashMap.values());
-        if (list.size() != 0) {
 
-        }
         addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
 
-        addVertragViewModel.insert(new Vertrag(list, kundenList.get(0).getName(), beginnLeihe.toString(), endeLeihe.toString()));
+        addVertragViewModel.insert(new Vertrag(list, kundenList.get(0).getName(), Converters.stringToDate(beginnLeihe.toString()), Converters.stringToDate(endeLeihe.toString())));
 
     }
 

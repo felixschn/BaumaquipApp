@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Viewpager_test">
-        <activity android:name=".ui.Kunde.AddKundenActivity"></activity>
-        <activity android:name=".ui.Vertraege.AddVertragActivity"></activity>
+        <activity android:name=".ui.Kunde.AddKundenActivity" />
+        <activity android:name=".ui.Vertraege.AddVertragActivity" />
         <activity android:name=".ui.Baumaschine.AddBaumaschinenActivity" />
         <activity
             android:name=".MainPageActivity"

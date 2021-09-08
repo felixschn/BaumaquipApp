@@ -24,14 +24,14 @@ public class Vertrag {
     private String vertragKunde;
 
     @NonNull
-    private String beginnLeihe;
+    private LocalDate beginnLeihe;
 
     @NonNull
-    private String endeLeihe;
+    private LocalDate endeLeihe;
 
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
-    public Vertrag(@NonNull List<Baumaschine> vertragBaumaschineList, @NonNull String vertragKunde, @NonNull String beginnLeihe, @NonNull String endeLeihe) {
+    public Vertrag(@NonNull List<Baumaschine> vertragBaumaschineList, @NonNull String vertragKunde, @NonNull LocalDate beginnLeihe, @NonNull LocalDate endeLeihe) {
         this.rowid = rowid;
         this.vertragBaumaschineList = vertragBaumaschineList;
         this.vertragKunde = vertragKunde;
@@ -54,20 +54,20 @@ public class Vertrag {
     }
 
     @NonNull
-    public String getBeginnLeihe() {
+    public LocalDate getBeginnLeihe() {
         return beginnLeihe;
     }
 
-    public void setBeginnLeihe(@NonNull String beginnLeihe) {
+    public void setBeginnLeihe(@NonNull LocalDate beginnLeihe) {
         this.beginnLeihe = beginnLeihe;
     }
 
     @NonNull
-    public String getEndeLeihe() {
+    public LocalDate getEndeLeihe() {
         return endeLeihe;
     }
 
-    public void setEndeLeihe(@NonNull String endeLeihe) {
+    public void setEndeLeihe(@NonNull LocalDate endeLeihe) {
         this.endeLeihe = endeLeihe;
     }
 }

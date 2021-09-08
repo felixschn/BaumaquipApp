@@ -1,6 +1,9 @@
 package com.example.rentalApplication.models;
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
@@ -9,8 +12,15 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Converters implements Serializable {
     @TypeConverter
@@ -47,6 +57,19 @@ public class Converters implements Serializable {
     public static BigDecimal stringToBigDecimal(String priceAsString) {
         return new BigDecimal(priceAsString);
     }
+
+    @TypeConverter
+    public static String dateToString(LocalDate date){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.GERMAN);
+        return dateFormat.format(date);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @TypeConverter
+    public static LocalDate stringToDate(String strDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        return LocalDate.parse(strDate, formatter);
+    }
+
 
 
 }

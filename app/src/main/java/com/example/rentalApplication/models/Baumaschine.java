@@ -7,8 +7,6 @@ import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.example.rentalApplication.persistence.BigDecimalConverter;
-
 import java.math.BigDecimal;
 
 @Fts4
