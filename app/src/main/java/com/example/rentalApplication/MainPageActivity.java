@@ -90,6 +90,7 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent baumaschinenIntent = new Intent(MainPageActivity.this, AddBaumaschinenActivity.class);
+                baumaschinenIntent.putExtra("Class","MainPageActivity");
                 MainPageActivity.this.startActivity(baumaschinenIntent);
             }
         });

@@ -14,7 +14,7 @@ public class BaumaschinenRepository {
     private BaumaschinenDao baumaschinenDao;
     private LiveData<List<Baumaschine>> allBaumaschinen;
     private String DB_NAME = "rent_db";
-    Baumaschine baumaschineById;
+    // Baumaschine baumaschineById;
 
 
     public BaumaschinenRepository(Application application) {
@@ -40,8 +40,14 @@ public class BaumaschinenRepository {
 
     public Baumaschine loadBaumaschineById(int id){
         Integer rowid = Integer.valueOf(id);
-         new ModifyAsyncTask(baumaschinenDao).execute(rowid);
-         return baumaschineById;
+        try {
+            return new ModifyAsyncTask(baumaschinenDao).execute(rowid).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static class InsertAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
