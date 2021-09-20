@@ -21,8 +21,10 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
     private Button addBaumaschinenButton;
     private AddBaumaschinenViewModel addBaumaschinenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
+    private UpdateBaumaschinenViewModel updateBaumaschinenViewModel;
     private Baumaschine loadBaumaschineById;
     private final static String TAG = "AddBaumaschinenActivity.java";
+    private Intent intent;
 
 
 
@@ -41,7 +43,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenAmountOfGas = findViewById(R.id.addBaumaschinenAmountOfGas);
 
         //retrieve Intent from starting activity
-        Intent intent = this.getIntent();
+        intent = this.getIntent();
         //check if intent contain values, if so, then modifing button was clicked, if not the adding new baumaschinen button was clicked
         if(intent != null){
             String activityString = intent.getStringExtra("Class");
@@ -53,6 +55,13 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 modifyBaumaschineViewModel = new ViewModelProvider(this, new ModifyBaumaschineViewModelFactory(this.getApplication(), intent.getExtras().getInt("baumaschineneRowId"))).get(ModifyBaumaschineViewModel.class);
                 loadBaumaschineById = modifyBaumaschineViewModel.loadBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
                 addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
+                addBaumaschinenAnzahlEditText.setText(loadBaumaschineById.getAmount().toString());
+                addBaumaschinenPricePerDayEditText.setText(loadBaumaschineById.getPricePerDay().toString());
+                addBaumaschinenPricePerWeekendEditText.setText(loadBaumaschineById.getPricePerWeekend().toString());
+                addBaumaschinenPricePerMonthEditText.setText(loadBaumaschineById.getPricePerMonth().toString());
+                addBaumaschinenOperatingHours.setText(loadBaumaschineById.getOperatingHours().toString());
+                addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
+                addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getAmountOfGas());
             }
 
 
@@ -60,15 +69,16 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertNewBaumaschine();
+                if(intent.getStringExtra("Class").equals("MainPageActivity")) {
+                    insertNewBaumaschine();
+                }
+                if(intent.getStringExtra("Class").equals("BaumaschinenListAdapter")){
+                    updateBaumaschine();
+                }
             }
 
 
         });
-
-
-
-
     }
     private void insertNewBaumaschine(){
         String baumaschinenName = addBaumaschinenNameEditText.getText().toString();
@@ -103,6 +113,30 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             finish();
         });*/
+    }
+    private void updateBaumaschine() {
+        String baumaschinenName = addBaumaschinenNameEditText.getText().toString();
+        String baumaschinenAnzahl = addBaumaschinenAnzahlEditText.getText().toString();
+        String baumaschinenPricePerDay = addBaumaschinenPricePerDayEditText.getText().toString();
+        String baumaschinenPricePerWeekend = addBaumaschinenPricePerWeekendEditText.getText().toString();
+        String baumaschinenPricePerMonth = addBaumaschinenPricePerMonthEditText.getText().toString();
+        String baumaschinenOperatingHours = addBaumaschinenOperatingHours.getText().toString();
+        String baumaschinenDegreeOfWear = addBaumaschinenDegreeOfWear.getText().toString();
+        String baumaschinenAmountOfGas = addBaumaschinenAmountOfGas.getText().toString();
+
+        updateBaumaschinenViewModel = new ViewModelProvider(this).get(UpdateBaumaschinenViewModel.class);
+        if (baumaschinenName.trim().isEmpty() || baumaschinenAnzahl.trim().isEmpty() || baumaschinenPricePerDay.trim().isEmpty() || baumaschinenPricePerWeekend.trim().isEmpty() || baumaschinenPricePerMonth.trim().isEmpty()) {
+            Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Integer anzahl = Integer.parseInt(baumaschinenAnzahl);
+        BigDecimal pricePerDay = new BigDecimal(baumaschinenPricePerDay);
+        BigDecimal pricePerWeekend = new BigDecimal(baumaschinenPricePerWeekend);
+        BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
+        Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
+        updateBaumaschinenViewModel.update(new Baumaschine(baumaschinenName,anzahl,pricePerDay,pricePerWeekend,pricePerMonth, operatingHours,baumaschinenDegreeOfWear,baumaschinenAmountOfGas));
+
+        finish();
     }
 
 }

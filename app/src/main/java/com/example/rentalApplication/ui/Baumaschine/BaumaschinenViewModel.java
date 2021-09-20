@@ -29,9 +29,13 @@ public class BaumaschinenViewModel extends AndroidViewModel {
     }
 
 
-    public void insert(Baumaschine baumaschine) {
+ /*   public void insert(Baumaschine baumaschine) {
         baumaschinenRepository.insert(baumaschine);
 
+    }*/
+
+    public void update(Baumaschine baumaschine){
+        baumaschinenRepository.update(baumaschine);
     }
 
 }   

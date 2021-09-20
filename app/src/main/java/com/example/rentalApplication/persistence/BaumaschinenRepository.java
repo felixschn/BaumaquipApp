@@ -35,10 +35,11 @@ public class BaumaschinenRepository {
     }
 
     public void update(Baumaschine baumaschine) {
+        new UpdateAsyncTask(baumaschinenDao).execute(baumaschine);
 
     }
 
-    public Baumaschine loadBaumaschineById(int id){
+    public Baumaschine loadBaumaschineById(int id) {
         Integer rowid = Integer.valueOf(id);
         try {
             return new ModifyAsyncTask(baumaschinenDao).execute(rowid).get();
@@ -64,6 +65,21 @@ public class BaumaschinenRepository {
         }
     }
 
+    private static class UpdateAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
+        private BaumaschinenDao mAsyncTaskDao;
+
+        UpdateAsyncTask(BaumaschinenDao dao) {
+            this.mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Baumaschine... baumaschines) {
+            mAsyncTaskDao.update(baumaschines[0]);
+            return null;
+        }
+    }
+
+
     private static class ModifyAsyncTask extends AsyncTask<Integer, Void, Baumaschine> {
         private BaumaschinenDao mAsyncTaskDao;
 
@@ -71,6 +87,7 @@ public class BaumaschinenRepository {
             this.mAsyncTaskDao = dao;
 
         }
+
         @Override
         protected Baumaschine doInBackground(Integer... integers) {
             return mAsyncTaskDao.loadBaumaschineById(integers[0]);
@@ -91,4 +108,5 @@ public class BaumaschinenRepository {
             return null;
         }
     }*/
+
 }
