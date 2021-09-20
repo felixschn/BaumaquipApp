@@ -14,7 +14,7 @@ import java.util.List;
 public class BaumaschinenViewModel extends AndroidViewModel {
     private BaumaschinenRepository baumaschinenRepository;
     private final LiveData<List<Baumaschine>> allBaumaschinen;
-    private  List<Baumaschine> allBaumaschinenList;
+
 
     public BaumaschinenViewModel(@NonNull Application application) {
         super(application);
@@ -23,10 +23,15 @@ public class BaumaschinenViewModel extends AndroidViewModel {
 
 
     }
-    public LiveData<List<Baumaschine>> getAllBaumaschinen() {return allBaumaschinen;}
 
-    public List<Baumaschine> getBaumaschinen() {return allBaumaschinenList;}
+    public LiveData<List<Baumaschine>> getAllBaumaschinen() {
+        return allBaumaschinen;
+    }
 
-    public void insert(Baumaschine baumaschine){baumaschinenRepository.insert(baumaschine);}
 
-}
+    public void insert(Baumaschine baumaschine) {
+        baumaschinenRepository.insert(baumaschine);
+
+    }
+
+}   

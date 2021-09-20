@@ -8,36 +8,72 @@ import androidx.lifecycle.LiveData;
 import com.example.rentalApplication.models.Baumaschine;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class BaumaschinenRepository {
     private BaumaschinenDao baumaschinenDao;
     private LiveData<List<Baumaschine>> allBaumaschinen;
     private String DB_NAME = "rent_db";
+    Baumaschine baumaschineById;
 
 
-    public BaumaschinenRepository(Application application){
+    public BaumaschinenRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
         baumaschinenDao = db.baumaschinenDao();
         allBaumaschinen = baumaschinenDao.getAllBaumaschinen();
     }
 
-    public LiveData<List<Baumaschine>> getAllBaumaschinen() {return allBaumaschinen;}
+    public LiveData<List<Baumaschine>> getAllBaumaschinen() {
+        return allBaumaschinen;
+    }
 
     //public void getBaumaschinen(){return allBaumaschinen; }
 
-    public void insert (Baumaschine baumaschine){
+    public void insert(Baumaschine baumaschine) {
         //RentDatabase.databaseWriteWxecutor.execute(() -> {baumaschinenDao.insert(baumaschine);});
         new InsertAsyncTask(baumaschinenDao).execute(baumaschine);
     }
-    private static class InsertAsyncTask extends AsyncTask<Baumaschine, Void, Void>{
+
+    public void update(Baumaschine baumaschine) {
+
+    }
+
+    public Baumaschine loadBaumaschineById(int id){
+        Integer rowid = Integer.valueOf(id);
+         new ModifyAsyncTask(baumaschinenDao).execute(rowid);
+         return baumaschineById;
+    }
+
+    private static class InsertAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
         private BaumaschinenDao mAsyncTaskDao;
-        InsertAsyncTask(BaumaschinenDao dao){
+
+        InsertAsyncTask(BaumaschinenDao dao) {
             this.mAsyncTaskDao = dao;
         }
+
         @Override
-        protected  Void doInBackground(Baumaschine... baumaschines){
+        protected Void doInBackground(Baumaschine... baumaschines) {
             mAsyncTaskDao.insert(baumaschines[0]);
             return null;
+        }
+    }
+
+    private static class ModifyAsyncTask extends AsyncTask<Integer, Void, Baumaschine> {
+        private BaumaschinenDao mAsyncTaskDao;
+
+        ModifyAsyncTask(BaumaschinenDao dao) {
+            this.mAsyncTaskDao = dao;
+
+        }
+        @Override
+        protected Baumaschine doInBackground(Integer... integers) {
+            return mAsyncTaskDao.loadBaumaschineById(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Baumaschine baumaschine) {
+            super.onPostExecute(baumaschine);
+
         }
     }
     /*private static class FetchAsyncTask extends AsyncTask<Baumaschine, Void, Void>{

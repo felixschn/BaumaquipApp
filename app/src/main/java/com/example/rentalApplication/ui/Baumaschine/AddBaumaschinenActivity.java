@@ -3,7 +3,9 @@ package com.example.rentalApplication.ui.Baumaschine;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,11 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
     private EditText addBaumaschinenNameEditText, addBaumaschinenAnzahlEditText, addBaumaschinenPricePerDayEditText, addBaumaschinenPricePerWeekendEditText, addBaumaschinenPricePerMonthEditText, addBaumaschinenOperatingHours, addBaumaschinenDegreeOfWear, addBaumaschinenAmountOfGas;
     private Button addBaumaschinenButton;
     private AddBaumaschinenViewModel addBaumaschinenViewModel;
+    private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
+    private Baumaschine loadBaumaschineById;
+    private final static String TAG = "AddBaumaschinenActivity.java";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,21 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenDegreeOfWear =findViewById(R.id.addBaumaschinenDegreeOfWear);
         addBaumaschinenAmountOfGas = findViewById(R.id.addBaumaschinenAmountOfGas);
 
+        //retrieve Intent from starting activity
+        Intent intent = this.getIntent();
+        //check if intent contain values, if so, then modifing button was clicked, if not the adding new baumaschinen button was clicked
+        if(intent != null && equals("BaumaschinenListAdapter")){
+            Log.d(TAG, "Intent Ergebnis RowID" + intent.getExtras().getInt("baumaschineneRowId"));
+
+            //create new modifyBaumaschinenViewModel, to pass the additional parameter id, a ModifyBaumaschineViewModelFactory was created and is used
+            //retrieve the id from the intent
+            modifyBaumaschineViewModel = new ViewModelProvider(this, new ModifyBaumaschineViewModelFactory(this.getApplication(),intent.getExtras().getInt("baumaschineneRowId"))).get(ModifyBaumaschineViewModel.class);
+            loadBaumaschineById = modifyBaumaschineViewModel.loadBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
+            addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
+
+
+
+        }
         addBaumaschinenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,11 +6,11 @@ import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 
-@Fts4
+
 @Entity
 public class Baumaschine {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int rowid;
     @NonNull
     private String machineName;
@@ -26,7 +26,7 @@ public class Baumaschine {
     private Double operatingHours;
     private String degreeOfWear;
     private String amountOfGas;
-
+    //create Boolean variable for expandable recyclerview
     private Boolean expanded;
 
     public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, @NonNull Double pricePerWeekend, @NonNull Double pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
@@ -38,6 +38,7 @@ public class Baumaschine {
         this.operatingHours = operatingHours;
         this.degreeOfWear = degreeOfWear;
         this.amountOfGas = amountOfGas;
+        //set Boolean initially to false
         this.expanded = false;
     }
 
@@ -118,6 +119,8 @@ public class Baumaschine {
         this.amountOfGas = amountOfGas;
     }
 
+
+    //create getter and setter to manipulate the boolean variable per click
     public Boolean getExpanded() {
         return expanded;
     }

@@ -99,6 +99,7 @@ public class BaumaschinenFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 }
