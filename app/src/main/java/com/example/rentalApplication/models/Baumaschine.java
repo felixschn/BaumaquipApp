@@ -5,6 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.math.BigDecimal;
 
 
 @Entity
@@ -17,11 +20,14 @@ public class Baumaschine {
     @NonNull
     private Integer amount;
     @NonNull
-    private Double pricePerDay;
+    @TypeConverters(Converters.class)
+    private BigDecimal pricePerDay;
     @NonNull
-    private Double pricePerWeekend;
+    @TypeConverters(Converters.class)
+    private BigDecimal pricePerWeekend;
     @NonNull
-    private Double pricePerMonth;
+    @TypeConverters(Converters.class)
+    private BigDecimal pricePerMonth;
 
     private Double operatingHours;
     private String degreeOfWear;
@@ -29,7 +35,7 @@ public class Baumaschine {
     //create Boolean variable for expandable recyclerview
     private Boolean expanded;
 
-    public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull Double pricePerDay, @NonNull Double pricePerWeekend, @NonNull Double pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
+    public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull BigDecimal pricePerDay, @NonNull BigDecimal pricePerWeekend, @NonNull BigDecimal pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
         this.machineName = machineName;
         this.amount = amount;
         this.pricePerDay = pricePerDay;
@@ -69,29 +75,29 @@ public class Baumaschine {
     }
 
     @NonNull
-    public Double getPricePerDay() {
+    public BigDecimal getPricePerDay() {
         return pricePerDay;
     }
 
-    public void setPricePerDay(@NonNull Double pricePerDay) {
+    public void setPricePerDay(@NonNull BigDecimal pricePerDay) {
         this.pricePerDay = pricePerDay;
     }
 
     @NonNull
-    public Double getPricePerWeekend() {
+    public BigDecimal getPricePerWeekend() {
         return pricePerWeekend;
     }
 
-    public void setPricePerWeekend(@NonNull Double pricePerWeekend) {
+    public void setPricePerWeekend(@NonNull BigDecimal pricePerWeekend) {
         this.pricePerWeekend = pricePerWeekend;
     }
 
     @NonNull
-    public Double getPricePerMonth() {
+    public BigDecimal getPricePerMonth() {
         return pricePerMonth;
     }
 
-    public void setPricePerMonth(@NonNull Double pricePerMonth) {
+    public void setPricePerMonth(@NonNull BigDecimal pricePerMonth) {
         this.pricePerMonth = pricePerMonth;
     }
 

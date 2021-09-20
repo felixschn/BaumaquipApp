@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
+import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Vertrag;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             Vertrag current = vertragList.get(position);
             //holder.baumaschineVertrag.setText(current.getVertragBaumaschineList());
             holder.kundenVertrag.setText(current.getVertragKunde());
-            holder.beginnLeihe.setText(current.getBeginnLeihe());
-            holder.endeLeihe.setText(current.getEndeLeihe());
+            holder.beginnLeihe.setText(Converters.dateToString(current.getBeginnLeihe()));
+            holder.endeLeihe.setText(Converters.dateToString(current.getEndeLeihe()));
         }
 
     }
