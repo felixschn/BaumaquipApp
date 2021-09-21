@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AddBaumaschinenViewModel extends AndroidViewModel {
     private BaumaschinenRepository baumaschinenRepository;
-    //private final LiveData<List<Baumaschine>> allBaumaschinen;
+
     public AddBaumaschinenViewModel(@NonNull Application application) {
         super(application);
         baumaschinenRepository = new BaumaschinenRepository(application);

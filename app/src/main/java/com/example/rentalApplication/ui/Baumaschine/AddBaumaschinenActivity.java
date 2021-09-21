@@ -21,7 +21,6 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
     private Button addBaumaschinenButton;
     private AddBaumaschinenViewModel addBaumaschinenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
-    private UpdateBaumaschinenViewModel updateBaumaschinenViewModel;
     private Baumaschine loadBaumaschineById;
     private final static String TAG = "AddBaumaschinenActivity.java";
     private Intent intent;
@@ -124,7 +123,6 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         String baumaschinenDegreeOfWear = addBaumaschinenDegreeOfWear.getText().toString();
         String baumaschinenAmountOfGas = addBaumaschinenAmountOfGas.getText().toString();
 
-        updateBaumaschinenViewModel = new ViewModelProvider(this).get(UpdateBaumaschinenViewModel.class);
         if (baumaschinenName.trim().isEmpty() || baumaschinenAnzahl.trim().isEmpty() || baumaschinenPricePerDay.trim().isEmpty() || baumaschinenPricePerWeekend.trim().isEmpty() || baumaschinenPricePerMonth.trim().isEmpty()) {
             Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
             return;
@@ -134,8 +132,9 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         BigDecimal pricePerWeekend = new BigDecimal(baumaschinenPricePerWeekend);
         BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
         Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
-        updateBaumaschinenViewModel.update(new Baumaschine(baumaschinenName,anzahl,pricePerDay,pricePerWeekend,pricePerMonth, operatingHours,baumaschinenDegreeOfWear,baumaschinenAmountOfGas));
-
+        Baumaschine baumaschine = new Baumaschine(baumaschinenName,anzahl,pricePerDay,pricePerWeekend,pricePerMonth, operatingHours,baumaschinenDegreeOfWear,baumaschinenAmountOfGas);
+        Log.d(TAG,"ROW_ID vor setzen: " + baumaschine.getRowid());
+        modifyBaumaschineViewModel.update(baumaschine);
         finish();
     }
 

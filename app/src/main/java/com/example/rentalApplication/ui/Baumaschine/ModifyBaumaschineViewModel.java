@@ -1,6 +1,7 @@
 package com.example.rentalApplication.ui.Baumaschine;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,6 +13,7 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
     private BaumaschinenRepository baumaschinenRepository;
     private Baumaschine baumaschineById;
     private int rowid;
+    private static final String TAG = "ModifyBaumaschineViewModel";
 
     public ModifyBaumaschineViewModel(@NonNull Application application, int id) {
         super(application);
@@ -23,4 +25,9 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
     public Baumaschine loadBaumaschineById (int id){
         return baumaschineById;
     }
+
+    public void update(Baumaschine baumaschine){
+        Log.d(TAG, "ROW_ID in: " + TAG + baumaschine.getRowid());
+        baumaschine.setRowid(rowid);
+        baumaschinenRepository.update(baumaschine);}
 }
