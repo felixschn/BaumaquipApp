@@ -40,7 +40,7 @@ public class BaumaschinenRepository {
     }
 
     public Baumaschine loadBaumaschineById(int id) {
-        Integer rowid = Integer.valueOf(id);
+        Integer rowid = id;
         try {
             return new ModifyAsyncTask(baumaschinenDao).execute(rowid).get();
         } catch (ExecutionException e) {

@@ -28,6 +28,9 @@ public class Kunde {
     @NonNull
     private String contactPerson;
 
+    //create Boolean varibale for expandable recyclerview
+    private Boolean expanded;
+
 
     public Kunde(@NonNull String name, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String telefonNumber, @NonNull String constructionSide, @NonNull String contactPerson) {
 
@@ -40,6 +43,16 @@ public class Kunde {
         this.location = location;
         this.constructionSide = constructionSide;
         this.contactPerson = contactPerson;
+
+        this.expanded = false;
+    }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rowid){
+        this.rowid = rowid;
     }
 
     public String getName() {
@@ -105,5 +118,13 @@ public class Kunde {
 
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
+    }
+
+    public Boolean getExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
     }
 }

@@ -1,58 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="9"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/kundenName"
-        android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        tools:text="@sample/kundenName" />
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/kundenStraße"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        tools:text="@sample/kundenStraße" />
-    <TextView
-        android:id="@+id/kundenStraßenNummer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="@sample/kundenStraßeNummer"
-        android:layout_weight="0.3"/>
-    <TextView
-        android:id="@+id/kundenZip"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="@sample/kundenZip"
-        android:layout_weight="0.5"/>
-    <TextView
-        android:id="@+id/kundenOrt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="@sample/kundenOrt"
-        android:layout_weight="1"/>
-    <TextView
-        android:id="@+id/kundenTelefonnummer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="@sample/kundenTelefonnummer"
-        android:layout_weight="1"/>
-    <TextView
-        android:id="@+id/kundenBaustelle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="@sample/kundenBaustelle"
-        android:layout_weight="1.2"/>
-    <TextView
-        android:id="@+id/kundenAnsprechpartner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="@sample/kundenAnsprechpartner"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textKundeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Bergolz Kinder GmbH"
+                />
+
+            <TextView
+                android:id="@+id/textKundeLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="444dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Pausa"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintStart_toEndOf="@+id/textKundeName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textKundenZip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="212dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/textKundeLocation"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="00000" />
+
+            <LinearLayout
+                android:layout_width="62dp"
+                android:layout_height="29dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/modifyButtonKunde"
+                    android:src="@android:drawable/ic_menu_edit"
+                    tools:src="@android:drawable/ic_menu_edit" />
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:id="@+id/expandableConstraintLayoutKunde"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textKundeName">
+
+                <TextView
+                    android:id="@+id/textKundeStreetName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:text="Zum Paradis"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textKundeStreetNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="84dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/textKundeStreetName"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="5" />
+
+                <TextView
+                    android:id="@+id/textKundeTelefonNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="136dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/textKundeStreetNumber"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0123456789" />
+
+                <TextView
+                    android:id="@+id/textKundeConstructionSide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Baustelle Neuensalz"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="29dp"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/textKundeContactPerson"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="164dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/textKundeConstructionSide"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Klaus Bergholz" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>prechpartner"
         android:layout_weight="1"/>
 
 

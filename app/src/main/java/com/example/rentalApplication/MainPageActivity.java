@@ -98,6 +98,7 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent kundenIntent = new Intent (MainPageActivity.this, AddKundenActivity.class);
+                kundenIntent.putExtra("Class","MainPageActivity");
                 MainPageActivity.this.startActivity(kundenIntent);
             }
         });

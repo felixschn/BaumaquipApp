@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.rentalApplication.models.Kunde;
 
@@ -18,6 +19,13 @@ public interface KundenDao {
 
     @Delete
     void delete(Kunde kunde);
+
+    @Update
+    void update(Kunde kunde);
+
+    @Query("Select *, rowid from Kunde Where rowid = :id")
+    Kunde loadKundeById(int id);
+
 
     @Query("SELECT *, rowid FROM Kunde")
     LiveData<List<Kunde>> getAllKunden();
