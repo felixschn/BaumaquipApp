@@ -26,13 +26,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="105dp">
+            android:layout_height="140dp">
 
             <TextView
                 android:id="@+id/baumaschineName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="12dp"
                 android:gravity="center"
-                android:text="Anzahl: "
+                android:text="@string/amount"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintStart_toEndOf="@+id/baumaschineName"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -79,10 +79,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableConstraintLayout"
-                android:layout_width="1276dp"
-                android:layout_height="54dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/baumaschineName">
@@ -91,8 +90,8 @@
                     android:id="@+id/textPreisPerDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="Preis pro Tag"
+                    android:layout_marginStart="@dimen/space_between_text"
+                    android:text="@string/price_per_day"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,7 +99,7 @@
                     android:id="@+id/baumaschinePreisPerDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="@dimen/space_between_text"
                     android:layout_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/textPreisPerDay"
                     app:layout_constraintTop_toTopOf="parent"
@@ -110,8 +109,8 @@
                     android:id="@+id/textPreisPerWeekend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="92dp"
-                    android:text="Preis pro Wochenende"
+                    android:layout_marginStart="@dimen/space_between_new_text"
+                    android:text="@string/price_per_weekend"
                     app:layout_constraintStart_toStartOf="@id/baumaschinePreisPerDay"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -119,7 +118,7 @@
                     android:id="@+id/baumaschinePreisPerWeekend"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="@dimen/space_between_text"
                     android:layout_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/textPreisPerWeekend"
                     app:layout_constraintTop_toTopOf="parent"
@@ -129,8 +128,8 @@
                     android:id="@+id/textPreisPerMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="92dp"
-                    android:text="Preis pro Monat"
+                    android:layout_marginStart="@dimen/space_between_new_text"
+                    android:text="@string/price_per_month"
                     app:layout_constraintStart_toStartOf="@id/baumaschinePreisPerWeekend"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -138,11 +137,72 @@
                     android:id="@+id/baumaschinePreisPerMonth"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="@dimen/space_between_text_and_number"
                     android:layout_weight="1"
                     app:layout_constraintStart_toEndOf="@id/textPreisPerMonth"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@sample/baumaschinenPreis" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textShowOperatingHours"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginTop="@dimen/space_between_text"
+                    android:text="@string/operating_hours"
+                    app:layout_constraintStart_toEndOf="@id/baumaschinePreisPerMonth"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textPreisPerDay" />
+
+                <TextView
+                    android:id="@+id/baumaschineOperatingHours"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginTop="@dimen/space_between_text"
+                    android:text="200"
+                    app:layout_constraintStart_toEndOf="@id/textShowOperatingHours"
+                    app:layout_constraintTop_toBottomOf="@id/baumaschinePreisPerDay" />
+
+                <TextView
+                    android:id="@+id/textShowAmountOfGas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_new_text"
+                    android:layout_marginTop="@dimen/space_between_text"
+                    android:text="@string/amount_of_gas"
+                    app:layout_constraintStart_toEndOf="@id/baumaschineOperatingHours"
+                    app:layout_constraintTop_toBottomOf="@id/textPreisPerWeekend" />
+
+                <TextView
+                    android:id="@+id/baumschineAmountOfGas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginTop="@dimen/space_between_text"
+                    android:text="200"
+                    app:layout_constraintStart_toEndOf="@id/textShowAmountOfGas"
+                    app:layout_constraintTop_toBottomOf="@id/baumaschinePreisPerWeekend" />
+
+                <TextView
+                    android:id="@+id/textShowDegreeOfWear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginTop="@dimen/space_between_text"
+                    android:text="@string/degree_of_wear"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textShowAmountOfGas" />
+
+                <TextView
+                    android:id="@+id/baumaschineDegreeOfWear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginTop="@dimen/space_between_text"
+                    android:text="20"
+                    app:layout_constraintStart_toEndOf="@id/textShowDegreeOfWear"
+                    app:layout_constraintTop_toBottomOf="@id/baumaschineOperatingHours" />
+
 
                 <!--<TextView
                     android:layout_width="80dp"

@@ -3,4 +3,8 @@
     <dimen name="standard_55">55dp</dimen>
     <dimen name="standard_105">105dp</dimen>
     <dimen name="standard_155">155dp</dimen>
+    <dimen name="space_between_new_text">100dp</dimen>
+    <dimen name="space_between_text">20dp</dimen>
+    <dimen name="space_between_text_and_number">10dp</dimen>
+
 </resources>

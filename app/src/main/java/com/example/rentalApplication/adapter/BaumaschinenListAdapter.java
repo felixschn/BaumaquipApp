@@ -45,6 +45,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
             holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
+            holder.baumaschineAmountOfGas.setText(current.getAmountOfGas().toString());
+            holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear().toString());
+            holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
 
             boolean isExpanded = baumaschineList.get(position).getExpanded();
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
@@ -74,6 +77,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         private final TextView baumaschinePreisPerDay;
         private final TextView baumaschinePreisPerWeekend;
         private final TextView baumaschinePreisPerMonth;
+        private final TextView baumaschineAmountOfGas;
+        private final TextView baumaschineDegreeOfWear;
+        private final TextView baumaschineOperatingHours;
         private final ImageButton modifyButton;
         private final ConstraintLayout expandableConstraintLayout;
 
@@ -86,6 +92,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             baumaschinePreisPerWeekend = itemView.findViewById(R.id.baumaschinePreisPerWeekend);
             baumaschinePreisPerMonth = itemView.findViewById(R.id.baumaschinePreisPerMonth);
             expandableConstraintLayout = itemView.findViewById(R.id.expandableConstraintLayout);
+            baumaschineAmountOfGas = itemView.findViewById(R.id.baumschineAmountOfGas);
+            baumaschineDegreeOfWear = itemView.findViewById(R.id.baumaschineDegreeOfWear);
+            baumaschineOperatingHours = itemView.findViewById(R.id.baumaschineOperatingHours);
             modifyButton = itemView.findViewById(R.id.modifyButton);
 
             //create OnClickListener to baumaschineName expand the recyclerview after userclick on the name

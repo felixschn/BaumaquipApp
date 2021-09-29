@@ -9,6 +9,14 @@
     <string name="baumaschine_operatingHours">enter operating hours</string>
     <string name="baumaschine_degreeOfWear">enter degree of wear</string>
     <string name="baumaschine_amountOfGas">enter amount of gas</string>
+    <string name="price_per_day">price per day</string>
+    <string name="price_per_weekend">price per weekend</string>
+    <string name="price_per_month">price per month</string>
+    <string name="amount">amount</string>
+    <string name="operating_hours">operating hours</string>
+    <string name="amount_of_gas">amout of gas</string>
+    <string name="degree_of_wear">degree of wear</string>
+
 
     <!--Kunden Strings-->
     <string name="kunde_name">enter customer name</string>
@@ -27,6 +35,10 @@
     <string name="construction_side">construction side: </string>
     <string name="contact_person">contact person: </string>
     <string name="email">email: </string>
+
+    <!--Buttons-->
+    <string name="button_add">add</string>
+    <string name="button_save">save</string>
 
 
 

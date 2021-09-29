@@ -9,6 +9,14 @@
     <string name="baumaschine_operatingHours">Betriebsstunden eingeben</string>
     <string name="baumaschine_degreeOfWear">Abnutzungszustand eingeben</string>
     <string name="baumaschine_amountOfGas">Tank-Füllstand eingeben</string>
+    <string name="price_per_day">Preis pro Tag</string>
+    <string name="price_per_weekend">Preis pro Wochenende</string>
+    <string name="price_per_month">Preis pro Monat</string>
+    <string name="amount">Anzahl</string>
+    <string name="operating_hours">Betriebsstunden</string>
+    <string name="amount_of_gas">Tank-Füllstand</string>
+    <string name="degree_of_wear">Zustand</string>
+
 
     <!--Kunden Strings-->
     <string name="kunde_name">Kundenname einfügen</string>
@@ -27,4 +35,8 @@
     <string name="construction_side">Baustelle: </string>
     <string name="contact_person">Kontaktperson: </string>
     <string name="email">Email: </string>
+
+    <!--Buttons-->
+    <string name="button_add">Hinzufügen</string>
+    <string name="button_save">Speichern</string>
 </resources>
