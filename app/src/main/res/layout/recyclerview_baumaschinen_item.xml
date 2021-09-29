@@ -13,41 +13,53 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        app:cardCornerRadius = "5dp"
+        app:cardElevation = "10dp"
+        android:layout_marginBottom="4dp"
+        android:background="#7AFF8C00">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/baumaquip_main_color"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="105dp">
 
             <TextView
                 android:id="@+id/baumaschineName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_marginLeft="15dp"
                 android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@sample/baumaschineName" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:id="@+id/textBaumaschinenAnzahl"
-                android:text="Anzahl: "
+                android:layout_width="54dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/baumaschineName"/>
+                android:text="Anzahl: "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintStart_toEndOf="@+id/baumaschineName"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/baumaschineAnzahl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="32dp"
                 android:layout_weight="1"
-                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center"
                 app:layout_constraintStart_toEndOf="@+id/textBaumaschinenAnzahl"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="@sample/baumaschinenAnzahl" />
+
 
             <LinearLayout
                 android:layout_width="62dp"
@@ -56,9 +68,9 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
+                    android:id="@+id/modifyButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/modifyButton"
                     android:src="@android:drawable/ic_menu_edit"
                     tools:src="@android:drawable/ic_menu_edit" />
 
@@ -66,10 +78,11 @@
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:id="@+id/expandableConstraintLayout"
+                android:layout_width="1276dp"
+                android:layout_height="54dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/baumaschineName">
@@ -78,6 +91,7 @@
                     android:id="@+id/textPreisPerDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
                     android:text="Preis pro Tag"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -129,6 +143,14 @@
                     app:layout_constraintStart_toEndOf="@id/textPreisPerMonth"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@sample/baumaschinenPreis" />
+
+                <!--<TextView
+                    android:layout_width="80dp"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="29dp"
+                    tools:text="t" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

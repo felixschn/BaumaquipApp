@@ -1,5 +1,25 @@
 <resources>
-    <string name="app_name">viewpager_test</string>
+    <string name="app_name">Baumaquip Mietprogramm</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="baumaschine_name">enter machine</string>
+    <string name="baumaschine_amount">enter amount</string>
+    <string name="baumaschine_pricePerDay">enter price per day</string>
+    <string name="baumaschine_pricePerWeekend">enter price per weekend</string>
+    <string name="baumaschine_pricePerMonth">enter price per month</string>
+    <string name="baumaschine_operatingHours">enter operating hours</string>
+    <string name="baumaschine_degreeOfWear">enter degree of wear</string>
+    <string name="baumaschine_amountOfGas">enter amount of gas</string>
+
+    <!--Kunden Strings-->
+    <string name="kunde_name">enter customer name</string>
+    <string name="kunde_telefon_number">enter telefon number</string>
+    <string name="kunde_street_name">enter name of street</string>
+    <string name="kunde_street_number">enter street number</string>
+    <string name="kunde_zip">enter zip</string>
+    <string name="kunde_location">enter location</string>
+    <string name="kunde_construction_side">enter construction side</string>
+    <string name="kunde_contact_person">enter name of contact person</string>
+
+
 
 </resources>
