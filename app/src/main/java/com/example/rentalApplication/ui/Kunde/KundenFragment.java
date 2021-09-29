@@ -78,8 +78,8 @@ public class KundenFragment extends Fragment {
         recyclerView = view.findViewById(R.id.kundenRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Kunde testKunde = new Kunde("Berholz GmbH","Pausaer Straße","102","08529", "Pausa", "0123456789", "Straßengeschäft", "Klaus Bergholz");
-        mKunde.add(testKunde);
+        //Kunde testKunde = new Kunde("Berholz GmbH","012345678","berghol","08529", "Pausa", "0123456789", "Straßengeschäft", "Klaus Bergholz");
+        //mKunde.add(testKunde);
         final KundenListAdapter kundenListAdapter = new KundenListAdapter();
         recyclerView.setAdapter(kundenListAdapter);
         kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);

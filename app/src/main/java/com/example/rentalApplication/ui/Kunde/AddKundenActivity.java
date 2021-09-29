@@ -14,7 +14,7 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Kunde;
 
 public class AddKundenActivity extends AppCompatActivity {
-    private EditText addKundenName, addKundenTelefonNumber, addKundenStreetName, addKundenStreetNumber, addKundenZip, addKundenLocation, addKundenConstructionSide, addKundenContactPerson;
+    private EditText addKundenName, addKundenTelefonNumber, addKundenStreetName, addKundenStreetNumber, addKundenEmail, addKundenZip, addKundenLocation, addKundenConstructionSide, addKundenContactPerson;
     private Button addKundenButton;
     private AddKundenViewModel addKundenViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
@@ -29,6 +29,7 @@ public class AddKundenActivity extends AppCompatActivity {
         addKundenButton = findViewById(R.id.addKundenButton);
         addKundenName = findViewById(R.id.addKundenName);
         addKundenTelefonNumber = findViewById(R.id.addKundenTelefonNumber);
+        addKundenEmail = findViewById(R.id.addKundenEmail);
         addKundenStreetName = findViewById(R.id.addKundenStreetName);
         addKundenStreetNumber = findViewById(R.id.addKundenStreetNumber);
         addKundenZip = findViewById(R.id.addKundenZip);
@@ -44,6 +45,7 @@ public class AddKundenActivity extends AppCompatActivity {
                 loadKundeById = modifyKundenViewModel.loadKundeById(intent.getExtras().getInt("kundeRowId"));
                 addKundenName.setText(loadKundeById.getName());
                 addKundenTelefonNumber.setText(loadKundeById.getTelefonNumber());
+                addKundenEmail.setText(loadKundeById.getEmail());
                 addKundenStreetName.setText(loadKundeById.getStreetName());
                 addKundenStreetNumber.setText(loadKundeById.getStreetNumber());
                 addKundenZip.setText(loadKundeById.getZip());
@@ -71,6 +73,7 @@ public class AddKundenActivity extends AppCompatActivity {
     private void insertNewKunde() {
         String kundenName = addKundenName.getText().toString();
         String kundenTelefonNumber = addKundenTelefonNumber.getText().toString();
+        String kundenEmail = addKundenEmail.getText().toString();
         String kundenStreetName = addKundenStreetName.getText().toString();
         String kundenStreetNumber = addKundenStreetNumber.getText().toString();
         String kundenZip = addKundenZip.getText().toString();
@@ -79,17 +82,18 @@ public class AddKundenActivity extends AppCompatActivity {
         String kundenContactPerson = addKundenContactPerson.getText().toString();
 
         addKundenViewModel = new ViewModelProvider(this).get(AddKundenViewModel.class);
-        if (kundenName.trim().isEmpty() || kundenTelefonNumber.trim().isEmpty() || kundenStreetName.trim().isEmpty() || kundenStreetNumber.trim().isEmpty() || kundenZip.trim().isEmpty() || kundenLocation.trim().isEmpty() || kundenConstructionSide.trim().isEmpty() || kundenContactPerson.trim().isEmpty()) {
+        if (kundenName.trim().isEmpty() || kundenTelefonNumber.trim().isEmpty() || kundenEmail.trim().isEmpty() || kundenStreetName.trim().isEmpty() || kundenStreetNumber.trim().isEmpty() || kundenZip.trim().isEmpty() || kundenLocation.trim().isEmpty() || kundenConstructionSide.trim().isEmpty() || kundenContactPerson.trim().isEmpty()) {
             Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
             return;
         }
-        addKundenViewModel.insert(new Kunde(kundenName, kundenTelefonNumber, kundenStreetName, kundenStreetNumber, kundenZip, kundenLocation, kundenConstructionSide, kundenContactPerson));
+        addKundenViewModel.insert(new Kunde(kundenName, kundenTelefonNumber, kundenEmail, kundenStreetName, kundenStreetNumber, kundenZip, kundenLocation, kundenConstructionSide, kundenContactPerson));
         finish();
     }
 
     private void updateKunde() {
         String kundenName = addKundenName.getText().toString();
         String kundenTelefonNumber = addKundenTelefonNumber.getText().toString();
+        String kundenEmail = addKundenEmail.getText().toString();
         String kundenStreetName = addKundenStreetName.getText().toString();
         String kundenStreetNumber = addKundenStreetNumber.getText().toString();
         String kundenZip = addKundenZip.getText().toString();
@@ -98,13 +102,13 @@ public class AddKundenActivity extends AppCompatActivity {
         String kundenContactPerson = addKundenContactPerson.getText().toString();
 
         //make sure, that every field is filled
-        if (kundenName.trim().isEmpty() || kundenTelefonNumber.trim().isEmpty() || kundenStreetName.trim().isEmpty() || kundenStreetNumber.trim().isEmpty() || kundenZip.trim().isEmpty() || kundenLocation.trim().isEmpty() || kundenConstructionSide.trim().isEmpty() || kundenContactPerson.trim().isEmpty()) {
+        if (kundenName.trim().isEmpty() || kundenTelefonNumber.trim().isEmpty() || kundenEmail.trim().isEmpty() || kundenStreetName.trim().isEmpty() || kundenStreetNumber.trim().isEmpty() || kundenZip.trim().isEmpty() || kundenLocation.trim().isEmpty() || kundenConstructionSide.trim().isEmpty() || kundenContactPerson.trim().isEmpty()) {
             Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
             return;
         }
 
         //creating new Kunde for updating the old one
-        modifyKundenViewModel.update(new Kunde(kundenName,kundenTelefonNumber,kundenStreetName,kundenStreetNumber,kundenZip,kundenLocation, kundenConstructionSide, kundenContactPerson));
+        modifyKundenViewModel.update(new Kunde(kundenName,kundenTelefonNumber, kundenEmail, kundenStreetName,kundenStreetNumber,kundenZip,kundenLocation, kundenConstructionSide, kundenContactPerson));
         finish();
     }
 }

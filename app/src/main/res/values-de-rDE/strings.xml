@@ -19,4 +19,5 @@
     <string name="kunde_location">Ort einfügen</string>
     <string name="kunde_construction_side">Ort der Baustelle einfügen</string>
     <string name="kunde_contact_person">Name eines Ansprechpartners einfügen</string>
+    <string name="kunde_email">Email Adresse eingeben</string>
 </resources>

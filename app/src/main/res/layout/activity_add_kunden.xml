@@ -34,6 +34,19 @@
         app:layout_constraintTop_toBottomOf="@+id/addKundenName" />
 
     <EditText
+        android:id="@+id/addKundenEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_input"
+        android:hint="@string/kunde_email"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addKundenTelefonNumber" />
+
+    <EditText
         android:id="@+id/addKundenStreetName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,7 +57,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addKundenTelefonNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/addKundenEmail" />
 
     <EditText
         android:id="@+id/addKundenStreetNumber"

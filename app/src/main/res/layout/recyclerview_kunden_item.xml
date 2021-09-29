@@ -109,14 +109,25 @@
                     tools:text="0123456789" />
 
                 <TextView
+                    android:id="@+id/textKundeEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="136dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/textKundeTelefonNumber"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0123456789"/>
+
+                <TextView
                     android:id="@+id/textKundeConstructionSide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="Baustelle Neuensalz"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="29dp"
-                    tools:ignore="MissingConstraints" />
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="4dp"
+                    android:text="bergholz@gmx.de"
+                    app:layout_constraintStart_toEndOf="@+id/textKundeEmail"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textKundeContactPerson"

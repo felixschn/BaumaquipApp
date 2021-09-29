@@ -16,6 +16,8 @@ public class Kunde {
     @NonNull
     private String telefonNumber;
     @NonNull
+    private String email;
+    @NonNull
     private String streetName;
     @NonNull
     private String streetNumber;
@@ -32,13 +34,14 @@ public class Kunde {
     private Boolean expanded;
 
 
-    public Kunde(@NonNull String name, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String telefonNumber, @NonNull String constructionSide, @NonNull String contactPerson) {
+    public Kunde(@NonNull String name, @NonNull String telefonNumber, @NonNull String email, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String constructionSide, @NonNull String contactPerson) {
 
         this.rowid = rowid;
         this.name = name;
         this.telefonNumber = telefonNumber;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
+        this.email = email;
         this.zip = zip;
         this.location = location;
         this.constructionSide = constructionSide;
@@ -65,6 +68,15 @@ public class Kunde {
 
     public String getTelefonNumber() {
         return telefonNumber;
+    }
+
+    @NonNull
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NonNull String email) {
+        this.email = email;
     }
 
     public void setTelefonNumber(String telefonNumber) {
