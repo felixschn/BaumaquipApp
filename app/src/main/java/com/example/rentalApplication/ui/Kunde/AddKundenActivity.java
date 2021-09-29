@@ -37,6 +37,8 @@ public class AddKundenActivity extends AppCompatActivity {
         addKundenConstructionSide = findViewById(R.id.addKundenConstructionSide);
         addKundenContactPerson = findViewById(R.id.addKundenContactPerson);
 
+        addKundenButton.setText("Hinzufügen");
+
         intent = this.getIntent();
         if (intent != null) {
             String activityString = intent.getStringExtra("Class");
@@ -52,6 +54,7 @@ public class AddKundenActivity extends AppCompatActivity {
                 addKundenLocation.setText(loadKundeById.getLocation());
                 addKundenConstructionSide.setText(loadKundeById.getConstructionSide());
                 addKundenContactPerson.setText(loadKundeById.getContactPerson());
+                addKundenButton.setText("Speichern");
             }
         }
 

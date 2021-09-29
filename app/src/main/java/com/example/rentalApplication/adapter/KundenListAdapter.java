@@ -47,6 +47,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             holder.kundenTelefonnummer.setText(current.getTelefonNumber());
             holder.kundenBaustelle.setText(current.getConstructionSide());
             holder.kundenAnsprechpartner.setText(current.getContactPerson());
+            holder.kundenEmail.setText(current.getEmail());
 
             //retrieve information if kunden object is expanded in the view
             boolean isExpanded = kundeList.get(position).getExpanded();
@@ -82,6 +83,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
         private final TextView kundenZip;
         private final TextView kundenOrt;
         private final TextView kundenTelefonnummer;
+        private final TextView kundenEmail;
         private final TextView kundenBaustelle;
         private final TextView kundenAnsprechpartner;
         private final ConstraintLayout expandableConstraintLayoutKunde;
@@ -95,6 +97,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             kundenZip = itemView.findViewById(R.id.textKundenZip);
             kundenOrt = itemView.findViewById(R.id.textKundeLocation);
             kundenTelefonnummer = itemView.findViewById(R.id.textKundeTelefonNumber);
+            kundenEmail = itemView.findViewById(R.id.textKundeEmail);
             kundenBaustelle = itemView.findViewById(R.id.textKundeConstructionSide);
             kundenAnsprechpartner = itemView.findViewById(R.id.textKundeContactPerson);
             expandableConstraintLayoutKunde = itemView.findViewById(R.id.expandableConstraintLayoutKunde);

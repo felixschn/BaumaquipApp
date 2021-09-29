@@ -31,23 +31,30 @@
                 />
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textShowKundeLocation"
+                app:layout_constraintStart_toEndOf="@id/textKundeName"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="100dp"
+                android:text="@string/location"/>
+
+
+            <TextView
                 android:id="@+id/textKundeLocation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="444dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
+                android:layout_marginStart="20dp"
                 android:text="Pausa"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                app:layout_constraintStart_toEndOf="@+id/textKundeName"
+                app:layout_constraintStart_toEndOf="@+id/textShowKundeLocation"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textKundenZip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="212dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/textKundeLocation"
                 app:layout_constraintTop_toTopOf="parent"
@@ -79,71 +86,113 @@
                 app:layout_constraintTop_toBottomOf="@id/textKundeName">
 
                 <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textShowKundeStreetName"
+                    android:text="@string/street"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
                     android:id="@+id/textKundeStreetName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
+                    android:layout_marginStart="20dp"
                     android:text="Zum Paradis"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/textShowKundeStreetName"
+                    app:layout_constraintTop_toTopOf="@id/textShowKundeStreetName" />
 
                 <TextView
                     android:id="@+id/textKundeStreetNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="84dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/textKundeStreetName"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="5" />
 
                 <TextView
+                    android:id="@+id/textShowKundeTelefonNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:layout_weight="1"
+                    android:text="@string/telefon_number"
+                    app:layout_constraintStart_toEndOf="@+id/textKundeStreetNumber"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/textKundeTelefonNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="136dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/textKundeStreetNumber"
+                    app:layout_constraintStart_toEndOf="@+id/textShowKundeTelefonNumber"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="0123456789" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textShowKundeEmail"
+                    android:layout_marginStart="100dp"
+                    android:layout_weight="1"
+                    android:text="@string/email"
+                    app:layout_constraintStart_toEndOf="@+id/textKundeTelefonNumber"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/textKundeEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="136dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/textKundeTelefonNumber"
+                    app:layout_constraintStart_toEndOf="@+id/textShowKundeEmail"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="0123456789"/>
+                    tools:text="bergholz@gmx.de"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textShowKundeConstructionSide"
+                    android:text="@string/construction_side"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textShowKundeStreetName"/>
+
+
 
                 <TextView
                     android:id="@+id/textKundeConstructionSide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="4dp"
-                    android:text="bergholz@gmx.de"
-                    app:layout_constraintStart_toEndOf="@+id/textKundeEmail"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="20dp"
+                    android:text="Pausa"
+                    app:layout_constraintStart_toEndOf="@+id/textShowKundeConstructionSide"
+                    app:layout_constraintTop_toBottomOf="@id/textKundeStreetName" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textShowContactPerson"
+                    android:text="@string/construction_side"
+                    android:layout_marginStart="100dp"
+                    app:layout_constraintStart_toEndOf="@id/textKundeConstructionSide"
+                    app:layout_constraintTop_toBottomOf="@id/textKundeStreetNumber"/>
 
                 <TextView
                     android:id="@+id/textKundeContactPerson"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="164dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    app:layout_constraintStart_toEndOf="@id/textKundeConstructionSide"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textShowContactPerson"
+                    app:layout_constraintTop_toBottomOf="@id/textKundeTelefonNumber"
                     tools:text="Klaus Bergholz" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>prechpartner"
-        android:layout_weight="1"/>
+    </androidx.cardview.widget.CardView>
 
 
 
