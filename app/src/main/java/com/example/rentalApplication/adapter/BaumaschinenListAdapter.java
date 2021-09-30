@@ -81,6 +81,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         private final TextView baumaschineDegreeOfWear;
         private final TextView baumaschineOperatingHours;
         private final ImageButton modifyButton;
+        private final ImageButton deleteButton;
         private final ConstraintLayout expandableConstraintLayout;
 
 
@@ -96,6 +97,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             baumaschineDegreeOfWear = itemView.findViewById(R.id.baumaschineDegreeOfWear);
             baumaschineOperatingHours = itemView.findViewById(R.id.baumaschineOperatingHours);
             modifyButton = itemView.findViewById(R.id.modifyButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
 
             //create OnClickListener to baumaschineName expand the recyclerview after userclick on the name
             baumaschineName.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +119,12 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
                     modifyBaumaschineIntent.putExtra("baumaschineneRowId", baumaschine.getRowid());
                     modifyBaumaschineIntent.putExtra("Class","BaumaschinenListAdapter");
                     context.startActivity(modifyBaumaschineIntent);
+
+                }
+            });
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
                 }
             });

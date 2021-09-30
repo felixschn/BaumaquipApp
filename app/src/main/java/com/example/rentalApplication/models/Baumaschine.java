@@ -34,6 +34,7 @@ public class Baumaschine {
     private String amountOfGas;
     //create Boolean variable for expandable recyclerview
     private Boolean expanded;
+    private Boolean archieved;
 
     public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull BigDecimal pricePerDay, @NonNull BigDecimal pricePerWeekend, @NonNull BigDecimal pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
         this.machineName = machineName;
