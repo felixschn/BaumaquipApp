@@ -22,7 +22,7 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
         baumaschineById = baumaschinenRepository.loadBaumaschineById(rowid);
     }
 
-    public Baumaschine loadBaumaschineById (int id){
+    public Baumaschine loadBaumaschineById (){
         return baumaschineById;
     }
 
@@ -30,4 +30,7 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
         Log.d(TAG, "ROW_ID in: " + TAG + baumaschine.getRowid());
         baumaschine.setRowid(rowid);
         baumaschinenRepository.update(baumaschine);}
+
+    public Baumaschine archiveBaumaschine(int id){return baumaschineById;}
+
 }

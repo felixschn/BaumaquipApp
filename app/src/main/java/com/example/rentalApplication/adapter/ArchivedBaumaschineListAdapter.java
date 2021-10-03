@@ -1,9 +1,7 @@
 package com.example.rentalApplication.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
@@ -24,13 +18,11 @@ import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
 import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
-import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenListAdapter.BaumaschinenViewHolder> {
-
+public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<ArchivedBaumaschineListAdapter.ArchivedViewHolder> {
     private LayoutInflater mInflater;
     private List<Baumaschine> baumaschineList = new ArrayList<>();
     private Context context;
@@ -40,24 +32,20 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
     private BaumaschinenFragment baumaschinenFragment;
 
 
-    public BaumaschinenListAdapter(BaumaschinenFragment baumaschinenFragment) {
-        this.baumaschinenFragment = baumaschinenFragment;
-    }
-
-    public BaumaschinenListAdapter() {
+    public ArchivedBaumaschineListAdapter() {
     }
 
     @NonNull
     @Override
-    public BaumaschinenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ArchivedBaumaschineListAdapter.ArchivedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_baumaschinen_item, parent, false);
         context = parent.getContext();
-        return new BaumaschinenViewHolder(itemView);
+        return new ArchivedBaumaschineListAdapter.ArchivedViewHolder(itemView);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(BaumaschinenViewHolder holder, int position) {
+    public void onBindViewHolder(ArchivedBaumaschineListAdapter.ArchivedViewHolder holder, int position) {
         if (baumaschineList != null) {
             Baumaschine current = baumaschineList.get(position);
             holder.baumaschineName.setText(current.getMachineName());
@@ -91,7 +79,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
     }
 
 
-    class BaumaschinenViewHolder extends RecyclerView.ViewHolder {
+    class ArchivedViewHolder extends RecyclerView.ViewHolder {
         private final TextView baumaschineName;
         private final TextView baumaschineAnzahl;
         private final TextView baumaschinePreisPerDay;
@@ -105,7 +93,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         private final ConstraintLayout expandableConstraintLayout;
 
 
-        public BaumaschinenViewHolder(@NonNull View itemView) {
+        public ArchivedViewHolder(@NonNull View itemView) {
             super(itemView);
             baumaschineName = itemView.findViewById(R.id.baumaschineName);
             baumaschineAnzahl = itemView.findViewById(R.id.baumaschineAnzahl);
@@ -117,6 +105,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             baumaschineDegreeOfWear = itemView.findViewById(R.id.baumaschineDegreeOfWear);
             baumaschineOperatingHours = itemView.findViewById(R.id.baumaschineOperatingHours);
             modifyButton = itemView.findViewById(R.id.modifyButton);
+            modifyButton.setImageResource(R.drawable.ic_baseline_add_24);
             deleteButton = itemView.findViewById(R.id.deleteButton);
 
             //create OnClickListener to baumaschineName expand the recyclerview after userclick on the name
@@ -135,9 +124,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
                     Log.d(TAG, "Modify Button clicked!");
                     Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
                     Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + baumaschine.getRowid());
-                    Intent modifyBaumaschineIntent = new Intent (context, AddBaumaschinenActivity.class);
+                    Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
                     modifyBaumaschineIntent.putExtra("baumaschineneRowId", baumaschine.getRowid());
-                    modifyBaumaschineIntent.putExtra("Class","BaumaschinenListAdapter");
+                    modifyBaumaschineIntent.putExtra("Class", "BaumaschinenListAdapter");
                     context.startActivity(modifyBaumaschineIntent);
 
                 }
@@ -152,9 +141,11 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
                 }
             });
         }
-
-
     }
-
-
 }
+
+
+
+
+
+

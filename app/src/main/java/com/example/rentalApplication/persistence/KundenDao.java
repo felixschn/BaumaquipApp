@@ -27,6 +27,6 @@ public interface KundenDao {
     Kunde loadKundeById(int id);
 
 
-    @Query("SELECT *, rowid FROM Kunde")
+    @Query("SELECT *, rowid FROM Kunde ORDER BY name ASC")
     LiveData<List<Kunde>> getAllKunden();
 }

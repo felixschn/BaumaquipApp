@@ -52,7 +52,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 //create new modifyBaumaschinenViewModel, to pass the additional parameter id, a ModifyBaumaschineViewModelFactory was created and is used
                 //retrieve the id from the intent
                 modifyBaumaschineViewModel = new ViewModelProvider(this, new ModifyBaumaschineViewModelFactory(this.getApplication(), intent.getExtras().getInt("baumaschineneRowId"))).get(ModifyBaumaschineViewModel.class);
-                loadBaumaschineById = modifyBaumaschineViewModel.loadBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
+                loadBaumaschineById = modifyBaumaschineViewModel.loadBaumaschineById();
                 addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
                 addBaumaschinenAnzahlEditText.setText(loadBaumaschineById.getAmount().toString());
                 addBaumaschinenPricePerDayEditText.setText(loadBaumaschineById.getPricePerDay().toString());

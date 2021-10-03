@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 public class BaumaschinenRepository {
     private BaumaschinenDao baumaschinenDao;
     private LiveData<List<Baumaschine>> allBaumaschinen;
+    private LiveData<List<Baumaschine>> allArchivedBaumaschinen;
     private String DB_NAME = "rent_db";
     // Baumaschine baumaschineById;
 
@@ -21,11 +22,15 @@ public class BaumaschinenRepository {
         RentDatabase db = RentDatabase.getDatabase(application);
         baumaschinenDao = db.baumaschinenDao();
         allBaumaschinen = baumaschinenDao.getAllBaumaschinen();
+        allArchivedBaumaschinen = baumaschinenDao.getAllArchivedBaumaschinen();
     }
 
+    //retrieving all non archived Baumaschinen
     public LiveData<List<Baumaschine>> getAllBaumaschinen() {
         return allBaumaschinen;
     }
+    //retrieving all archived Baumaschinen
+    public LiveData<List<Baumaschine>> getAllArchivedBaumaschinen(){return allArchivedBaumaschinen;}
 
     //public void getBaumaschinen(){return allBaumaschinen; }
 
@@ -38,7 +43,7 @@ public class BaumaschinenRepository {
         new UpdateAsyncTask(baumaschinenDao).execute(baumaschine);
 
     }
-
+    //loading Baumaschine per id to enable modifying Baumaschine
     public Baumaschine loadBaumaschineById(int id) {
         Integer rowid = id;
         try {
@@ -49,6 +54,18 @@ public class BaumaschinenRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Baumaschine archiveBaumaschine(int id){
+        try {
+            return  new ModifyAsyncTask(baumaschinenDao).execute(id).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     private static class InsertAsyncTask extends AsyncTask<Baumaschine, Void, Void> {

@@ -1,9 +1,7 @@
 package com.example.rentalApplication.models;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -34,7 +32,7 @@ public class Baumaschine {
     private String amountOfGas;
     //create Boolean variable for expandable recyclerview
     private Boolean expanded;
-    private Boolean archieved;
+    private Boolean archived;
 
     public Baumaschine(@NonNull String machineName, @NonNull Integer amount, @NonNull BigDecimal pricePerDay, @NonNull BigDecimal pricePerWeekend, @NonNull BigDecimal pricePerMonth, Double operatingHours, String degreeOfWear, String amountOfGas) {
         this.machineName = machineName;
@@ -47,6 +45,7 @@ public class Baumaschine {
         this.amountOfGas = amountOfGas;
         //set Boolean initially to false
         this.expanded = false;
+        this.archived = false;
     }
 
     public int getRowid() {
@@ -134,5 +133,13 @@ public class Baumaschine {
 
     public void setExpanded(Boolean expanded) {
         this.expanded = expanded;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 }

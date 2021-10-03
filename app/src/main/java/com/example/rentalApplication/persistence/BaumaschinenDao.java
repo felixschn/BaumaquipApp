@@ -23,8 +23,11 @@ public interface BaumaschinenDao {
     @Update
     void update(Baumaschine baumaschine);
 
-    @Query("SELECT *, rowid FROM Baumaschine")
+    @Query("SELECT *, rowid FROM Baumaschine WHERE archived = 0 ORDER BY machineName ASC")
     LiveData<List<Baumaschine>> getAllBaumaschinen();
+
+    @Query("SELECT *, rowid FROM Baumaschine WHERE archived = 1 ORDER BY machineName ASC")
+    LiveData<List<Baumaschine>> getAllArchivedBaumaschinen();
 
     @Query("SELECT *, rowid FROM Baumaschine WHERE rowid = :rowId")
     List<Baumaschine> getBaumaschine(int rowId);
@@ -32,5 +35,8 @@ public interface BaumaschinenDao {
 
     @Query("SELECT *, rowid From Baumaschine WHERE rowid = :id")
     Baumaschine loadBaumaschineById(int id);
+
+    @Query("SELECT *, rowid From Baumaschine WHERE rowid = :id")
+    Baumaschine archiveBaumaschine(int id);
 
 }

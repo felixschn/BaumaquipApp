@@ -16,9 +16,18 @@
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/recyclerview_baumaschinen_item.xml" value="0.5" />
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/recyclerview_kunden_item.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/mipmap-anydpi-v26/modify_button.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_baumaschinen.xml" value="0.22587719298245615" />
         <entry key="app/src/main/res/layout/activity_add_vertrag.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/archived_baumaschinen.xml" value="0.22587719298245615" />
+        <entry key="app/src/main/res/layout/fragment_baumaschinen.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_vertraege.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/modify_delete_buttons.xml" value="0.1484375" />
+        <entry key="app/src/main/res/layout/recyclerview_archived_baumaschine_item.xml" value="0.22587719298245615" />
+        <entry key="app/src/main/res/layout/recyclerview_archived_baumaschinen_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/recyclerview_baumaschinen_item.xml" value="0.22587719298245615" />
+        <entry key="app/src/main/res/layout/recyclerview_kunden_item.xml" value="0.4845481049562682" />
         <entry key="app/src/main/res/layout/recyclerview_vertrag_item.xml" value="0.2828125" />
+        <entry key="app/src/main/res/menu/archive_menu.xml" value="0.266796875" />
       </map>
     </option>
   </component>

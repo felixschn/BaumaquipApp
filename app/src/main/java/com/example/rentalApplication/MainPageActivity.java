@@ -2,6 +2,9 @@ package com.example.rentalApplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.rentalApplication.adapter.BaumaquipAdapter;
 import com.example.rentalApplication.persistence.RentDatabase;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
+import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity;
 import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -183,4 +187,27 @@ public class MainPageActivity extends AppCompatActivity {
         tabLayoutMediator.attach();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.archive_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.archivedBaumaschine:
+                Intent archivedBaumaschinenIntent = new Intent(MainPageActivity.this, ArchivedBaumaschinenActivity.class);
+                archivedBaumaschinenIntent.putExtra("Class","MainPageActivity");
+                MainPageActivity.this.startActivity(archivedBaumaschinenIntent);
+                return true;
+            case R.id.archivedKunde:
+                return true;
+            case R.id.archivedVertrag:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
