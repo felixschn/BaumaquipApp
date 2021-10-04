@@ -1,5 +1,6 @@
 package com.example.rentalApplication.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -16,23 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
-import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
-import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
+import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<ArchivedBaumaschineListAdapter.ArchivedViewHolder> {
-    private LayoutInflater mInflater;
     private List<Baumaschine> baumaschineList = new ArrayList<>();
     private Context context;
-    private BaumaschinenListAdapter baumaschinenListAdapter;
-    private static String TAG = "BaumaschinenListAdapter.java";
-    private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
-    private BaumaschinenFragment baumaschinenFragment;
+    private static final String TAG = "BaumaschinenListAdapter.java";
+    private final ArchivedBaumaschinenActivity archivedBaumaschinenActivity;
 
-
-    public ArchivedBaumaschineListAdapter() {
+    //constructor expanded with Activity Param to call the method delete later on in the activity (in RecyclerView Adapter no ViewModel is creatable therefor we execute the delete method in the calling activity)
+    public ArchivedBaumaschineListAdapter(ArchivedBaumaschinenActivity archivedBaumaschinenActivity) {
+        this.archivedBaumaschinenActivity = archivedBaumaschinenActivity;
     }
 
     @NonNull
@@ -45,7 +44,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ArchivedBaumaschineListAdapter.ArchivedViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ArchivedBaumaschineListAdapter.ArchivedViewHolder holder, int position) {
         if (baumaschineList != null) {
             Baumaschine current = baumaschineList.get(position);
             holder.baumaschineName.setText(current.getMachineName());
@@ -53,8 +52,8 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
             holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
-            holder.baumaschineAmountOfGas.setText(current.getAmountOfGas().toString());
-            holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear().toString());
+            holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
+            holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
             holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
 
             boolean isExpanded = baumaschineList.get(position).getExpanded();
@@ -76,6 +75,11 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
     public void setBaumaschinen(List<Baumaschine> baumaschineList) {
         this.baumaschineList = baumaschineList;
         notifyDataSetChanged();
+    }
+
+    public void deleteBaumaschine(Baumaschine baumaschine){
+        archivedBaumaschinenActivity.deleteBaumaschine(baumaschine);
+
     }
 
 
@@ -109,36 +113,37 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             deleteButton = itemView.findViewById(R.id.deleteButton);
 
             //create OnClickListener to baumaschineName expand the recyclerview after userclick on the name
-            baumaschineName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                    baumaschine.setExpanded(!baumaschine.getExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
+            baumaschineName.setOnClickListener(v -> {
+                Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
+                baumaschine.setExpanded(!baumaschine.getExpanded());
+                notifyItemChanged(getAdapterPosition());
             });
 
-            modifyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Modify Button clicked!");
-                    Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                    Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + baumaschine.getRowid());
-                    Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
-                    modifyBaumaschineIntent.putExtra("baumaschineneRowId", baumaschine.getRowid());
-                    modifyBaumaschineIntent.putExtra("Class", "BaumaschinenListAdapter");
-                    context.startActivity(modifyBaumaschineIntent);
+            modifyButton.setOnClickListener(v -> {
+                Log.d(TAG, "Modify Button clicked!");
+                Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
+                Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + baumaschine.getRowid());
+                Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
+                modifyBaumaschineIntent.putExtra("baumaschineneRowId", baumaschine.getRowid());
+                modifyBaumaschineIntent.putExtra("Class", "BaumaschinenListAdapter");
+                context.startActivity(modifyBaumaschineIntent);
 
-                }
             });
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Delete Button clicked");
-                    Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                    baumaschinenFragment.archiveBaumaschine(baumaschineList.get(getAdapterPosition()).getRowid());
+            deleteButton.setOnClickListener(v -> {
+                Log.d(TAG, "Delete Button clicked");
+                Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(context.getResources().getString(R.string.alertDialog));
+                builder.setCancelable(true);
+                builder.setPositiveButton(context.getResources().getString(R.string.okDialog), (dialog, which) -> deleteBaumaschine(baumaschine));
+                builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
+                AlertDialog deleteAlert = builder.create();
+                deleteAlert.show();
 
-                }
+
+
+
+
             });
         }
     }

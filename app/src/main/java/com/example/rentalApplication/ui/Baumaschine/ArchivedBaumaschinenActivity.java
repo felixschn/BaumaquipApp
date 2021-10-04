@@ -27,7 +27,9 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.archivedBaumaschineRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final ArchivedBaumaschineListAdapter archivedBaumaschineListAdapter = new ArchivedBaumaschineListAdapter();
+
+        //creating new Adapter for the recyclerview and within this adapter send an instance of this activity, that the adapter can call this activities delete method
+        final ArchivedBaumaschineListAdapter archivedBaumaschineListAdapter = new ArchivedBaumaschineListAdapter(this);
         recyclerView.setAdapter(archivedBaumaschineListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
@@ -37,6 +39,9 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity {
                 archivedBaumaschineListAdapter.setBaumaschinen(baumaschines);
             }
         });
+    }
 
+    public void deleteBaumaschine(Baumaschine baumaschine){
+        baumaschinenViewModel.delete(baumaschine);
     }
 }

@@ -29,8 +29,11 @@ public class BaumaschinenRepository {
     public LiveData<List<Baumaschine>> getAllBaumaschinen() {
         return allBaumaschinen;
     }
+
     //retrieving all archived Baumaschinen
-    public LiveData<List<Baumaschine>> getAllArchivedBaumaschinen(){return allArchivedBaumaschinen;}
+    public LiveData<List<Baumaschine>> getAllArchivedBaumaschinen() {
+        return allArchivedBaumaschinen;
+    }
 
     //public void getBaumaschinen(){return allBaumaschinen; }
 
@@ -43,6 +46,11 @@ public class BaumaschinenRepository {
         new UpdateAsyncTask(baumaschinenDao).execute(baumaschine);
 
     }
+
+    public void delete(Baumaschine baumaschine){
+        new DeleteAsyncTask(baumaschinenDao).execute(baumaschine);
+    }
+
     //loading Baumaschine per id to enable modifying Baumaschine
     public Baumaschine loadBaumaschineById(int id) {
         Integer rowid = id;
@@ -56,9 +64,9 @@ public class BaumaschinenRepository {
         return null;
     }
 
-    public Baumaschine archiveBaumaschine(int id){
+    public Baumaschine archiveBaumaschine(int id) {
         try {
-            return  new ModifyAsyncTask(baumaschinenDao).execute(id).get();
+            return new ModifyAsyncTask(baumaschinenDao).execute(id).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -92,6 +100,20 @@ public class BaumaschinenRepository {
         @Override
         protected Void doInBackground(Baumaschine... baumaschines) {
             mAsyncTaskDao.update(baumaschines[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
+        private BaumaschinenDao mAsyncTaskDao;
+
+        DeleteAsyncTask(BaumaschinenDao dao) {
+            this.mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Baumaschine... baumaschines) {
+            mAsyncTaskDao.delete(baumaschines[0]);
             return null;
         }
     }

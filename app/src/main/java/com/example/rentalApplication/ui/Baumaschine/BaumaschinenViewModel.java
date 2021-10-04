@@ -32,6 +32,9 @@ public class BaumaschinenViewModel extends AndroidViewModel {
 
     public LiveData<List<Baumaschine>> getAllArchivedBaumaschine() {return allArchivedBaumaschinen;}
 
+    public void delete(Baumaschine baumaschine){baumaschinenRepository.delete(baumaschine);}
+
+
 
  /*   public void insert(Baumaschine baumaschine) {
         baumaschinenRepository.insert(baumaschine);

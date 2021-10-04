@@ -40,6 +40,10 @@
     <string name="button_add">add</string>
     <string name="button_save">save</string>
 
+    <!--AlertDialog-->
+    <string name="alertDialog">Do you really delete this machine? This could lead to significant application failures due to the connectivity between contract and machines</string>
+    <string name="okDialog">Noticed!</string>
+    <string name="cancelDialog">Cancel</string>
 
 
 </resources>

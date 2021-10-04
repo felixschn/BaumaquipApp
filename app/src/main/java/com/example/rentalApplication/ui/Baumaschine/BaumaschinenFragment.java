@@ -109,8 +109,6 @@ public class BaumaschinenFragment extends Fragment {
         archiveBaumaschine = modifyBaumaschineViewModel.archiveBaumaschine(id);
         archiveBaumaschine.setArchived(true);
         modifyBaumaschineViewModel.update(archiveBaumaschine);
-
-
         return null;
 
     }

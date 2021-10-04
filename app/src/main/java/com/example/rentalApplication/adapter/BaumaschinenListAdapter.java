@@ -36,15 +36,11 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
     private Context context;
     private BaumaschinenListAdapter baumaschinenListAdapter;
     private static String TAG = "BaumaschinenListAdapter.java";
-    private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private BaumaschinenFragment baumaschinenFragment;
 
 
     public BaumaschinenListAdapter(BaumaschinenFragment baumaschinenFragment) {
         this.baumaschinenFragment = baumaschinenFragment;
-    }
-
-    public BaumaschinenListAdapter() {
     }
 
     @NonNull

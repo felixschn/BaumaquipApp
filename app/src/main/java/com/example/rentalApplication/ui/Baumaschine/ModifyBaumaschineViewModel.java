@@ -32,5 +32,4 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
         baumaschinenRepository.update(baumaschine);}
 
     public Baumaschine archiveBaumaschine(int id){return baumaschineById;}
-
 }
