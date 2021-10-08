@@ -26,7 +26,7 @@ import java.util.List;
 public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<ArchivedBaumaschineListAdapter.ArchivedViewHolder> {
     private List<Baumaschine> baumaschineList = new ArrayList<>();
     private Context context;
-    private static final String TAG = "BaumaschinenListAdapter.java";
+    private static final String TAG = "ArchivedBaumaschinenListAdapter.java";
     private final ArchivedBaumaschinenActivity archivedBaumaschinenActivity;
 
     //constructor expanded with Activity Param to call the method delete later on in the activity (in RecyclerView Adapter no ViewModel is creatable therefor we execute the delete method in the calling activity)
@@ -77,7 +77,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
         notifyDataSetChanged();
     }
 
-    public void deleteBaumaschine(Baumaschine baumaschine){
+    public void deleteBaumaschine(Baumaschine baumaschine) {
         archivedBaumaschinenActivity.deleteBaumaschine(baumaschine);
 
     }
@@ -120,13 +120,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             });
 
             modifyButton.setOnClickListener(v -> {
-                Log.d(TAG, "Modify Button clicked!");
-                Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + baumaschine.getRowid());
-                Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
-                modifyBaumaschineIntent.putExtra("baumaschineneRowId", baumaschine.getRowid());
-                modifyBaumaschineIntent.putExtra("Class", "BaumaschinenListAdapter");
-                context.startActivity(modifyBaumaschineIntent);
+                archivedBaumaschinenActivity.restoreBaumaschine(baumaschineList.get(getAdapterPosition()).getRowid());
 
             });
             deleteButton.setOnClickListener(v -> {
@@ -139,9 +133,6 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
                 builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
                 AlertDialog deleteAlert = builder.create();
                 deleteAlert.show();
-
-
-
 
 
             });

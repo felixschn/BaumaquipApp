@@ -11,25 +11,20 @@ import com.example.rentalApplication.persistence.BaumaschinenRepository;
 
 public class ModifyBaumaschineViewModel extends AndroidViewModel {
     private BaumaschinenRepository baumaschinenRepository;
-    private Baumaschine baumaschineById;
-    private int rowid;
     private static final String TAG = "ModifyBaumaschineViewModel";
 
-    public ModifyBaumaschineViewModel(@NonNull Application application, int id) {
+    public ModifyBaumaschineViewModel(@NonNull Application application) {
         super(application);
         baumaschinenRepository = new BaumaschinenRepository(application);
-        this.rowid = id;
-        baumaschineById = baumaschinenRepository.loadBaumaschineById(rowid);
     }
 
-    public Baumaschine loadBaumaschineById (){
-        return baumaschineById;
+    public Baumaschine loadBaumaschineById (int id){
+        return baumaschinenRepository.loadBaumaschineById(id);
     }
 
     public void update(Baumaschine baumaschine){
         Log.d(TAG, "ROW_ID in: " + TAG + baumaschine.getRowid());
-        baumaschine.setRowid(rowid);
         baumaschinenRepository.update(baumaschine);}
 
-    public Baumaschine archiveBaumaschine(int id){return baumaschineById;}
+    public Baumaschine getAnyBaumaschine(){return baumaschinenRepository.getAnyBaumaschine();}
 }

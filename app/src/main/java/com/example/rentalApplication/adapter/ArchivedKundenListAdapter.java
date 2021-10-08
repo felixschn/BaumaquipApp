@@ -14,37 +14,38 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
-import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
+import com.example.rentalApplication.ui.Kunde.ArchivedKundenActivity;
 import com.example.rentalApplication.ui.Kunde.KundenClickListener;
-import com.example.rentalApplication.ui.Kunde.KundenFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.KundenViewHolder> {
+public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKundenListAdapter.ArchivedKundeViewHolder> {
     private List<Kunde> kundeList = new ArrayList<>();
     private Context context;
-    private KundenFragment kundenFragment;
-    private final KundenClickListener listener;
+    private static final String TAG = "ArchivedKundenListAdapter.java";
+    private final ArchivedKundenActivity archivedKundenActivity;
+    private final KundenClickListener kundenClickListener;
 
-    public KundenListAdapter(KundenFragment kundenFragment, KundenClickListener clickListener) {
-        this.kundenFragment = kundenFragment;
-        this.listener = clickListener;
+    public ArchivedKundenListAdapter(ArchivedKundenActivity archivedKundenActivity, KundenClickListener listener) {
+        this.archivedKundenActivity = archivedKundenActivity;
+        this.kundenClickListener = listener;
     }
 
     @NonNull
     @Override
-    public KundenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_kunden_item, parent, false);
+    public ArchivedKundenListAdapter.ArchivedKundeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new KundenViewHolder(itemView, listener);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.recyclerview_kunden_item, parent, false);
+        return new ArchivedKundenListAdapter.ArchivedKundeViewHolder(itemView, kundenClickListener);
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull KundenViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ArchivedKundeViewHolder holder, int position) {
         if (kundeList != null) {
             Kunde current = kundeList.get(position);
             holder.kundenName.setText(current.getName());
@@ -62,13 +63,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
             holder.expandableConstraintLayoutKunde.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         }
-
     }
-
-    private void insertNewVertrag() {
-
-    }
-
 
     @Override
     public int getItemCount() {
@@ -84,7 +79,12 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
         notifyDataSetChanged();
     }
 
-    class KundenViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+    public void deleteKunde(Kunde kunde) {
+        archivedKundenActivity.deleteKunde(kunde);
+    }
+
+
+    class ArchivedKundeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView kundenName;
         private final TextView kundenStrasse;
         private final TextView kundenStrassenNummer;
@@ -97,9 +97,9 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
         private final ConstraintLayout expandableConstraintLayoutKunde;
         private final ImageButton modifyButtonKunde;
         private final ImageButton deleteButtonKunde;
-        private WeakReference<KundenClickListener> listenerRef;
+        private final WeakReference<KundenClickListener> listenerRef;
 
-        public KundenViewHolder(@NonNull View itemView, KundenClickListener kundenClickListener) {
+        public ArchivedKundeViewHolder(@NonNull View itemView, KundenClickListener kundenClickListener) {
             super(itemView);
             listenerRef = new WeakReference<>(kundenClickListener);
             kundenName = itemView.findViewById(R.id.textKundeName);
@@ -113,10 +113,10 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             kundenAnsprechpartner = itemView.findViewById(R.id.textKundeContactPerson);
             expandableConstraintLayoutKunde = itemView.findViewById(R.id.expandableConstraintLayoutKunde);
             modifyButtonKunde = itemView.findViewById(R.id.modifyButton);
+            modifyButtonKunde.setImageResource(R.drawable.ic_baseline_add_24);
             deleteButtonKunde = itemView.findViewById(R.id.deleteButton);
 
             itemView.setOnClickListener(this);
-            kundenName.setOnClickListener(this);
             modifyButtonKunde.setOnClickListener(this);
             deleteButtonKunde.setOnClickListener(this);
 
@@ -133,19 +133,23 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
                 @Override
                 public void onClick(View v) {
                     Kunde kunde = kundeList.get(getAdapterPosition());
-                    //create Intent to start new AddKundenActivity for modifying a Kunde object
-                    Intent modifyKundeIntent = new Intent(context, AddKundenActivity.class);
-                    //putting extra info to intent for differentiating in AddKundenActivity which activity has called and giving the RowId from the clicked object in the recyclerview
-                    modifyKundeIntent.putExtra("kundeRowId", kunde.getRowid());
-                    modifyKundeIntent.putExtra("Class", "KundenListAdapter");
-                    context.startActivity(modifyKundeIntent);
+                    archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getRowid());
                 }
             });
 
             deleteButtonKunde.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    kundenFragment.archiveKunde(kundeList.get(getAdapterPosition()).getRowid());
+                    Kunde kunde = kundeList.get(getAdapterPosition());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage(context.getResources().getString(R.string.alertDialog));
+                    builder.setCancelable(true);
+                    builder.setPositiveButton(context.getResources().getString(R.string.okDialog), (dialog, which) -> deleteKunde(kunde));
+                    builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
+                    AlertDialog deleteAlert = builder.create();
+                    deleteAlert.show();
+
+
                 }
             });*/
         }
@@ -155,22 +159,21 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             Kunde kunde = kundeList.get(getAdapterPosition());
 
             if (v.getId() == modifyButtonKunde.getId()) {
-                //create Intent to start new AddKundenActivity for modifying a Kunde object
-                Intent modifyKundeIntent = new Intent(context, AddKundenActivity.class);
-                //putting extra info to intent for differentiating in AddKundenActivity which activity has called and giving the RowId from the clicked object in the recyclerview
-                modifyKundeIntent.putExtra("kundeRowId", kunde.getRowid());
-                modifyKundeIntent.putExtra("Class", "KundenListAdapter");
-                context.startActivity(modifyKundeIntent);
-
+                archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getRowid());
             }
             if (v.getId() == deleteButtonKunde.getId()) {
-                kundenFragment.archiveKunde(kundeList.get(getAdapterPosition()).getRowid());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(context.getResources().getString(R.string.alertDialog));
+                builder.setCancelable(true);
+                builder.setPositiveButton(context.getResources().getString(R.string.okDialog), (dialog, which) -> deleteKunde(kunde));
+                builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
+                AlertDialog deleteAlert = builder.create();
+                deleteAlert.show();
             } else {
                 kunde.setExpanded(!kunde.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
             listenerRef.get().onPositionClicked(getAdapterPosition());
-
         }
     }
 }

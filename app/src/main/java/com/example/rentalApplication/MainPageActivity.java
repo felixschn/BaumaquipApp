@@ -17,6 +17,7 @@ import com.example.rentalApplication.persistence.RentDatabase;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity;
 import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
+import com.example.rentalApplication.ui.Kunde.ArchivedKundenActivity;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -203,6 +204,9 @@ public class MainPageActivity extends AppCompatActivity {
                 MainPageActivity.this.startActivity(archivedBaumaschinenIntent);
                 return true;
             case R.id.archivedKunde:
+                Intent archivedKundenIntent = new Intent(MainPageActivity.this, ArchivedKundenActivity.class);
+                archivedKundenIntent.putExtra("Class", "MainPageActivity");
+                MainPageActivity.this.startActivity(archivedKundenIntent);
                 return true;
             case R.id.archivedVertrag:
                 return true;

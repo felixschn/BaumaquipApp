@@ -35,14 +35,4 @@ public class BaumaschinenViewModel extends AndroidViewModel {
     public void delete(Baumaschine baumaschine){baumaschinenRepository.delete(baumaschine);}
 
 
-
- /*   public void insert(Baumaschine baumaschine) {
-        baumaschinenRepository.insert(baumaschine);
-
-    }*/
-
-    public void update(Baumaschine baumaschine){
-        baumaschinenRepository.update(baumaschine);
-    }
-
 }   

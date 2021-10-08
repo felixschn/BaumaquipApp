@@ -19,6 +19,8 @@ import java.util.List;
 public class ArchivedBaumaschinenActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
+    private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
+    private Baumaschine restoreBaumaschine;
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -33,15 +35,21 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity {
         recyclerView.setAdapter(archivedBaumaschineListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
-        baumaschinenViewModel.getAllArchivedBaumaschine().observe(this, new Observer<List<Baumaschine>>() {
-            @Override
-            public void onChanged(List<Baumaschine> baumaschines) {
-                archivedBaumaschineListAdapter.setBaumaschinen(baumaschines);
-            }
-        });
+        baumaschinenViewModel.getAllArchivedBaumaschine().observe(this, baumaschines -> archivedBaumaschineListAdapter.setBaumaschinen(baumaschines));
     }
 
-    public void deleteBaumaschine(Baumaschine baumaschine){
+    public void deleteBaumaschine(Baumaschine baumaschine) {
         baumaschinenViewModel.delete(baumaschine);
+    }
+
+    public void restoreBaumaschine(int id) {
+        modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
+        restoreBaumaschine = modifyBaumaschineViewModel.loadBaumaschineById(id);
+        restoreBaumaschine.setArchived(false);
+        modifyBaumaschineViewModel.update(restoreBaumaschine);
+        if (modifyBaumaschineViewModel.getAnyBaumaschine() == null) {
+            finish();
+        }
+
     }
 }

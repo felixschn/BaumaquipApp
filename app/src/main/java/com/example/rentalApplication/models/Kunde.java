@@ -33,6 +33,8 @@ public class Kunde {
     //create Boolean varibale for expandable recyclerview
     private Boolean expanded;
 
+    private Boolean archived;
+
 
     public Kunde(@NonNull String name, @NonNull String telefonNumber, @NonNull String email, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String constructionSide, @NonNull String contactPerson) {
 
@@ -48,6 +50,7 @@ public class Kunde {
         this.contactPerson = contactPerson;
 
         this.expanded = false;
+        this.archived = false;
     }
 
     public int getRowid() {
@@ -138,5 +141,13 @@ public class Kunde {
 
     public void setExpanded(Boolean expanded) {
         this.expanded = expanded;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 }

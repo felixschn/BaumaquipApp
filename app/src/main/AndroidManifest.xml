@@ -13,6 +13,7 @@
         <activity android:name=".ui.Vertraege.AddVertragActivity" />
         <activity android:name=".ui.Baumaschine.AddBaumaschinenActivity" />
         <activity android:name=".ui.Baumaschine.ArchivedBaumaschinenActivity" />
+        <activity android:name=".ui.Kunde.ArchivedKundenActivity" />
         <activity
             android:name=".MainPageActivity"
             android:label="@string/app_name"

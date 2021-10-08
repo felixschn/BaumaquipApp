@@ -37,13 +37,13 @@ public class AddKundenActivity extends AppCompatActivity {
         addKundenConstructionSide = findViewById(R.id.addKundenConstructionSide);
         addKundenContactPerson = findViewById(R.id.addKundenContactPerson);
 
-        addKundenButton.setText("Hinzufügen");
+        addKundenButton.setText(R.string.button_add);
 
         intent = this.getIntent();
         if (intent != null) {
             String activityString = intent.getStringExtra("Class");
             if (activityString.equals("KundenListAdapter")) {
-                modifyKundenViewModel = new ViewModelProvider(this, new ModifyKundenViewModelFactory(this.getApplication(), intent.getExtras().getInt("kundeRowId"))).get(ModifyKundenViewModel.class);
+                modifyKundenViewModel = new ViewModelProvider(this).get(ModifyKundenViewModel.class);
                 loadKundeById = modifyKundenViewModel.loadKundeById(intent.getExtras().getInt("kundeRowId"));
                 addKundenName.setText(loadKundeById.getName());
                 addKundenTelefonNumber.setText(loadKundeById.getTelefonNumber());
@@ -54,7 +54,7 @@ public class AddKundenActivity extends AppCompatActivity {
                 addKundenLocation.setText(loadKundeById.getLocation());
                 addKundenConstructionSide.setText(loadKundeById.getConstructionSide());
                 addKundenContactPerson.setText(loadKundeById.getContactPerson());
-                addKundenButton.setText("Speichern");
+                addKundenButton.setText(R.string.button_save);
             }
         }
 
@@ -109,9 +109,19 @@ public class AddKundenActivity extends AppCompatActivity {
             Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
             return;
         }
+        Kunde kunde = modifyKundenViewModel.loadKundeById(intent.getExtras().getInt("kundeRowId"));
+        kunde.setName(kundenName);
+        kunde.setTelefonNumber(kundenTelefonNumber);
+        kunde.setEmail(kundenEmail);
+        kunde.setStreetName(kundenStreetName);
+        kunde.setStreetNumber(kundenStreetNumber);
+        kunde.setZip(kundenZip);
+        kunde.setLocation(kundenLocation);
+        kunde.setConstructionSide(kundenConstructionSide);
+        kunde.setConstructionSide(kundenConstructionSide);
 
         //creating new Kunde for updating the old one
-        modifyKundenViewModel.update(new Kunde(kundenName,kundenTelefonNumber, kundenEmail, kundenStreetName,kundenStreetNumber,kundenZip,kundenLocation, kundenConstructionSide, kundenContactPerson));
+        modifyKundenViewModel.update(kunde);
         finish();
     }
 }

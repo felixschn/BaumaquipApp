@@ -14,22 +14,26 @@ import java.util.concurrent.ExecutionException;
 public class KundenRepository {
     private KundenDao kundenDao;
     private LiveData<List<Kunde>> allKunden;
+    private LiveData<List<Kunde>> allArchivedKunden;
 
     public KundenRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
         kundenDao = db.kundenDao();
         allKunden = kundenDao.getAllKunden();
+        allArchivedKunden = kundenDao.getAllArchivedKunden();
     }
     public LiveData<List<Kunde>> getAllKunden() {return allKunden;}
+    public LiveData<List<Kunde>> getAllArchivedKunden() {return allArchivedKunden;}
 
     public void insert(Kunde kunde){
         new InsertAsyncTask(kundenDao).execute(kunde);
     }
 
-
     public void update(Kunde kunde){
         new UpdateAsyncTask(kundenDao).execute(kunde);
     }
+
+    public void delete(Kunde kunde) {new DeleteAsyncTask(kundenDao).execute(kunde);}
 
     public Kunde loadKundeById(int id){
         Integer rowid = id;
@@ -82,5 +86,18 @@ public class KundenRepository {
             return mAsyncTaskDao.loadKundeById(integers[0]);
         }
 
+    }
+
+    private class DeleteAsyncTask extends AsyncTask<Kunde, Void, Void> {
+        private KundenDao mAsyncTaskDao;
+        public DeleteAsyncTask(KundenDao mAsyncTaskDao) {
+            this.mAsyncTaskDao = mAsyncTaskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Kunde... kundes) {
+            mAsyncTaskDao.delete(kundes[0]);
+            return null;
+        }
     }
 }

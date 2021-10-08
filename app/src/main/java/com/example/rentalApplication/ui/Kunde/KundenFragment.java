@@ -16,6 +16,8 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.KundenListAdapter;
 import com.example.rentalApplication.models.Kunde;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +26,12 @@ import java.util.List;
  * Use the {@link KundenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class KundenFragment extends Fragment {
+public class KundenFragment extends Fragment implements KundenClickListener {
 
-    private ArrayList<Kunde> mKunde = new ArrayList<>();
-    private KundenListAdapter kundenListAdapter;
     private RecyclerView recyclerView;
     private KundenViewModel kundenViewModel;
+    private ModifyKundenViewModel modifyKundenViewModel;
+    private Kunde archiveKunde;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,7 +82,7 @@ public class KundenFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //Kunde testKunde = new Kunde("Berholz GmbH","012345678","berghol","08529", "Pausa", "0123456789", "Straßengeschäft", "Klaus Bergholz");
         //mKunde.add(testKunde);
-        final KundenListAdapter kundenListAdapter = new KundenListAdapter();
+        final KundenListAdapter kundenListAdapter = new KundenListAdapter(this, this);
         recyclerView.setAdapter(kundenListAdapter);
         kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);
         kundenViewModel.getAllKunden().observe(getViewLifecycleOwner(), new Observer<List<Kunde>>() {
@@ -92,5 +94,18 @@ public class KundenFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void archiveKunde(int id) {
+        modifyKundenViewModel = new ViewModelProvider(requireActivity()).get(ModifyKundenViewModel.class);
+        archiveKunde = modifyKundenViewModel.loadKundeById(id);
+        archiveKunde.setArchived(true);
+        modifyKundenViewModel.update(archiveKunde);
+
+    }
+
+    @Override
+    public void onPositionClicked(int position) {
+
     }
 }

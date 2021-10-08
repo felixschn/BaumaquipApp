@@ -9,31 +9,29 @@
     android:paddingBottom="10dp">
 
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        app:cardCornerRadius = "5dp"
-        app:cardElevation = "10dp"
         android:layout_marginBottom="4dp"
-        android:background="#7AFF8C00">
+        android:background="#7AFF8C00"
+        android:padding="8dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp">
 
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="@color/baumaquip_main_color"/>
+            android:background="@color/baumaquip_main_color" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/baumaschineName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:gravity="center"
+                android:layout_marginStart="32"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -41,9 +39,9 @@
 
             <TextView
                 android:id="@+id/textBaumaschinenAnzahl"
-                android:layout_width="54dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="12dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:gravity="center"
                 android:text="@string/amount"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -60,8 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@sample/baumaschinenAnzahl" />
 
-            <include
-                layout="@layout/modify_delete_buttons"/>
+            <include layout="@layout/modify_delete_buttons" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout

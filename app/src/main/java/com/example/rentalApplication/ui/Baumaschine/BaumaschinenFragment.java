@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import java.util.List;
  * Use the {@link BaumaschinenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BaumaschinenFragment extends Fragment {
+public class BaumaschinenFragment extends Fragment implements BaumaschinenClickListener {
 
     private ArrayList<Baumaschine> mBaumaschine = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
@@ -33,8 +34,8 @@ public class BaumaschinenFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
-    private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private Baumaschine archiveBaumaschine;
+    private static final String TAG = "BaumaschinenFragment.java";
 
 
     // TODO: Rename and change types of parameters
@@ -85,7 +86,7 @@ public class BaumaschinenFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //Baumaschine baumaschine = new Baumaschine("test",1,10.00, 25.00,100.00, null,null, null);
         //mBaumaschine.add(baumaschine);
-        final BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter(this);
+        final BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter(this, this);
         recyclerView.setAdapter(baumaschinenListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
@@ -97,6 +98,7 @@ public class BaumaschinenFragment extends Fragment {
             public void onChanged(List<Baumaschine> baumaschines) {
                 baumaschinenListAdapter.setBaumaschinen(baumaschines);
 
+
             }
         });
 
@@ -104,12 +106,18 @@ public class BaumaschinenFragment extends Fragment {
         return view;
     }
 
-    public Baumaschine archiveBaumaschine(int id){
-        modifyBaumaschineViewModel = new ViewModelProvider(requireActivity(),new ModifyBaumaschineViewModelFactory(requireActivity().getApplication(),id)).get(ModifyBaumaschineViewModel.class);
-        archiveBaumaschine = modifyBaumaschineViewModel.archiveBaumaschine(id);
+    public void archiveBaumaschine(int id){
+        Log.d(TAG,"id Wert: " + id);
+        ModifyBaumaschineViewModel modifyBaumaschineViewModel = new ViewModelProvider(requireActivity()).get(ModifyBaumaschineViewModel.class);
+        archiveBaumaschine = modifyBaumaschineViewModel.loadBaumaschineById(id);
+        Log.d(TAG,"ROW_ID in Fragment: " + archiveBaumaschine.getRowid());
         archiveBaumaschine.setArchived(true);
         modifyBaumaschineViewModel.update(archiveBaumaschine);
-        return null;
+
+    }
+
+    @Override
+    public void onPositionClicked(int position) {
 
     }
 }
