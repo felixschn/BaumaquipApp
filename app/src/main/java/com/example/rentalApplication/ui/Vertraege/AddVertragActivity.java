@@ -262,7 +262,7 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
 
 
 
-                Log.d(TAG,"Amount: " + amount);
+                Log.d(TAG,"Amount: " + maxAmount);
                 break;
             case R.id.spinnerKunden:
                 break;

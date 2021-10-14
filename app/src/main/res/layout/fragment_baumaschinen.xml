@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Baumaschine.BaumaschinenFragment"
     android:background="@color/white">
@@ -11,7 +11,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/baumaschineRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="50dp"
+        android:scrollbars="vertical"
         tools:itemCount="5"
         tools:listitem="@layout/recyclerview_baumaschinen_item"/>
         <!--app:layout_constraintBottom_toBottomOf="@+id/viewpager"
