@@ -23,7 +23,7 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
     }
 
     public void update(Baumaschine baumaschine){
-        Log.d(TAG, "ROW_ID in: " + TAG + baumaschine.getRowid());
+        Log.d(TAG, "ROW_ID in: " + TAG + baumaschine.getIdBaumaschine());
         baumaschinenRepository.update(baumaschine);}
 
     public Baumaschine getAnyBaumaschine(){return baumaschinenRepository.getAnyBaumaschine();}

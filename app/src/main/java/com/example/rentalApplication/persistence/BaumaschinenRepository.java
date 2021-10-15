@@ -118,7 +118,7 @@ public class BaumaschinenRepository {
 
         @Override
         protected Baumaschine doInBackground(Integer... integers) {
-            return mAsyncTaskDao.loadBaumaschineById(integers[0]);
+            return mAsyncTaskDao.getBaumaschineById(integers[0]);
         }
 
         @Override

@@ -1,6 +1,7 @@
 package com.example.rentalApplication.models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
@@ -8,8 +9,9 @@ import androidx.room.PrimaryKey;
 @Fts4
 @Entity
 public class Kunde {
-    @PrimaryKey
-    public int rowid;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "rowid")
+    public int idKunde;
 
     @NonNull
     private String name;
@@ -38,7 +40,7 @@ public class Kunde {
 
     public Kunde(@NonNull String name, @NonNull String telefonNumber, @NonNull String email, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String constructionSide, @NonNull String contactPerson) {
 
-        this.rowid = rowid;
+        this.idKunde = idKunde;
         this.name = name;
         this.telefonNumber = telefonNumber;
         this.streetName = streetName;
@@ -53,12 +55,12 @@ public class Kunde {
         this.archived = false;
     }
 
-    public int getRowid() {
-        return rowid;
+    public int getIdKunde() {
+        return idKunde;
     }
 
-    public void setRowid(int rowid){
-        this.rowid = rowid;
+    public void setIdKunde(int idKunde){
+        this.idKunde = idKunde;
     }
 
     public String getName() {

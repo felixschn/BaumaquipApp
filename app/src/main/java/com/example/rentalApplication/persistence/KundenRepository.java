@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Kunde;
 
 import java.util.List;
@@ -83,7 +82,7 @@ public class KundenRepository {
 
         @Override
         protected Kunde doInBackground(Integer... integers) {
-            return mAsyncTaskDao.loadKundeById(integers[0]);
+            return mAsyncTaskDao.getKundeById(integers[0]);
         }
 
     }

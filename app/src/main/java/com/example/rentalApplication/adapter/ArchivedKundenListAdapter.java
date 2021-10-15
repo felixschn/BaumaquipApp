@@ -2,7 +2,6 @@ package com.example.rentalApplication.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Kunde;
-import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
 import com.example.rentalApplication.ui.Kunde.ArchivedKundenActivity;
 import com.example.rentalApplication.ui.Kunde.KundenClickListener;
 
@@ -159,7 +157,7 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
             Kunde kunde = kundeList.get(getAdapterPosition());
 
             if (v.getId() == modifyButtonKunde.getId()) {
-                archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getRowid());
+                archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getIdKunde());
             }
             if (v.getId() == deleteButtonKunde.getId()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

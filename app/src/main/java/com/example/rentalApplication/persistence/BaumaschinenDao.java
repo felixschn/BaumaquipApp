@@ -33,5 +33,5 @@ public interface BaumaschinenDao {
     LiveData<List<Baumaschine>> getAllArchivedBaumaschinen();
 
     @Query("SELECT *, rowid From Baumaschine WHERE rowid = :id")
-    Baumaschine loadBaumaschineById(int id);
+    Baumaschine getBaumaschineById(int id);
 }

@@ -11,8 +11,6 @@ import com.example.rentalApplication.models.Kunde;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
-
 @Dao
 public interface KundenDao {
 
@@ -26,7 +24,7 @@ public interface KundenDao {
     void update(Kunde kunde);
 
     @Query("Select *, rowid from Kunde Where rowid = :id")
-    Kunde loadKundeById(int id);
+    Kunde getKundeById(int id);
 
 
     @Query("SELECT *, rowid FROM Kunde Where archived = 0 ORDER BY name ASC")

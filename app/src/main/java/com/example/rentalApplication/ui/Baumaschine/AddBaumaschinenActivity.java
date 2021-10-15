@@ -141,7 +141,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         baumaschine.setOperatingHours(operatingHours);
         baumaschine.setDegreeOfWear(baumaschinenDegreeOfWear);
         baumaschine.setAmountOfGas(baumaschinenAmountOfGas);
-        Log.d(TAG,"ROW_ID vor setzen: " + baumaschine.getRowid());
+        Log.d(TAG,"ROW_ID vor setzen: " + baumaschine.getIdBaumaschine());
         modifyBaumaschineViewModel.update(baumaschine);
         finish();
     }

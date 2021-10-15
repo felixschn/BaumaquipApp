@@ -1,9 +1,7 @@
 package com.example.rentalApplication.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
@@ -24,7 +18,6 @@ import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenClickListener;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
-import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
 
 
 import java.lang.ref.WeakReference;
@@ -183,15 +176,15 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             if (v.getId() == modifyButton.getId()) {
                 Log.d(TAG, "Modify Button clicked!");
                 Baumaschine modifyBaumaschine = baumaschineList.get(getAdapterPosition());
-                Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + modifyBaumaschine.getRowid());
+                Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + modifyBaumaschine.getIdBaumaschine());
                 Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
-                modifyBaumaschineIntent.putExtra("baumaschineneRowId", modifyBaumaschine.getRowid());
+                modifyBaumaschineIntent.putExtra("baumaschineneRowId", modifyBaumaschine.getIdBaumaschine());
                 modifyBaumaschineIntent.putExtra("Class", "BaumaschinenListAdapter");
                 context.startActivity(modifyBaumaschineIntent);
             }
 
             if (v.getId() == deleteButton.getId()) {
-                baumaschinenFragment.archiveBaumaschine(baumaschine.getRowid());
+                baumaschinenFragment.archiveBaumaschine(baumaschine.getIdBaumaschine());
 
             } else {
                 baumaschineList.get(getAdapterPosition()).setExpanded(!baumaschine.getExpanded());

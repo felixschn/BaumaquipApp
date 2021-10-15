@@ -1,21 +1,22 @@
 package com.example.rentalApplication.models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Fts4
 @Entity
 public class Vertrag {
     @TypeConverters(Converters.class)
-    @PrimaryKey
-    public int rowid;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "rowid")
+    public int idVertrag;
 
     @TypeConverters(Converters.class)
     private List<Baumaschine> vertragBaumaschineList;
@@ -32,7 +33,7 @@ public class Vertrag {
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
     public Vertrag(@NonNull List<Baumaschine> vertragBaumaschineList, @NonNull String vertragKunde, @NonNull LocalDate beginnLeihe, @NonNull LocalDate endeLeihe) {
-        this.rowid = rowid;
+        this.idVertrag = idVertrag;
         this.vertragBaumaschineList = vertragBaumaschineList;
         this.vertragKunde = vertragKunde;
         this.beginnLeihe = beginnLeihe;

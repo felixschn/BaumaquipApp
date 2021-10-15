@@ -1,6 +1,7 @@
 package com.example.rentalApplication.models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -12,7 +13,8 @@ import java.math.BigDecimal;
 public class Baumaschine {
 
     @PrimaryKey(autoGenerate = true)
-    public int rowid;
+    @ColumnInfo(name = "rowid")
+    public int idBaumaschine;
     @NonNull
     private String machineName;
     @NonNull
@@ -48,12 +50,12 @@ public class Baumaschine {
         this.archived = false;
     }
 
-    public int getRowid() {
-        return rowid;
+    public int getIdBaumaschine() {
+        return idBaumaschine;
     }
 
-    public void setRowid(int rowid) {
-        this.rowid = rowid;
+    public void setIdBaumaschine(int idBaumaschine) {
+        this.idBaumaschine = idBaumaschine;
     }
 
     @NonNull

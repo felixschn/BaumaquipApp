@@ -2,7 +2,6 @@ package com.example.rentalApplication.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
-import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity;
 
 
@@ -120,7 +118,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             });
 
             modifyButton.setOnClickListener(v -> {
-                archivedBaumaschinenActivity.restoreBaumaschine(baumaschineList.get(getAdapterPosition()).getRowid());
+                archivedBaumaschinenActivity.restoreBaumaschine(baumaschineList.get(getAdapterPosition()).getIdBaumaschine());
 
             });
             deleteButton.setOnClickListener(v -> {

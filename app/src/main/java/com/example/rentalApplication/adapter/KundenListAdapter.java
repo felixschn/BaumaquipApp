@@ -1,6 +1,5 @@
 package com.example.rentalApplication.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
-import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
 import com.example.rentalApplication.ui.Kunde.KundenClickListener;
@@ -158,13 +156,13 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
                 //create Intent to start new AddKundenActivity for modifying a Kunde object
                 Intent modifyKundeIntent = new Intent(context, AddKundenActivity.class);
                 //putting extra info to intent for differentiating in AddKundenActivity which activity has called and giving the RowId from the clicked object in the recyclerview
-                modifyKundeIntent.putExtra("kundeRowId", kunde.getRowid());
+                modifyKundeIntent.putExtra("kundeRowId", kunde.getIdKunde());
                 modifyKundeIntent.putExtra("Class", "KundenListAdapter");
                 context.startActivity(modifyKundeIntent);
 
             }
             if (v.getId() == deleteButtonKunde.getId()) {
-                kundenFragment.archiveKunde(kundeList.get(getAdapterPosition()).getRowid());
+                kundenFragment.archiveKunde(kundeList.get(getAdapterPosition()).getIdKunde());
             } else {
                 kunde.setExpanded(!kunde.getExpanded());
                 notifyItemChanged(getAdapterPosition());
