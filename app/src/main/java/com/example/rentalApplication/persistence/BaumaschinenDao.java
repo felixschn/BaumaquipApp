@@ -32,17 +32,6 @@ public interface BaumaschinenDao {
     @Query("SELECT *, rowid FROM Baumaschine WHERE archived = 1 ORDER BY machineName ASC")
     LiveData<List<Baumaschine>> getAllArchivedBaumaschinen();
 
-    @Query("SELECT *, rowid FROM Baumaschine WHERE rowid = :rowId")
-    List<Baumaschine> getBaumaschine(int rowId);
-
-    @Query("SELECT *, rowid FROM Baumaschine LIMIT 1")
-    Baumaschine getAnyBaumaschine();
-
-
     @Query("SELECT *, rowid From Baumaschine WHERE rowid = :id")
     Baumaschine loadBaumaschineById(int id);
-
-    @Query("SELECT *, rowid From Baumaschine WHERE rowid = :id")
-    Baumaschine archiveBaumaschine(int id);
-
 }
