@@ -86,8 +86,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
 
     public void setBaumaschinen(List<Baumaschine> baumaschineList) {
         this.baumaschineList = baumaschineList;
-        notifyDataSetChanged();
-
+        notifyItemInserted(baumaschineList.size()-1);
     }
 
 

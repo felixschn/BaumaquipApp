@@ -72,7 +72,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
 
     public void setBaumaschinen(List<Baumaschine> baumaschineList) {
         this.baumaschineList = baumaschineList;
-        notifyDataSetChanged();
+        notifyItemInserted(baumaschineList.size()-1);
     }
 
     public void deleteBaumaschine(Baumaschine baumaschine) {

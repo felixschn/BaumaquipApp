@@ -9,7 +9,7 @@
     android:paddingBottom="10dp">
 
     <TextView
-        android:id="@+id/addVertragBaumaschineName"
+        android:id="@+id/addVertragBaumaschinenListName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -17,11 +17,14 @@
         />
 
     <TextView
-        android:id="@+id/addVertragAmountBaumaschine"
+        android:id="@+id/addVertragAmountBaumaschineList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         tools:text="@sample/baumaschineName" />
+
+    <include layout="@layout/modify_delete_buttons" />
+
 
 
 

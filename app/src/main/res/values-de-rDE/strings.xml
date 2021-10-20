@@ -44,4 +44,8 @@
     <string name="alertDialog">Möchten Sie diese Maschine wirklich löschen? Dies kann zu signifikanten Problemen in der Anwendung, aufgrund der Verbindungen zwischen Vertrag und Maschinen führen</string>
     <string name="okDialog">Verstanden!</string>
     <string name="cancelDialog">Abbrechen</string>
+
+    <!--VertragStrings-->
+    <string name="emptyRecyclerView">Keine Baumaschine ausgewählt</string>
+    <string name="announceRecyclerView">Ausgewählte Baumaschinen</string>
 </resources>

@@ -79,7 +79,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
 
     public void setKunden(List<Kunde> kundenList) {
         this.kundeList = kundenList;
-        notifyDataSetChanged();
+        notifyItemInserted(kundenList.size()-1);
     }
 
     class KundenViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {

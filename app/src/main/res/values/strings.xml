@@ -45,5 +45,9 @@
     <string name="okDialog">Noticed!</string>
     <string name="cancelDialog">Cancel</string>
 
+    <!--VertragStrings-->
+    <string name="emptyRecyclerView">No machine selected</string>
+    <string name="announceRecyclerView">selected machines</string>
+
 
 </resources>

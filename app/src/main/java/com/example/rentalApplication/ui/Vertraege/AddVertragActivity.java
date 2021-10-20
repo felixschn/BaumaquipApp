@@ -9,14 +9,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,49 +22,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.AddVertragBaumaschineListAdapter;
-import com.example.rentalApplication.adapter.AddVertragKundeListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.models.Vertrag;
-import com.example.rentalApplication.persistence.BaumaschinenRepository;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenViewModel;
 import com.example.rentalApplication.ui.Kunde.KundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomBaumaschinenAdapter;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class AddVertragActivity extends AppCompatActivity implements AddVertragBaumaschineListAdapter.IGetBaumaschinenFromAdapter, AddVertragKundeListAdapter.IGetKundeFromAdapter, AdapterView.OnItemSelectedListener {
+
+public class AddVertragActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener, VertragBaumaschinenListClickListener, View.OnClickListener {
 
     private BaumaschinenViewModel baumaschinenViewModel;
     private KundenViewModel kundenViewModel;
-    private KundenViewModel kViewModel;
-    private HashMap<Integer, Baumaschine> baumaschineHashMap;
-    private HashMap<Integer, Kunde> kundeHashMap;
     private EditText beginnLeihe, endeLeihe;
     private final Calendar rentCalendar = Calendar.getInstance();
     private Button addVertragButton;
-    private AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter;
-    private RecyclerView recyclerViewBaumaschine, recyclerViewKunde;
-    private AddVertragViewModel addVertragViewModel;
-    private static final String sendedList = "receiving list";
     private static final String TAG = "AddVertragActivity";
-    private String text = "";
-    private Button increaseButton, decreaseButton;
-    private TextView amountTextView;
-    int amountInt;
-    int maxAmount;
-    String amount;
-    private Boolean isUserAction = false;
+    private ImageButton increaseButton, decreaseButton, addBaumaschinenListButton;
+    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView;
+    int amountInt, maxAmount;
     private CustomBaumaschinenAdapter customBaumaschinenAdapter;
+    private RecyclerView recyclerView;
+    private AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter;
+    private Spinner baumaschinenSpinner, kundenSpinner;
+    private Baumaschine selectedBaumaschineFromSpinner;
 
 
     @Override
@@ -76,9 +62,10 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
 
 
         //create Spinner objects and link them to the xml objects --> tutorial: https://abhiandroid.com/ui/custom-spinner-examples.html
-        Spinner baumaschinenSpinner = (Spinner) findViewById(R.id.spinnerBaumaschinen);
-        Spinner kundenSpinner = (Spinner) findViewById(R.id.spinnerKunden);
+        baumaschinenSpinner = (Spinner) findViewById(R.id.spinnerBaumaschinen);
         baumaschinenSpinner.setOnItemSelectedListener(this);
+
+        kundenSpinner = (Spinner) findViewById(R.id.spinnerKunden);
         kundenSpinner.setOnItemSelectedListener(this);
 
         //create new customAdapter object and link Spinner with adapter
@@ -99,35 +86,21 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
         });
 
         decreaseButton = findViewById(R.id.baumaschinenAmountDecreaseButton);
+        decreaseButton.setOnClickListener(this);
+
         increaseButton = findViewById(R.id.baumschinenAmountIncreaseButton);
+        increaseButton.setOnClickListener(this);
+
+        addBaumaschinenListButton = findViewById(R.id.addVertragBaumaschineListButton);
+        addBaumaschinenListButton.setOnClickListener(this);
+
         amountTextView = findViewById(R.id.baumaschinenAmountTextView);
         amountTextView.setText(String.valueOf(1));
 
-        decreaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "decreasing Baumaschinen amount");
-                amountInt--;
-                amountTextView.setText(String.valueOf(amountInt));
-
-                buttonVisibility();
-            }
-        });
-
-        increaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "increasing Baumaschinen amount");
-                amountInt++;
-                amountTextView.setText(String.valueOf(amountInt));
-
-                buttonVisibility();
+        addVertragButton = findViewById(R.id.addVertragButton);
+        addVertragButton.setOnClickListener(this);
 
 
-                //if(amountInt < kundenSpinner.getSelectedItem().)
-
-            }
-        });
 
         //create new customAdapter object and link Spinner with adapter
         CustomKundeAdapter customKundeAdapter = new CustomKundeAdapter(getApplicationContext());
@@ -180,17 +153,19 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
                 new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, rentCalendar.get(Calendar.YEAR), rentCalendar.get(Calendar.MONTH), rentCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        addVertragButton = findViewById(R.id.addVertragButton);
-        addVertragButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View v) {
-                insertNewVertag();
-
-            }
-        });
 
 
+
+        addVertragBaumaschineListAdapter = new AddVertragBaumaschineListAdapter(this, this);
+        recyclerView = findViewById(R.id.addVertragBaumaschinenListRecyclerView);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(addVertragBaumaschineListAdapter);
+
+        emptyRecyclerViewTextView = findViewById(R.id.emptyRecyclerviewTextView);
+        announceRecyclerView = findViewById(R.id.announceRecyclerViewTextView);
+
+        recyclerViewVisibility();
     }
 
 
@@ -206,69 +181,39 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
         endeLeihe.setText(simpleDateFormat.format(rentCalendar.getTime()));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void insertNewVertag() {
-        List<Baumaschine> list = new ArrayList<Baumaschine>(baumaschineHashMap.values());
-        List<Kunde> kundenList = new ArrayList<Kunde>(kundeHashMap.values());
 
-        addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
-
-        addVertragViewModel.insert(new Vertrag(list, kundenList.get(0).getName(), Converters.stringToDate(beginnLeihe.toString()), Converters.stringToDate(endeLeihe.toString())));
-
-    }
-
-    private void buttonVisibility(){
-        if(amountInt >= maxAmount) {
+    private void buttonVisibility() {
+        if (amountInt >= maxAmount) {
             increaseButton.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             increaseButton.setVisibility(View.VISIBLE);
         }
-        if(amountInt == 1) {
+        if (amountInt == 1) {
             decreaseButton.setVisibility(View.INVISIBLE);
-        }
-        else{
+        } else {
             decreaseButton.setVisibility(View.VISIBLE);
         }
 
     }
 
 
-    //created interface to intercept data from the recyclerview adapter
-    @Override
-    public void getBaumaschinenFromAdapter(HashMap<Integer, Baumaschine> baumaschineHashMap) {
-        this.baumaschineHashMap = baumaschineHashMap;
-        Log.d(sendedList, "Activity " + baumaschineHashMap.size());
-
-    }
-
-
-    @Override
-    public void getKundeFromAdapter(HashMap<Integer, Kunde> kundeList) {
-        this.kundeHashMap = kundeList;
-        Log.d(sendedList, "Activity " + kundeHashMap.size());
-
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch(parent.getId()){
+        switch (parent.getId()) {
             case R.id.spinnerBaumaschinen:
-                String selected = parent.getItemAtPosition(position).toString();
-                maxAmount = ((Baumaschine) parent.getAdapter().getItem(position)).getAmount();
+                selectedBaumaschineFromSpinner = (Baumaschine) parent.getAdapter().getItem(position);
+                maxAmount = selectedBaumaschineFromSpinner.getAmount();
                 amountInt = 1;
                 amountTextView.setText(String.valueOf(amountInt));
                 buttonVisibility();
 
 
-
-                Log.d(TAG,"Amount: " + maxAmount);
+                Log.d(TAG, "Amount: " + maxAmount);
                 break;
             case R.id.spinnerKunden:
                 break;
 
         }
-
 
 
     }
@@ -278,4 +223,60 @@ public class AddVertragActivity extends AppCompatActivity implements AddVertragB
 
     }
 
+
+
+    //override method for VertragBaumaschinenListClickListener
+    @Override
+    public void onPositionClicked(int position) {
+
+    }
+
+
+    //override method for View.OnClickListener
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == increaseButton.getId()){
+            Log.d(TAG, "increasing Baumaschinen amount");
+            amountInt++;
+            amountTextView.setText(String.valueOf(amountInt));
+            buttonVisibility();
+        }
+        if(v.getId() == decreaseButton.getId()){
+            Log.d(TAG, "decreasing Baumaschinen amount");
+            amountInt--;
+            amountTextView.setText(String.valueOf(amountInt));
+            buttonVisibility();
+        }
+        if(v.getId() == addBaumaschinenListButton.getId()){
+            if(selectedBaumaschineFromSpinner != null){
+                addVertragBaumaschineListAdapter.setAddVertragBaumaschinen(selectedBaumaschineFromSpinner);
+                recyclerViewVisibility();
+            }
+
+
+
+        }
+        if(v.getId() == addVertragButton.getId()){
+            //insertNewVertrag();
+        }
+
+    }
+
+    public void recyclerViewVisibility(){
+        if(addVertragBaumaschineListAdapter.getItemCount() == 0){
+            recyclerView.setVisibility(View.GONE);
+            announceRecyclerView.setVisibility(View.GONE);
+            emptyRecyclerViewTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            announceRecyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerViewTextView.setVisibility(View.GONE);
+        }
+
+    }
+
+    public int getSelectedBaumaschinenAmount(){
+        return amountInt;
+    }
 }
