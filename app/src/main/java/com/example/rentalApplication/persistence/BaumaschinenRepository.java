@@ -11,18 +11,28 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class BaumaschinenRepository {
+    private static BaumaschinenRepository INSTANCE = null;
+
     private BaumaschinenDao baumaschinenDao;
     private LiveData<List<Baumaschine>> allBaumaschinen;
     private LiveData<List<Baumaschine>> allArchivedBaumaschinen;
     private Baumaschine anyBaumaschine;
     private String DB_NAME = "rent_db";
 
-    public BaumaschinenRepository(Application application) {
+    private BaumaschinenRepository(Application application){
         RentDatabase db = RentDatabase.getDatabase(application);
         baumaschinenDao = db.baumaschinenDao();
         allBaumaschinen = baumaschinenDao.getAllBaumaschinen();
         allArchivedBaumaschinen = baumaschinenDao.getAllArchivedBaumaschinen();
+    };
+
+    public static synchronized BaumaschinenRepository getInstance(Application application){
+        if (null == INSTANCE){
+            INSTANCE = new BaumaschinenRepository(application);
+        }
+        return INSTANCE;
     }
+
 
     //retrieving all non archived Baumaschinen
     public LiveData<List<Baumaschine>> getAllBaumaschinen() {
@@ -51,7 +61,7 @@ public class BaumaschinenRepository {
     }
 
     //loading Baumaschine per id to enable modifying Baumaschine
-    public Baumaschine loadBaumaschineById(int id) {
+    public Baumaschine getBaumaschineById(int id) {
         Integer rowid = id;
         try {
             return new ModifyAsyncTask(baumaschinenDao).execute(rowid).get();

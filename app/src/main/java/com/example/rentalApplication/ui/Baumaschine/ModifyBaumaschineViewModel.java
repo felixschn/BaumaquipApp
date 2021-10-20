@@ -15,11 +15,11 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
 
     public ModifyBaumaschineViewModel(@NonNull Application application) {
         super(application);
-        baumaschinenRepository = new BaumaschinenRepository(application);
+        baumaschinenRepository = BaumaschinenRepository.getInstance(application);
     }
 
-    public Baumaschine loadBaumaschineById (int id){
-        return baumaschinenRepository.loadBaumaschineById(id);
+    public Baumaschine getBaumaschineById(int id){
+        return baumaschinenRepository.getBaumaschineById(id);
     }
 
     public void update(Baumaschine baumaschine){

@@ -52,7 +52,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 //create new modifyBaumaschinenViewModel, to pass the additional parameter id, a ModifyBaumaschineViewModelFactory was created and is used
                 //retrieve the id from the intent
                 modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
-                loadBaumaschineById = modifyBaumaschineViewModel.loadBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
+                loadBaumaschineById = modifyBaumaschineViewModel.getBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
                 addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
                 addBaumaschinenAnzahlEditText.setText(loadBaumaschineById.getAmount().toString());
                 addBaumaschinenPricePerDayEditText.setText(loadBaumaschineById.getPricePerDay().toString());
@@ -132,7 +132,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         BigDecimal pricePerWeekend = new BigDecimal(baumaschinenPricePerWeekend);
         BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
         Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
-        Baumaschine baumaschine = modifyBaumaschineViewModel.loadBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
+        Baumaschine baumaschine = modifyBaumaschineViewModel.getBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
         baumaschine.setMachineName(baumaschinenName);
         baumaschine.setAmount(anzahl);
         baumaschine.setPricePerDay(pricePerDay);

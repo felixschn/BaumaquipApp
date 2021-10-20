@@ -19,7 +19,7 @@ public class BaumaschinenViewModel extends AndroidViewModel {
 
     public BaumaschinenViewModel(@NonNull Application application) {
         super(application);
-        baumaschinenRepository = new BaumaschinenRepository(application);
+        baumaschinenRepository = BaumaschinenRepository.getInstance(application);
         allBaumaschinen = baumaschinenRepository.getAllBaumaschinen();
         allArchivedBaumaschinen = baumaschinenRepository.getAllArchivedBaumaschinen();
 

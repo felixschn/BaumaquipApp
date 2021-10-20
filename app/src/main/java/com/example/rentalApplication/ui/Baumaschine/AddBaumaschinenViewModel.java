@@ -12,11 +12,11 @@ import com.example.rentalApplication.persistence.BaumaschinenRepository;
 import java.util.List;
 
 public class AddBaumaschinenViewModel extends AndroidViewModel {
-    private BaumaschinenRepository baumaschinenRepository;
+    private final BaumaschinenRepository baumaschinenRepository;
 
     public AddBaumaschinenViewModel(@NonNull Application application) {
         super(application);
-        baumaschinenRepository = new BaumaschinenRepository(application);
+        baumaschinenRepository = BaumaschinenRepository.getInstance(application);
     }
     public void insert(Baumaschine baumaschine){
         baumaschinenRepository.insert(baumaschine);

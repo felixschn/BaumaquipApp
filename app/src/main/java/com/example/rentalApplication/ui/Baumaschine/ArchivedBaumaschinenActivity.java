@@ -4,17 +4,13 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.ArchivedBaumaschineListAdapter;
-import com.example.rentalApplication.adapter.BaumaschinenListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
-
-import java.util.List;
 
 public class ArchivedBaumaschinenActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -44,7 +40,7 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity {
 
     public void restoreBaumaschine(int id) {
         modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
-        restoreBaumaschine = modifyBaumaschineViewModel.loadBaumaschineById(id);
+        restoreBaumaschine = modifyBaumaschineViewModel.getBaumaschineById(id);
         restoreBaumaschine.setArchived(false);
         modifyBaumaschineViewModel.update(restoreBaumaschine);
         if (modifyBaumaschineViewModel.getAnyBaumaschine() == null) {
