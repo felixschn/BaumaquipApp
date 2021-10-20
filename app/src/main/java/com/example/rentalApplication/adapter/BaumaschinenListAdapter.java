@@ -19,7 +19,6 @@ import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenClickListener;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
 
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +57,8 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
             holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
-            holder.baumaschineAmountOfGas.setText(current.getAmountOfGas().toString());
-            holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear().toString());
+            holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
+            holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
             holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
 
             boolean isExpanded = baumaschineList.get(position).getExpanded();
@@ -78,15 +77,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         }
     }
 
-    public void setExpandableToFalse(int position){
-        baumaschineList.get(position).setExpanded(false);
-    }
-
-
-
     public void setBaumaschinen(List<Baumaschine> baumaschineList) {
         this.baumaschineList = baumaschineList;
-        notifyItemInserted(baumaschineList.size()-1);
+        notifyDataSetChanged();
     }
 
 
@@ -121,7 +114,6 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
 
 
             itemView.setOnClickListener(this);
-            baumaschineName.setOnClickListener(this);
             modifyButton.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
 

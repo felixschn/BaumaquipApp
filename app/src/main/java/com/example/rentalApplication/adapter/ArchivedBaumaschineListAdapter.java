@@ -17,7 +17,6 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
 
     public void setBaumaschinen(List<Baumaschine> baumaschineList) {
         this.baumaschineList = baumaschineList;
-        notifyItemInserted(baumaschineList.size()-1);
+        notifyDataSetChanged();
     }
 
     public void deleteBaumaschine(Baumaschine baumaschine) {

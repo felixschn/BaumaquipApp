@@ -12,13 +12,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,8 +57,8 @@ public class Converters implements Serializable {
 
     @TypeConverter
     public static String dateToString(LocalDate date){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.GERMAN);
-        return dateFormat.format(date);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.GERMAN);
+        return date.format(dateFormat);
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter

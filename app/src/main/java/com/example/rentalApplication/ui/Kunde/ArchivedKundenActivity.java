@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.ArchivedKundenListAdapter;
 import com.example.rentalApplication.models.Kunde;
-import com.example.rentalApplication.persistence.KundenRepository;
 
 import java.util.List;
 

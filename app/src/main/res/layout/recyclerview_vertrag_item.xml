@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:paddingBottom="10dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -26,18 +25,65 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/vertagId"
+                android:id="@+id/vertragIdTextView"
                 android:layout_height="0dp"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="32dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
+                android:id="@+id/vertragKundeTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/vertagId"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintStart_toEndOf="@+id/vertragIdTextView"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <include layout="@layout/modify_delete_buttons"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vertragExpandableConstraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vertragIdTextView">
+
+                <TextView
+                    android:id="@+id/vertragStartLeihe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="01.01.2021"/>
+
+                <TextView
+                    android:id="@+id/vertragEndLeihe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/vertragStartLeihe"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="01.02.2021"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/vertragStartLeihe"
+                    app:layout_constraintStart_toStartOf="parent">
+                    
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/vertragBaumaschinenRecyclerView"/>
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

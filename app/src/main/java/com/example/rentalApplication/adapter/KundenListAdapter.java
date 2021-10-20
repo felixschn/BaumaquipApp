@@ -63,11 +63,6 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
 
     }
 
-    private void insertNewVertrag() {
-
-    }
-
-
     @Override
     public int getItemCount() {
         if (kundeList != null) {
@@ -79,7 +74,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
 
     public void setKunden(List<Kunde> kundenList) {
         this.kundeList = kundenList;
-        notifyItemInserted(kundenList.size()-1);
+        notifyDataSetChanged();
     }
 
     class KundenViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {

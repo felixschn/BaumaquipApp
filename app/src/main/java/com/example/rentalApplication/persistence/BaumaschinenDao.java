@@ -9,7 +9,6 @@ import androidx.room.Update;
 
 import com.example.rentalApplication.models.Baumaschine;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Dao
@@ -26,7 +25,7 @@ public interface BaumaschinenDao {
 
     /*@Query("UPDATE baumaschine SET machineName = :updateName, amount = :updateAmount, pricePerDay = :updatePricePerDay, pricePerWeekend = :updatePricePerWeekend, pricePerMonth = :updatePricePerMonth, operatingHours = :updateOperatingHours, degreeOfWear = :updateDegreeOfWear, amountOfGas = :updateAmountOfGas WHERE rowid = :rowid")
     void update(int rowid, String updateName, int updateAmount, BigDecimal updatePricePerDay, BigDecimal updatePricePerWeekend, BigDecimal updatePricePerMonth, Double updateOperatingHours, String updateDegreeOfWear, String updateAmountOfGas);*/
-    @Query("SELECT *, rowid FROM Baumaschine WHERE archived = 0 ORDER BY machineName ASC")
+    @Query("SELECT *, rowid FROM Baumaschine WHERE archived = 0 ORDER BY machineName ASC ")
     LiveData<List<Baumaschine>> getAllBaumaschinen();
 
     @Query("SELECT *, rowid FROM Baumaschine WHERE archived = 1 ORDER BY machineName ASC")

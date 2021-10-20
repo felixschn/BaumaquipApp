@@ -30,6 +30,9 @@ public class Vertrag {
     @NonNull
     private LocalDate endeLeihe;
 
+    private Boolean expanded;
+    private Boolean archived;
+
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
     public Vertrag(@NonNull List<Baumaschine> vertragBaumaschineList, @NonNull String vertragKunde, @NonNull LocalDate beginnLeihe, @NonNull LocalDate endeLeihe) {
@@ -38,7 +41,15 @@ public class Vertrag {
         this.vertragKunde = vertragKunde;
         this.beginnLeihe = beginnLeihe;
         this.endeLeihe = endeLeihe;
+        //set Boolean initially to false
+        this.expanded = false;
+        this.archived = false;
 
+
+    }
+
+    public int getIdVertrag() {
+        return idVertrag;
     }
 
     public List<Baumaschine> getVertragBaumaschineList() {
@@ -70,5 +81,21 @@ public class Vertrag {
 
     public void setEndeLeihe(@NonNull LocalDate endeLeihe) {
         this.endeLeihe = endeLeihe;
+    }
+
+    public Boolean getExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 }

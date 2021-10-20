@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

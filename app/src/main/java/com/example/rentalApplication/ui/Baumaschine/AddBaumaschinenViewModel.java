@@ -4,12 +4,9 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.persistence.BaumaschinenRepository;
-
-import java.util.List;
 
 public class AddBaumaschinenViewModel extends AndroidViewModel {
     private final BaumaschinenRepository baumaschinenRepository;

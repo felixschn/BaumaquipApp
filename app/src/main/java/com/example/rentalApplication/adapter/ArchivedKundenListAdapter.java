@@ -74,7 +74,7 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
 
     public void setKunden(List<Kunde> kundenList) {
         this.kundeList = kundenList;
-        notifyItemInserted(kundenList.size()-1);
+        notifyDataSetChanged();
     }
 
     public void deleteKunde(Kunde kunde) {

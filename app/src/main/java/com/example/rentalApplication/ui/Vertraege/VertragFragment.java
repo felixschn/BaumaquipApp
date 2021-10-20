@@ -1,6 +1,9 @@
 package com.example.rentalApplication.ui.Vertraege;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -8,12 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.rentalApplication.R;
-import com.example.rentalApplication.adapter.KundenListAdapter;
 import com.example.rentalApplication.adapter.VertragListAdapter;
 import com.example.rentalApplication.models.Vertrag;
 
@@ -25,7 +23,7 @@ import java.util.List;
  * Use the {@link VertragFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VertragFragment extends Fragment {
+public class VertragFragment extends Fragment implements VertragClickListener{
     
     private ArrayList<Vertrag> mVertrag = new ArrayList<>();
     private VertragListAdapter vertragListAdapter;
@@ -76,10 +74,12 @@ public class VertragFragment extends Fragment {
                              Bundle savedInstanceState) {
         
         View view = inflater.inflate(R.layout.fragment_vertraege, container, false);
+
+        final VertragListAdapter vertragListAdapter = new VertragListAdapter(this, this);
+
         recyclerView = view.findViewById(R.id.vertragRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final VertragListAdapter vertragListAdapter = new VertragListAdapter();
         recyclerView.setAdapter(vertragListAdapter);
         vertragViewModel = new ViewModelProvider(requireActivity()).get(VertragViewModel.class);
         vertragViewModel.getAllVertrag().observe(getViewLifecycleOwner(), new Observer<List<Vertrag>>() {
@@ -90,5 +90,10 @@ public class VertragFragment extends Fragment {
         });
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onPositionClicked(int position) {
+
     }
 }
