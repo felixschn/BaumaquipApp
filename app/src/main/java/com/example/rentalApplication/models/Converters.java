@@ -22,27 +22,24 @@ import java.util.Locale;
 public class Converters implements Serializable {
     @TypeConverter
     public String fromVertragBaumaschineList(List<Baumaschine> vertragBaumaschineList) {
-        if (vertragBaumaschineList == null) {
+        if (null == vertragBaumaschineList) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<List<Baumaschine>>() {
         }.getType();
-        String json = gson.toJson(vertragBaumaschineList, type);
-        return json;
-
+        return gson.toJson(vertragBaumaschineList, type);
     }
 
     @TypeConverter
     public List<Baumaschine> toVertragBaumaschineList(String vertragBaumaschineString) {
-        if (vertragBaumaschineString == null) {
+        if (null == vertragBaumaschineString) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<List<Baumaschine>>() {
         }.getType();
-        List<Baumaschine> vertragBaumaschineList = gson.fromJson(vertragBaumaschineString, type);
-        return vertragBaumaschineList;
+        return gson.fromJson(vertragBaumaschineString, type);
     }
 
     @TypeConverter
@@ -67,6 +64,47 @@ public class Converters implements Serializable {
         return LocalDate.parse(strDate, formatter);
     }
 
+    public String fromIntegerList(List<Integer> intList) {
+        if (intList == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Integer>>() {
+        }.getType();
+        return gson.toJson(intList, type);
 
+    }
 
+    @TypeConverter
+    public List<Integer> toIntegerList(String intListString) {
+        if (null == intListString) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Integer>>() {
+        }.getType();
+        return gson.fromJson(intListString, type);
+    }
+
+    @TypeConverter
+    public  String StuecklisteToString(List<Stuecklisteneintrag> stueckliste){
+        if (null == stueckliste) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Stuecklisteneintrag>>() {
+        }.getType();
+        return gson.toJson(stueckliste, type);
+    }
+
+    @TypeConverter
+    public List<Stuecklisteneintrag> StringToStueckliste(String string){
+        if (null == string) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Baumaschine>>() {
+        }.getType();
+        return gson.fromJson(string, type);
+    }
 }
