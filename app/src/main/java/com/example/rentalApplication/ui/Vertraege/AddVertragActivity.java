@@ -250,6 +250,7 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
         if(v.getId() == addBaumaschinenListButton.getId()){
             if(selectedBaumaschineFromSpinner != null){
                 addVertragBaumaschineListAdapter.setAddVertragBaumaschinen(selectedBaumaschineFromSpinner);
+                addVertragBaumaschineListAdapter.getBaumaschineList();
                 recyclerViewVisibility();
             }
 

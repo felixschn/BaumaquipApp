@@ -84,6 +84,10 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         }
     }
 
+    public List<Baumaschine> getBaumaschineList(){
+        return baumaschineList;
+    }
+
 
     class AddVertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView baumaschineName;
