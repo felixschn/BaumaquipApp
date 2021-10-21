@@ -2,6 +2,7 @@ package com.example.rentalApplication.models;
 
 
 import android.os.Build;
+import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
@@ -12,10 +13,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,7 +44,7 @@ public class Converters implements Serializable {
     }
 
     @TypeConverter
-    public static String BigDecimalToString(BigDecimal price) {
+    public static String bigDecimalToString(BigDecimal price) {
         return price.toString();
     }
 
@@ -53,15 +54,28 @@ public class Converters implements Serializable {
     }
 
     @TypeConverter
-    public static String dateToString(LocalDate date){
+    public static String localDateToString(LocalDate date) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.GERMAN);
         return date.format(dateFormat);
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter
-    public static LocalDate stringToDate(String strDate) {
+    public static LocalDate stringToLocalDate(String strDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         return LocalDate.parse(strDate, formatter);
+    }
+
+    public static LocalDate editTextToLocalDate(EditText editText) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        return LocalDate.parse(editText.getText().toString(), formatter);
+    }
+
+    public static String dateToString(Date date) {
+        //format the Date Type in LocaleDate
+        LocalDate ldate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return localDateToString(ldate);
+
     }
 
     public String fromIntegerList(List<Integer> intList) {
@@ -87,7 +101,7 @@ public class Converters implements Serializable {
     }
 
     @TypeConverter
-    public  String StuecklisteToString(List<Stuecklisteneintrag> stueckliste){
+    public String stuecklisteToString(List<Stuecklisteneintrag> stueckliste) {
         if (null == stueckliste) {
             return (null);
         }
@@ -98,7 +112,7 @@ public class Converters implements Serializable {
     }
 
     @TypeConverter
-    public List<Stuecklisteneintrag> StringToStueckliste(String string){
+    public List<Stuecklisteneintrag> stringToStueckliste(String string) {
         if (null == string) {
             return (null);
         }

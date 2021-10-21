@@ -23,7 +23,9 @@ import java.util.concurrent.Executors;
 public abstract class RentDatabase extends RoomDatabase {
 
     public abstract KundenDao kundenDao();
+
     public abstract BaumaschinenDao baumaschinenDao();
+
     public abstract VertragDao vertragDao();
 
     private static final int NUMBER_OF_THREADS = 4;
@@ -68,7 +70,7 @@ public abstract class RentDatabase extends RoomDatabase {
         }
     };*/
 
-    public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+    public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -76,14 +78,17 @@ public abstract class RentDatabase extends RoomDatabase {
         }
     };
 
-    public static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void>{
+    public static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private final KundenDao kundenDao;
         private final BaumaschinenDao baumaschinenDao;
         private final VertragDao vertragDao;
+
         PopulateDbAsyncTask(RentDatabase db) {
             kundenDao = db.kundenDao();
             baumaschinenDao = db.baumaschinenDao();
-            vertragDao = db.vertragDao();}
+            vertragDao = db.vertragDao();
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             //baumaschinenDao.insert(new Baumaschine("Testmaschine", 1,10.00,20.00,30.00,null,null, null));

@@ -23,8 +23,8 @@ import java.util.List;
  * Use the {@link VertragFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VertragFragment extends Fragment implements VertragClickListener{
-    
+public class VertragFragment extends Fragment implements VertragClickListener {
+
     private ArrayList<Vertrag> mVertrag = new ArrayList<>();
     private VertragListAdapter vertragListAdapter;
     private RecyclerView recyclerView;
@@ -72,7 +72,7 @@ public class VertragFragment extends Fragment implements VertragClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        
+
         View view = inflater.inflate(R.layout.fragment_vertraege, container, false);
 
         final VertragListAdapter vertragListAdapter = new VertragListAdapter(this, this);

@@ -45,7 +45,7 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
     }
 
     //method to retrieve a list of all Database entries from the calling activity
-    public void setBaumaschinen(List<Baumaschine> baumaschineList){
+    public void setBaumaschinen(List<Baumaschine> baumaschineList) {
         this.baumaschineList = baumaschineList;
         notifyDataSetChanged();
     }

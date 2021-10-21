@@ -105,11 +105,11 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         return view;
     }
 
-    public void archiveBaumaschine(int id){
-        Log.d(TAG,"id Wert: " + id);
+    public void archiveBaumaschine(int id) {
+        Log.d(TAG, "id Wert: " + id);
         ModifyBaumaschineViewModel modifyBaumaschineViewModel = new ViewModelProvider(requireActivity()).get(ModifyBaumaschineViewModel.class);
         archiveBaumaschine = modifyBaumaschineViewModel.getBaumaschineById(id);
-        Log.d(TAG,"ROW_ID in Fragment: " + archiveBaumaschine.getIdBaumaschine());
+        Log.d(TAG, "ROW_ID in Fragment: " + archiveBaumaschine.getIdBaumaschine());
         archiveBaumaschine.setArchived(true);
         modifyBaumaschineViewModel.update(archiveBaumaschine);
 

@@ -19,15 +19,17 @@ public class BaumaschinenRepository {
     private Baumaschine anyBaumaschine;
     private String DB_NAME = "rent_db";
 
-    private BaumaschinenRepository(Application application){
+    private BaumaschinenRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
         baumaschinenDao = db.baumaschinenDao();
         allBaumaschinen = baumaschinenDao.getAllBaumaschinen();
         allArchivedBaumaschinen = baumaschinenDao.getAllArchivedBaumaschinen();
-    };
+    }
 
-    public static synchronized BaumaschinenRepository getInstance(Application application){
-        if (null == INSTANCE){
+    ;
+
+    public static synchronized BaumaschinenRepository getInstance(Application application) {
+        if (null == INSTANCE) {
             INSTANCE = new BaumaschinenRepository(application);
         }
         return INSTANCE;
@@ -56,7 +58,7 @@ public class BaumaschinenRepository {
 
     }
 
-    public void delete(Baumaschine baumaschine){
+    public void delete(Baumaschine baumaschine) {
         new DeleteAsyncTask(baumaschinenDao).execute(baumaschine);
     }
 
@@ -73,7 +75,9 @@ public class BaumaschinenRepository {
         return null;
     }
 
-    public Baumaschine getAnyBaumaschine(){return anyBaumaschine;}
+    public Baumaschine getAnyBaumaschine() {
+        return anyBaumaschine;
+    }
 
     private static class InsertAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
         private BaumaschinenDao mAsyncTaskDao;

@@ -34,6 +34,7 @@ public class MainPageActivity extends AppCompatActivity {
     private static final String TAG = "Main_Activity";
     public static int ADD_BAUMASCHINEN_ACTIVITY_REQUEST_CODE = 1;
     public static RentDatabase rentDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class MainPageActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!isAllFabsVisible){
+                        if (!isAllFabsVisible) {
                             mAddBaumaschineFab.show();
                             mAddKundeFab.show();
                             mAddVertragFab.show();
@@ -76,8 +77,7 @@ public class MainPageActivity extends AppCompatActivity {
 
                             fab.extend();
                             isAllFabsVisible = true;
-                        }
-                        else{
+                        } else {
                             mAddBaumaschineFab.hide();
                             mAddKundeFab.hide();
                             mAddVertragFab.hide();
@@ -96,15 +96,15 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent baumaschinenIntent = new Intent(MainPageActivity.this, AddBaumaschinenActivity.class);
-                baumaschinenIntent.putExtra("Class","MainPageActivity");
+                baumaschinenIntent.putExtra("Class", "MainPageActivity");
                 MainPageActivity.this.startActivity(baumaschinenIntent);
             }
         });
         mAddKundeFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent kundenIntent = new Intent (MainPageActivity.this, AddKundenActivity.class);
-                kundenIntent.putExtra("Class","MainPageActivity");
+                Intent kundenIntent = new Intent(MainPageActivity.this, AddKundenActivity.class);
+                kundenIntent.putExtra("Class", "MainPageActivity");
                 MainPageActivity.this.startActivity(kundenIntent);
             }
         });
@@ -128,9 +128,9 @@ public class MainPageActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                switch(position){
+                switch (position) {
                     case 0:
-                        Log.d(TAG,"BaumaschineTab");
+                        Log.d(TAG, "BaumaschineTab");
 
                         /*fab.setOnClickListener(new View.OnClickListener(){
                             @Override
@@ -173,7 +173,7 @@ public class MainPageActivity extends AppCompatActivity {
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         tab.setText("Baumaschinen");
                         break;
@@ -199,10 +199,10 @@ public class MainPageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.archivedBaumaschine:
                 Intent archivedBaumaschinenIntent = new Intent(MainPageActivity.this, ArchivedBaumaschinenActivity.class);
-                archivedBaumaschinenIntent.putExtra("Class","MainPageActivity");
+                archivedBaumaschinenIntent.putExtra("Class", "MainPageActivity");
                 MainPageActivity.this.startActivity(archivedBaumaschinenIntent);
                 return true;
             case R.id.archivedKunde:

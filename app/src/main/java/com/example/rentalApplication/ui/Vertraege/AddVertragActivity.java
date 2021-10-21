@@ -29,21 +29,16 @@ import com.example.rentalApplication.ui.Kunde.KundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomBaumaschinenAdapter;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
-public class AddVertragActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener, VertragBaumaschinenListClickListener, View.OnClickListener {
+public class AddVertragActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, VertragBaumaschinenListClickListener, View.OnClickListener {
 
     private BaumaschinenViewModel baumaschinenViewModel;
     private KundenViewModel kundenViewModel;
-    private EditText beginnLeihe, endeLeihe;
+    private EditText beginnVertrag, endeVertrag;
     private final Calendar rentCalendar = Calendar.getInstance();
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
@@ -82,8 +77,6 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
             public void onChanged(List<Baumaschine> baumaschines) {
                 //create in CustomAdapter a method called setBaumaschines to retrieve a list of all Database entries
                 customBaumaschinenAdapter.setBaumaschinen(baumaschines);
-
-
             }
         });
 
@@ -103,7 +96,6 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
         addVertragButton.setOnClickListener(this);
 
 
-
         //create new customAdapter object and link Spinner with adapter
         CustomKundeAdapter customKundeAdapter = new CustomKundeAdapter(getApplicationContext());
         kundenSpinner.setAdapter(customKundeAdapter);
@@ -118,8 +110,8 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
             }
         });
 
-        beginnLeihe = (EditText) findViewById(R.id.dateBeginnLeihe);
-        endeLeihe = (EditText) findViewById(R.id.dateEndeLeihe);
+        beginnVertrag = (EditText) findViewById(R.id.dateBeginnLeihe);
+        endeVertrag = (EditText) findViewById(R.id.dateEndeLeihe);
 
         DatePickerDialog.OnDateSetListener dateBeginnLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -127,7 +119,10 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
                 rentCalendar.set(Calendar.YEAR, year);
                 rentCalendar.set(Calendar.MONTH, month);
                 rentCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                setDateLeihe(beginnLeihe);
+                //TODO: check if date < now() --> warning / error message
+                beginnVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
+
+
             }
         };
         DatePickerDialog.OnDateSetListener dateEndeLeihe = new DatePickerDialog.OnDateSetListener() {
@@ -136,13 +131,13 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
                 rentCalendar.set(Calendar.YEAR, year);
                 rentCalendar.set(Calendar.MONTH, month);
                 rentCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                setDateLeihe(endeLeihe);
+                //TODO: check if date <= begin --> warning / error message
+                endeVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
             }
         };
 
 
-        beginnLeihe.setOnClickListener(new View.OnClickListener() {
+        beginnVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, rentCalendar.get(Calendar.YEAR), rentCalendar.get(Calendar.MONTH), rentCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -150,14 +145,14 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
             }
         });
 
-        endeLeihe.setOnClickListener(new View.OnClickListener() {
+        endeVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, rentCalendar.get(Calendar.YEAR), rentCalendar.get(Calendar.MONTH), rentCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        addVertragBaumaschineListAdapter = new AddVertragBaumaschineListAdapter(this, this);
+        addVertragBaumaschineListAdapter = new AddVertragBaumaschineListAdapter(getApplication(), this, this);
         recyclerView = findViewById(R.id.addVertragBaumaschinenListRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -169,18 +164,8 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
         recyclerViewVisibility();
     }
 
-    private void setDateLeihe(EditText editText){
-        //get time from Calendar
-        Date input = rentCalendar.getTime();
-        //format the Date Type in LocaleDate
-        LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        //set EditText with help from Converter
-        editText.setText(Converters.dateToString(date));
-    }
-
-
     /*method to in- or decrease the amount of the chosen Baumaschine through the spinner:
-    * -if the the amount */
+     * -if the the amount */
     private void buttonVisibility() {
         if (amountInt >= maxAmount) {
             increaseButton.setVisibility(View.INVISIBLE);
@@ -197,15 +182,16 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
 
 
     /*method to receive chosen spinner object (Baumaschine or Kunde)
-    * in case of Baumaschine: intercept the amount of the chosen Baumaschine
-    *   and set the initial amount which should be rented to 1
-    * if the maxAmount is higher than 1, show increase button
-    * if amountInt is higher than 1 show decrease button*/
+     * in case of Baumaschine: intercept the amount of the chosen Baumaschine
+     *   and set the initial amount which should be rented to 1
+     * if the maxAmount is higher than 1, show increase button
+     * if amountInt is higher than 1 show decrease button*/
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spinnerBaumaschinen:
                 selectedBaumaschineFromSpinner = (Baumaschine) parent.getAdapter().getItem(position);
+                //TODO: calculate maxAmount based on selected date
                 maxAmount = selectedBaumaschineFromSpinner.getAmount();
                 amountInt = 1;
                 amountTextView.setText(String.valueOf(amountInt));
@@ -226,7 +212,6 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
     }
 
 
-
     /*override method for VertragBaumaschinenListClickListener*/
     @Override
     public void onPositionClicked(int position) {
@@ -238,42 +223,40 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
     @Override
     public void onClick(View v) {
         /*increase the amount of the chosen Baumaschine which should be rented*/
-        if (v.getId() == increaseButton.getId()){
+        if (v.getId() == increaseButton.getId()) {
             Log.d(TAG, "increasing Baumaschinen amount");
             amountInt++;
             amountTextView.setText(String.valueOf(amountInt));
             buttonVisibility();
         }
         /*increase the amount of the chosen Baumaschine which should be rented*/
-        if(v.getId() == decreaseButton.getId()){
+        if (v.getId() == decreaseButton.getId()) {
             Log.d(TAG, "decreasing Baumaschinen amount");
             amountInt--;
             amountTextView.setText(String.valueOf(amountInt));
             buttonVisibility();
         }
-        if(v.getId() == addBaumaschinenListButton.getId()){
-            if(selectedBaumaschineFromSpinner != null){
-                addVertragBaumaschineListAdapter.setAddVertragBaumaschinen(selectedBaumaschineFromSpinner);
-                addVertragBaumaschineListAdapter.getBaumaschineList();
+        if (v.getId() == addBaumaschinenListButton.getId()) {
+            if (selectedBaumaschineFromSpinner != null) {
+                addVertragBaumaschineListAdapter.addBaumaschinenToVertrag(selectedBaumaschineFromSpinner);
                 recyclerViewVisibility();
             }
 
 
-
         }
-        if(v.getId() == addVertragButton.getId()){
+        if (v.getId() == addVertragButton.getId()) {
+            //TODO: save to DB
             //insertNewVertrag();
         }
 
     }
 
-    public void recyclerViewVisibility(){
-        if(addVertragBaumaschineListAdapter.getItemCount() == 0){
+    public void recyclerViewVisibility() {
+        if (addVertragBaumaschineListAdapter.getItemCount() == 0) {
             recyclerView.setVisibility(View.GONE);
             announceRecyclerView.setVisibility(View.GONE);
             emptyRecyclerViewTextView.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             recyclerView.setVisibility(View.VISIBLE);
             announceRecyclerView.setVisibility(View.VISIBLE);
             emptyRecyclerViewTextView.setVisibility(View.GONE);
@@ -281,7 +264,17 @@ public class AddVertragActivity extends AppCompatActivity implements  AdapterVie
 
     }
 
-    public int getSelectedBaumaschinenAmount(){
+    public int getSelectedBaumaschinenAmount() {
         return amountInt;
     }
+
+    public LocalDate getBeginnVertrag() {
+        return Converters.editTextToLocalDate(beginnVertrag);
+    }
+
+    public LocalDate getEndeVertrag() {
+        return Converters.editTextToLocalDate(endeVertrag);
+    }
+
+
 }

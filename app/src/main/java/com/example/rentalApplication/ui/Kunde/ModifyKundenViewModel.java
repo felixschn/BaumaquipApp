@@ -19,9 +19,11 @@ public class ModifyKundenViewModel extends AndroidViewModel {
         kundenRepository = new KundenRepository(application);
     }
 
-    public Kunde loadKundeById (int id){return kundenRepository.loadKundeById(id);}
+    public Kunde loadKundeById(int id) {
+        return kundenRepository.loadKundeById(id);
+    }
 
-    public void update(Kunde kunde){
+    public void update(Kunde kunde) {
         //setting RowID that correct database entry is updated; because of creation of a new Kunden Object in update Method the RowID from the called Kunden Object is needed
         kundenRepository.update(kunde);
     }

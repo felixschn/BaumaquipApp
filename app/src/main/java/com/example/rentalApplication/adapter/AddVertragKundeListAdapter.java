@@ -34,7 +34,7 @@ public class AddVertragKundeListAdapter extends RecyclerView.Adapter<AddVertragK
     }
 
     @Override
-    public void onBindViewHolder(@NonNull  AddVertragKundeListAdapter.AddVertragKundeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AddVertragKundeListAdapter.AddVertragKundeViewHolder holder, int position) {
         if (kundeList != null) {
             Kunde current = kundeList.get(position);
             holder.kundeName.setText(current.getName());
@@ -48,11 +48,10 @@ public class AddVertragKundeListAdapter extends RecyclerView.Adapter<AddVertragK
 
     @Override
     public int getItemCount() {
-        if(kundeList != null){
+        if (kundeList != null) {
             return kundeList.size();
-        }
-        else{
-            return  0;
+        } else {
+            return 0;
         }
     }
 
@@ -103,7 +102,7 @@ public class AddVertragKundeListAdapter extends RecyclerView.Adapter<AddVertragK
                     itemView.setSelected(true);
                     kundeHashMap.put(getAdapterPosition(), kundeList.get(getAdapterPosition()));
                     mKundeListListener.getKundeFromAdapter(kundeHashMap);
-                    maxKunde = maxKunde +1;
+                    maxKunde = maxKunde + 1;
                     System.out.println("maxKunde incrementiert: " + maxKunde);
                 }
                 Toast.makeText(v.getContext(), "Ein Kunde wurde bereits gewählt", Toast.LENGTH_LONG).show();

@@ -9,6 +9,7 @@ import androidx.room.Query;
 import com.example.rentalApplication.models.Vertrag;
 
 import java.util.List;
+
 @Dao
 public interface VertragDao {
 

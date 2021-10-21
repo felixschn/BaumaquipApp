@@ -19,16 +19,23 @@ public class VertragRepository {
         allVertrag = vertragDao.getAllVertrag();
     }
 
-    public LiveData<List<Vertrag>> getAllVertrag() {return  allVertrag;}
-    public void insert(Vertrag vertrag){
+    public LiveData<List<Vertrag>> getAllVertrag() {
+        return allVertrag;
+    }
+
+    public void insert(Vertrag vertrag) {
         new InsertAsyncTask(vertragDao).execute(vertrag);
     }
-    private static class InsertAsyncTask extends AsyncTask<Vertrag, Void, Void>{
+
+    private static class InsertAsyncTask extends AsyncTask<Vertrag, Void, Void> {
         private VertragDao mAsyncTaskDao;
-        InsertAsyncTask(VertragDao dao){ this.mAsyncTaskDao = dao;}
+
+        InsertAsyncTask(VertragDao dao) {
+            this.mAsyncTaskDao = dao;
+        }
 
         @Override
-        protected Void doInBackground(Vertrag... vertrags){
+        protected Void doInBackground(Vertrag... vertrags) {
             mAsyncTaskDao.insert(vertrags[0]);
             return null;
         }

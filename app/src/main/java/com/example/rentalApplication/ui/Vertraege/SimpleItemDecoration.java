@@ -13,9 +13,11 @@ import com.example.rentalApplication.R;
 
 public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable drawable;
+
     SimpleItemDecoration(Context context) {
         drawable = ContextCompat.getDrawable(context, R.drawable.line_divider);
     }
+
     @Override
     public void onDrawOver(@NonNull Canvas canvas, RecyclerView parent, @NonNull RecyclerView.State state) {
         int left = parent.getPaddingLeft();

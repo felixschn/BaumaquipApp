@@ -18,7 +18,7 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="@color/baumaquip_main_color"/>
+            android:background="@color/baumaquip_main_color" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_marginStart="32dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/vertragKundeTextView"
@@ -41,7 +41,7 @@
                 app:layout_constraintStart_toEndOf="@+id/vertragIdTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include layout="@layout/modify_delete_buttons"/>
+            <include layout="@layout/modify_delete_buttons" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/vertragExpandableConstraintLayout"
@@ -59,7 +59,7 @@
                     android:layout_marginStart="20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="01.01.2021"/>
+                    android:text="01.01.2021" />
 
                 <TextView
                     android:id="@+id/vertragEndLeihe"
@@ -67,18 +67,18 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/vertragStartLeihe"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="01.02.2021"/>
+                    android:text="01.02.2021" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/vertragStartLeihe"
                     app:layout_constraintStart_toStartOf="parent">
-                    
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/vertragBaumaschinenRecyclerView"/>
+                        android:id="@+id/vertragBaumaschinenRecyclerView" />
 
                 </LinearLayout>
 
@@ -88,9 +88,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     </androidx.cardview.widget.CardView>
-
 
 
 </LinearLayout>

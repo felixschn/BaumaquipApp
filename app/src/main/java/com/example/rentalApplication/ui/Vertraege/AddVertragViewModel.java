@@ -21,7 +21,11 @@ public class AddVertragViewModel extends AndroidViewModel {
         allVertrag = vertragRepository.getAllVertrag();
     }
 
-    public LiveData<List<Vertrag>> getAllVertrag() {return allVertrag;}
+    public LiveData<List<Vertrag>> getAllVertrag() {
+        return allVertrag;
+    }
 
-    public void insert (Vertrag vertrag){vertragRepository.insert(vertrag);}
+    public void insert(Vertrag vertrag) {
+        vertragRepository.insert(vertrag);
+    }
 }

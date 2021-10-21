@@ -1,6 +1,6 @@
-
 package com.example.rentalApplication.adapter;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
+import com.example.rentalApplication.persistence.BaumaschinenRepository;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragBaumaschinenListClickListener;
 
@@ -27,14 +29,16 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     private static final String selectedAdded = "added machine";
     private static final String selectedRemoved = "removed machine";
     private int selectedPos = RecyclerView.NO_POSITION;
-    private List<Baumaschine> baumaschineList = new ArrayList<>();
+    private List<Stuecklisteneintrag> stueckliste = new ArrayList<>();
     private final VertragBaumaschinenListClickListener listener;
     private Context context;
+    private Application application;
+    private final BaumaschinenRepository baumaschinenRepository = BaumaschinenRepository.getInstance(application);
 
-    public AddVertragBaumaschineListAdapter(VertragBaumaschinenListClickListener listener, Context context) {
+    public AddVertragBaumaschineListAdapter(Application application, VertragBaumaschinenListClickListener listener, Context context) {
+        this.application = application;
         this.listener = listener;
         this.context = context;
-
     }
 
     @NonNull
@@ -47,54 +51,58 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
     @Override
     public void onBindViewHolder(@NonNull AddVertragBaumaschineListAdapter.AddVertragViewHolder holder, int position) {
-        if (baumaschineList != null) {
-            Baumaschine current = baumaschineList.get(position);
-            holder.baumaschineName.setText(current.getMachineName());
+        if (stueckliste != null) {
+            int currentMaschineId = stueckliste.get(position).getIdBaumaschine();
+            holder.baumaschineName.setText(baumaschinenRepository.getBaumaschineById(currentMaschineId).getMachineName());
 
             /*get amount which the user has determined in the vertragBaumaschinenRecyclerView,
             therefor call the method getSelectedBaumaschinenAmount() from AddVertragActivity
             which is accessible through ((AddVertragActivity)context)*/
-            int selectedAmount = ((AddVertragActivity)context).getSelectedBaumaschinenAmount();
-            String selectedAmountToString = String.valueOf(selectedAmount);
-            holder.amountBaumaschine.setText(selectedAmountToString);
+            int selectedAmount = stueckliste.get(position).getAmount();
+            holder.amountBaumaschine.setText(String.valueOf(selectedAmount));
         }
     }
 
 
     @Override
     public int getItemCount() {
-        if (baumaschineList != null) {
-            return baumaschineList.size();
+        if (stueckliste != null) {
+            return stueckliste.size();
         } else {
             return 0;
         }
     }
 
-    public void setAddVertragBaumaschinen(Baumaschine baumaschine) {
-
+    public void addBaumaschinenToVertrag(Baumaschine baumaschine) {
         /*check if the chosen Baumaschine is already in the list, if so then prohibit a duplicate*/
-        if(baumaschineList.contains(baumaschine)){
-            Log.d(TAG,"Maschine bereits vorhanden");
+        boolean maschineAlreadyListed = false;
+        for (Stuecklisteneintrag stuecklisteneintrag : stueckliste) {
+            if (stuecklisteneintrag.getIdBaumaschine() == baumaschine.getIdBaumaschine()) {
+                maschineAlreadyListed = true;
+            }
+        }
+        if (maschineAlreadyListed) {
+            Log.d(TAG, "Maschine bereits vorhanden");
             Toast.makeText(context.getApplicationContext(), "Maschine bereits in Liste vorhanden!", Toast.LENGTH_SHORT).show();
             return;
         }
-        baumaschineList.add(baumaschine);
+        stueckliste.add(new Stuecklisteneintrag(baumaschine, ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag()));
         notifyDataSetChanged();
 
     }
 
-    public void removeAddVertragBaumaschine(int position){
-        baumaschineList.remove(position);
+    public void removeAddVertragBaumaschine(int position) {
+        stueckliste.remove(position);
         notifyItemRemoved(position);
         /*calling recyclerViewVisibility method from AddVertrag Activity (check the context if its an instance of the desired activity),
         to show up the emptyRecyclerViewTextView String, when RecyclerView is empty*/
-        if(context instanceof AddVertragActivity){
-            ((AddVertragActivity)context).recyclerViewVisibility();
+        if (context instanceof AddVertragActivity) {
+            ((AddVertragActivity) context).recyclerViewVisibility();
         }
     }
 
-    public List<Baumaschine> getBaumaschineList(){
-        return baumaschineList;
+    public List<Stuecklisteneintrag> getStueckliste() {
+        return stueckliste;
     }
 
 
@@ -125,7 +133,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         public void onClick(View v) {
             listenerRef.get().onPositionClicked(getAdapterPosition());
 
-            if(v.getId() == deleteButton.getId()){
+            if (v.getId() == deleteButton.getId()) {
                 removeAddVertragBaumaschine(getAdapterPosition());
             }
 

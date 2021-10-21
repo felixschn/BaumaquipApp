@@ -15,7 +15,8 @@ public class AddBaumaschinenViewModel extends AndroidViewModel {
         super(application);
         baumaschinenRepository = BaumaschinenRepository.getInstance(application);
     }
-    public void insert(Baumaschine baumaschine){
+
+    public void insert(Baumaschine baumaschine) {
         baumaschinenRepository.insert(baumaschine);
     }
 }

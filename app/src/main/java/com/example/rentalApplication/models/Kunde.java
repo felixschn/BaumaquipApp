@@ -59,7 +59,7 @@ public class Kunde {
         return idKunde;
     }
 
-    public void setIdKunde(int idKunde){
+    public void setIdKunde(int idKunde) {
         this.idKunde = idKunde;
     }
 

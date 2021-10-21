@@ -19,28 +19,27 @@ public class Vertrag {
     public int idVertrag;
 
     @TypeConverters(Converters.class)
-    private List<Baumaschine> vertragBaumaschineList;
+    private List<Stuecklisteneintrag> stueckliste;
 
     @NonNull
-    private String vertragKunde;
+    private int idKunde;
 
     @NonNull
-    private LocalDate beginnLeihe;
+    private LocalDate beginnVertrag;
 
     @NonNull
-    private LocalDate endeLeihe;
+    private LocalDate endeVertrag;
 
     private Boolean expanded;
     private Boolean archived;
 
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
-    public Vertrag(@NonNull List<Baumaschine> vertragBaumaschineList, @NonNull String vertragKunde, @NonNull LocalDate beginnLeihe, @NonNull LocalDate endeLeihe) {
-        this.idVertrag = idVertrag;
-        this.vertragBaumaschineList = vertragBaumaschineList;
-        this.vertragKunde = vertragKunde;
-        this.beginnLeihe = beginnLeihe;
-        this.endeLeihe = endeLeihe;
+    public Vertrag(@NonNull List<Stuecklisteneintrag> stueckliste, @NonNull int idKunde, @NonNull LocalDate beginnVertrag, @NonNull LocalDate endeVertrag) {
+        this.stueckliste = stueckliste;
+        this.idKunde = idKunde;
+        this.beginnVertrag = beginnVertrag;
+        this.endeVertrag = endeVertrag;
         //set Boolean initially to false
         this.expanded = false;
         this.archived = false;
@@ -52,35 +51,43 @@ public class Vertrag {
         return idVertrag;
     }
 
-    public List<Baumaschine> getVertragBaumaschineList() {
-        return vertragBaumaschineList;
+    public List<Stuecklisteneintrag> getVertragStueckList() {
+        return stueckliste;
     }
 
     @NonNull
-    public String getVertragKunde() {
-        return vertragKunde;
+    public int getIdKunde() {
+        return idKunde;
     }
 
-    public void setVertragKunde(@NonNull String vertragKunde) {
-        this.vertragKunde = vertragKunde;
-    }
-
-    @NonNull
-    public LocalDate getBeginnLeihe() {
-        return beginnLeihe;
-    }
-
-    public void setBeginnLeihe(@NonNull LocalDate beginnLeihe) {
-        this.beginnLeihe = beginnLeihe;
+    public void setIdKunde(@NonNull int idKunde) {
+        this.idKunde = idKunde;
     }
 
     @NonNull
-    public LocalDate getEndeLeihe() {
-        return endeLeihe;
+    public LocalDate getBeginnVertrag() {
+        return beginnVertrag;
     }
 
-    public void setEndeLeihe(@NonNull LocalDate endeLeihe) {
-        this.endeLeihe = endeLeihe;
+    public void setBeginnVertrag(@NonNull LocalDate beginnVertrag) {
+        this.beginnVertrag = beginnVertrag;
+    }
+
+    @NonNull
+    public LocalDate getEndeVertrag() {
+        return endeVertrag;
+    }
+
+    public void setEndeVertrag(@NonNull LocalDate endeVertrag) {
+        this.endeVertrag = endeVertrag;
+    }
+
+    public List<Stuecklisteneintrag> getStueckliste() {
+        return stueckliste;
+    }
+
+    public void setStueckliste(List<Stuecklisteneintrag> stueckliste) {
+        stueckliste = stueckliste;
     }
 
     public Boolean getExpanded() {

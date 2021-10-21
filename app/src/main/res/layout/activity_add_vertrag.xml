@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/baumaschinenAmountTextView"
-        app:layout_constraintTop_toBottomOf="@id/spinnerKunden"  />
+        app:layout_constraintTop_toBottomOf="@id/spinnerKunden" />
 
     <ImageButton
         android:id="@+id/addVertragBaumaschineListButton"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@id/spinnerKunden"
         android:layout_marginTop="32dp"
         android:layout_marginStart="30dp"
-        style="@style/Widget.AppCompat.Button.Small"/>
+        style="@style/Widget.AppCompat.Button.Small" />
 
     <RelativeLayout
         android:id="@+id/addVertragBaumaschinenListLinearLayout"
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone"
-            android:text="@string/emptyRecyclerView"/>
+            android:text="@string/emptyRecyclerView" />
 
     </RelativeLayout>
 
@@ -136,8 +136,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addVertragBaumaschinenListLinearLayout" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

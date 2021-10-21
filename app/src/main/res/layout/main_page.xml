@@ -11,8 +11,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tabLayout"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/tabLayout" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -25,7 +24,6 @@
         app:tabPaddingTop="15dp" />
 
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
@@ -36,8 +34,7 @@
         app:layout_constraintVertical_bias="0.038"
         android:paddingBottom="10dp"
         android:paddingTop="50dp"
-        tools:layout_editor_absoluteX="0dp"
-        />
+        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabViewPager"
@@ -49,8 +46,7 @@
         app:icon="@drawable/ic_button_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/baumaquip_main_color"
-        />
+        android:backgroundTint="@color/baumaquip_main_color" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addBaumaschine"
@@ -60,8 +56,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/fabViewPager"
         app:layout_constraintEnd_toEndOf="@+id/fabViewPager"
-        app:backgroundTint="@color/baumaquip_main_color"
-        />
+        app:backgroundTint="@color/baumaquip_main_color" />
 
     <TextView
         android:id="@+id/addBaumaschineFabString"
@@ -82,7 +77,7 @@
         app:layout_constraintBottom_toTopOf="@+id/addBaumaschine"
         app:layout_constraintEnd_toEndOf="@+id/addBaumaschine"
         app:layout_constraintStart_toStartOf="@+id/addBaumaschine"
-        app:backgroundTint="@color/baumaquip_main_color"/>
+        app:backgroundTint="@color/baumaquip_main_color" />
 
     <TextView
         android:id="@+id/addKundenFabString"
@@ -92,7 +87,7 @@
         android:text="Kunde hinzufügen"
         app:layout_constraintBottom_toBottomOf="@+id/addKunde"
         app:layout_constraintEnd_toStartOf="@+id/addKunde"
-        app:layout_constraintTop_toTopOf="@+id/addKunde"/>
+        app:layout_constraintTop_toTopOf="@+id/addKunde" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addVertrag"
@@ -105,8 +100,7 @@
         app:layout_constraintStart_toStartOf="@+id/addKunde"
         android:backgroundTint="@color/baumaquip_main_color"
         android:insetTop="0dp"
-        android:insetBottom="0dp"
-        />
+        android:insetBottom="0dp" />
 
     />
 
@@ -118,7 +112,7 @@
         android:text="Vertrag hinzufügen"
         app:layout_constraintBottom_toBottomOf="@+id/addVertrag"
         app:layout_constraintEnd_toStartOf="@+id/addVertrag"
-        app:layout_constraintTop_toTopOf="@+id/addVertrag"/>
+        app:layout_constraintTop_toTopOf="@+id/addVertrag" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

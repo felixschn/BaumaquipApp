@@ -26,8 +26,9 @@ public class CustomKundeAdapter extends BaseAdapter {
         inflater = (LayoutInflater.from(context));
 
     }
+
     //method to retrieve a list of all Database entries from the calling activity
-    public void setKunden(List<Kunde> kundenList){
+    public void setKunden(List<Kunde> kundenList) {
         this.kundenList = kundenList;
         notifyDataSetChanged();
     }

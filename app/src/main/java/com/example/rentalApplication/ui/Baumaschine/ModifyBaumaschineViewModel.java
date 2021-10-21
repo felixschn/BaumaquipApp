@@ -18,13 +18,16 @@ public class ModifyBaumaschineViewModel extends AndroidViewModel {
         baumaschinenRepository = BaumaschinenRepository.getInstance(application);
     }
 
-    public Baumaschine getBaumaschineById(int id){
+    public Baumaschine getBaumaschineById(int id) {
         return baumaschinenRepository.getBaumaschineById(id);
     }
 
-    public void update(Baumaschine baumaschine){
+    public void update(Baumaschine baumaschine) {
         Log.d(TAG, "ROW_ID in: " + TAG + baumaschine.getIdBaumaschine());
-        baumaschinenRepository.update(baumaschine);}
+        baumaschinenRepository.update(baumaschine);
+    }
 
-    public Baumaschine getAnyBaumaschine(){return baumaschinenRepository.getAnyBaumaschine();}
+    public Baumaschine getAnyBaumaschine() {
+        return baumaschinenRepository.getAnyBaumaschine();
+    }
 }

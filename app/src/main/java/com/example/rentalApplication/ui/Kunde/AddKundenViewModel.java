@@ -15,5 +15,8 @@ public class AddKundenViewModel extends AndroidViewModel {
         super(application);
         kundenRepository = new KundenRepository(application);
     }
-    public void insert(Kunde kunde){ kundenRepository.insert(kunde);}
+
+    public void insert(Kunde kunde) {
+        kundenRepository.insert(kunde);
+    }
 }

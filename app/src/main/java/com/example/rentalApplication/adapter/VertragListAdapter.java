@@ -49,9 +49,9 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             Vertrag current = vertragList.get(position);
             String intToString = String.valueOf(current.getIdVertrag());
             holder.vertragId.setText(intToString);
-            holder.vertragKunde.setText(current.getVertragKunde());
-            holder.vertragStartLeihe.setText(setDate(current.getBeginnLeihe()));
-            holder.vertragEndeLeihe.setText(setDate(current.getEndeLeihe()));
+            holder.vertragKunde.setText(current.getIdKunde());
+            holder.vertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
+            holder.vertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
 
             boolean isExpanded = vertragList.get(position).getExpanded();
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -80,7 +80,7 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
     //method to format LocalDate from StartLeihe and EndLeihe to String for TextView
     public String setDate(LocalDate localDate) {
         Converters converters = new Converters();
-        converters.dateToString(localDate);
+        converters.localDateToString(localDate);
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.GERMAN);
         return dateFormat.format(localDate);
     }

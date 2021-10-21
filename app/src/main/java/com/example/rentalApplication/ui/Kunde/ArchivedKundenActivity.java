@@ -42,9 +42,11 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
 
         });
     }
-    public void deleteKunde(Kunde kunde){
+
+    public void deleteKunde(Kunde kunde) {
         kundenViewModel.delete(kunde);
     }
+
     public void restoreKunde(int id) {
         modifyKundenViewModel = new ViewModelProvider(this).get(ModifyKundenViewModel.class);
         restoreKunde = modifyKundenViewModel.loadKundeById(id);

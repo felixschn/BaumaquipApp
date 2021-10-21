@@ -12,7 +12,6 @@
         android:paddingBottom="50dp"
         android:scrollbars="vertical"
 
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        ></androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

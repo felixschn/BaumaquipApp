@@ -77,7 +77,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
         notifyDataSetChanged();
     }
 
-    class KundenViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+    class KundenViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView kundenName;
         private final TextView kundenStrasse;
         private final TextView kundenStrassenNummer;
