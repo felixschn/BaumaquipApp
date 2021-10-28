@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -237,14 +238,21 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             buttonVisibility();
         }
         if (v.getId() == addBaumaschinenListButton.getId()) {
-            if (selectedBaumaschineFromSpinner != null) {
-                addVertragBaumaschineListAdapter.addBaumaschinenToVertrag(selectedBaumaschineFromSpinner);
-                recyclerViewVisibility();
-            }
+            if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
 
+                if (selectedBaumaschineFromSpinner != null) {
+                    addVertragBaumaschineListAdapter.addBaumaschinenToVertrag(selectedBaumaschineFromSpinner);
+                    recyclerViewVisibility();
+                }
+            }
+            else{
+                Toast.makeText(this, "Bitte Start und Enddatum wählen!", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
         }
         if (v.getId() == addVertragButton.getId()) {
+            addVertragBaumaschineListAdapter.getStueckliste();
             //TODO: save to DB
             //insertNewVertrag();
         }

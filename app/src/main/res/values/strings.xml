@@ -48,6 +48,7 @@
     <!--VertragStrings-->
     <string name="emptyRecyclerView">No machine selected</string>
     <string name="announceRecyclerView">selected machines</string>
+    <string name="insurance">insured</string>
 
 
 </resources>

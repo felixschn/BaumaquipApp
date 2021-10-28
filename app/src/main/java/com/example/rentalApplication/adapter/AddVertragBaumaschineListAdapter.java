@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -111,6 +112,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         private final TextView amountBaumaschine;
         private final ImageButton deleteButton;
         private final ImageButton modifyButton;
+        private final CheckBox insuranceCheckbox;
         private WeakReference<VertragBaumaschinenListClickListener> listenerRef;
 
 
@@ -122,9 +124,11 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             amountBaumaschine = itemView.findViewById(R.id.addVertragAmountBaumaschineList);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             modifyButton = itemView.findViewById(R.id.modifyButton);
+            insuranceCheckbox = itemView.findViewById(R.id.insuranceCheckBox);
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
             modifyButton.setVisibility(View.GONE);
+            insuranceCheckbox.setOnClickListener(this);
 
 
         }
@@ -135,6 +139,9 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
             if (v.getId() == deleteButton.getId()) {
                 removeAddVertragBaumaschine(getAdapterPosition());
+            }
+            if(v.getId() == insuranceCheckbox.getId()){
+                stueckliste.get(getAdapterPosition()).setInsurance(true);
             }
 
         }

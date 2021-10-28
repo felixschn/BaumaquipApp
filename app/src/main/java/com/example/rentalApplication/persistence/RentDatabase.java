@@ -28,6 +28,8 @@ public abstract class RentDatabase extends RoomDatabase {
 
     public abstract VertragDao vertragDao();
 
+    public abstract StuecklisteneintragDao stuecklisteneintragDao();
+
     private static final int NUMBER_OF_THREADS = 4;
 
     private static volatile RentDatabase INSTANCE;
@@ -82,11 +84,14 @@ public abstract class RentDatabase extends RoomDatabase {
         private final KundenDao kundenDao;
         private final BaumaschinenDao baumaschinenDao;
         private final VertragDao vertragDao;
+        private final StuecklisteneintragDao stuecklisteneintragDao;
 
         PopulateDbAsyncTask(RentDatabase db) {
             kundenDao = db.kundenDao();
             baumaschinenDao = db.baumaschinenDao();
             vertragDao = db.vertragDao();
+            stuecklisteneintragDao = db.stuecklisteneintragDao();
+
         }
 
         @Override

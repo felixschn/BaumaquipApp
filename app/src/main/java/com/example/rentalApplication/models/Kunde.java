@@ -40,7 +40,6 @@ public class Kunde {
 
     public Kunde(@NonNull String name, @NonNull String telefonNumber, @NonNull String email, @NonNull String streetName, @NonNull String streetNumber, @NonNull String zip, @NonNull String location, @NonNull String constructionSide, @NonNull String contactPerson) {
 
-        this.idKunde = idKunde;
         this.name = name;
         this.telefonNumber = telefonNumber;
         this.streetName = streetName;

@@ -48,4 +48,5 @@
     <!--VertragStrings-->
     <string name="emptyRecyclerView">Keine Baumaschine ausgewählt</string>
     <string name="announceRecyclerView">Ausgewählte Baumaschinen</string>
+    <string name="insurance">versichert</string>
 </resources>

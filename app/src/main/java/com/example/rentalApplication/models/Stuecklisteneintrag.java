@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
@@ -19,16 +20,27 @@ public class Stuecklisteneintrag {
     @ColumnInfo(name = "rowid")
     @PrimaryKey
     public int idStueckList;
+
     @NonNull
     private int idBaumaschine;
+
     @NonNull
     private Integer amount;
+
     @NonNull
+    @TypeConverters(Converters.class)
     private Double operatingHours_begin;
+
+    @NonNull
+    @TypeConverters(Converters.class)
     private Double operatingHours_end;
+
     @NonNull
+    @TypeConverters(Converters.class)
     private Boolean insurance = false;
+
     @NonNull
+    @TypeConverters(Converters.class)
     private BigDecimal price;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
