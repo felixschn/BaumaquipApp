@@ -25,12 +25,16 @@ import com.example.rentalApplication.adapter.AddVertragBaumaschineListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Kunde;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
+import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenViewModel;
 import com.example.rentalApplication.ui.Kunde.KundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomBaumaschinenAdapter;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,6 +43,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
     private BaumaschinenViewModel baumaschinenViewModel;
     private KundenViewModel kundenViewModel;
+    private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
+    private AddVertragViewModel addVertragViewModel;
     private EditText beginnVertrag, endeVertrag;
     private final Calendar rentCalendar = Calendar.getInstance();
     private Button addVertragButton;
@@ -51,6 +57,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private AddVertragBaumaschineListAdapter addVertragBaumaschineListAdapter;
     private Spinner baumaschinenSpinner, kundenSpinner;
     private Baumaschine selectedBaumaschineFromSpinner;
+    private Kunde selectedKundeFromSpinner;
 
 
     @Override
@@ -182,11 +189,13 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     }
 
 
-    /*method to receive chosen spinner object (Baumaschine or Kunde)
+    /*
+     * method to receive chosen spinner object (Baumaschine or Kunde)
      * in case of Baumaschine: intercept the amount of the chosen Baumaschine
-     *   and set the initial amount which should be rented to 1
+     * and set the initial amount which should be rented to 1
      * if the maxAmount is higher than 1, show increase button
-     * if amountInt is higher than 1 show decrease button*/
+     * if amountInt is higher than 1 show decrease button
+   */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
@@ -200,6 +209,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 Log.d(TAG, "Amount: " + maxAmount);
                 break;
             case R.id.spinnerKunden:
+                selectedKundeFromSpinner = (Kunde) parent.getAdapter().getItem(position);
                 break;
 
         }
@@ -223,6 +233,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     /*override method for View.OnClickListener*/
     @Override
     public void onClick(View v) {
+
         /*increase the amount of the chosen Baumaschine which should be rented*/
         if (v.getId() == increaseButton.getId()) {
             Log.d(TAG, "increasing Baumaschinen amount");
@@ -230,14 +241,17 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             amountTextView.setText(String.valueOf(amountInt));
             buttonVisibility();
         }
-        /*increase the amount of the chosen Baumaschine which should be rented*/
+
+        /*decrease the amount of the chosen Baumaschine which should be rented*/
         if (v.getId() == decreaseButton.getId()) {
             Log.d(TAG, "decreasing Baumaschinen amount");
             amountInt--;
             amountTextView.setText(String.valueOf(amountInt));
             buttonVisibility();
         }
+
         if (v.getId() == addBaumaschinenListButton.getId()) {
+            /* check if the beginnVertrag & endeVertrag field is filled*/
             if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
 
                 if (selectedBaumaschineFromSpinner != null) {
@@ -252,13 +266,26 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         }
         if (v.getId() == addVertragButton.getId()) {
-            addVertragBaumaschineListAdapter.getStueckliste();
+            addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+            List<Stuecklisteneintrag> stuecklisteInsert = addVertragBaumaschineListAdapter.getStueckliste();
+            List<Integer> stuecklisteIds = new ArrayList<>();
+            for(int i = 0; i < stuecklisteInsert.size(); i++ ){
+                addStuecklisteneintragViewModel.insert(stuecklisteInsert.get(i));
+                stuecklisteIds.add(stuecklisteInsert.get(i).getIdStueckList());
+
+
+
+            }
+
+            addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
+            addVertragViewModel.insert(new Vertrag(stuecklisteIds,selectedKundeFromSpinner.getIdKunde(),getBeginnVertrag(),getEndeVertrag()));
             //TODO: save to DB
             //insertNewVertrag();
         }
 
     }
 
+    /* set visibility of the recyclerview to true, if an machine is added, else let the recyclerview disappear*/
     public void recyclerViewVisibility() {
         if (addVertragBaumaschineListAdapter.getItemCount() == 0) {
             recyclerView.setVisibility(View.GONE);

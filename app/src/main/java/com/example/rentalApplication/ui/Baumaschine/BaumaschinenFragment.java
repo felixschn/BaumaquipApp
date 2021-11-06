@@ -16,6 +16,7 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.BaumaschinenListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +93,12 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
      /*   baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), allBaumaschinen -> {
 
         });*/
+
+        //method to create an test machine at start
+        Baumaschine testBaumaschine = new Baumaschine("TestMaschine", 20, BigDecimal.valueOf(1),BigDecimal.valueOf(2), BigDecimal.valueOf(3), 10.0,"gut", "voll");
+        baumaschinenViewModel.insert(testBaumaschine);
+
+
         baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), new Observer<List<Baumaschine>>() {
             @Override
             public void onChanged(List<Baumaschine> baumaschines) {

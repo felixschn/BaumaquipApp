@@ -45,12 +45,12 @@ public class CustomKundeAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return kundenList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return kundenList.get(position).getIdKunde();
     }
 
     @Override

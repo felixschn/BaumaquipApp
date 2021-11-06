@@ -18,11 +18,13 @@ public class KundenViewModel extends AndroidViewModel {
 
     public KundenViewModel(@NonNull Application application) {
         super(application);
-        kundenRepository = new KundenRepository(application);
+        kundenRepository = KundenRepository.getInstance(application);
         allKunden = kundenRepository.getAllKunden();
         allArchivedKunden = kundenRepository.getAllArchivedKunden();
 
     }
+
+    public void insert(Kunde kunde){kundenRepository.insert(kunde);}
 
     public LiveData<List<Kunde>> getAllKunden() {
         return allKunden;

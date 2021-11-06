@@ -13,12 +13,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Kunde;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Baumaschine.class, Kunde.class, Vertrag.class}, version = 1, exportSchema = false)
+@Database(entities = {Baumaschine.class, Kunde.class, Vertrag.class, Stuecklisteneintrag.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class RentDatabase extends RoomDatabase {
 

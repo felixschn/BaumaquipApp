@@ -1,13 +1,17 @@
 package com.example.rentalApplication.models;
 
+import android.app.Application;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import com.example.rentalApplication.persistence.BaumaschinenRepository;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
@@ -18,7 +22,7 @@ import java.time.temporal.ChronoUnit;
 public class Stuecklisteneintrag {
 
     @ColumnInfo(name = "rowid")
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int idStueckList;
 
     @NonNull
@@ -31,7 +35,6 @@ public class Stuecklisteneintrag {
     @TypeConverters(Converters.class)
     private Double operatingHours_begin;
 
-    @NonNull
     @TypeConverters(Converters.class)
     private Double operatingHours_end;
 
@@ -43,27 +46,47 @@ public class Stuecklisteneintrag {
     @TypeConverters(Converters.class)
     private BigDecimal price;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public Stuecklisteneintrag(@NonNull Baumaschine machine, @NonNull Integer amount,
-                               @NonNull LocalDate begin_date, @NonNull LocalDate end_date) {
-        this.idBaumaschine = machine.getIdBaumaschine();
+    @Ignore
+    private BaumaschinenRepository baumaschinenRepository;
+    @Ignore
+    private Application application;
+
+
+
+    private LocalDate beginDate, endDate;
+
+    public Stuecklisteneintrag() {
+    }
+
+    public Stuecklisteneintrag(@NonNull int idBaumaschine, @NonNull Integer amount,
+                               @NonNull LocalDate beginDate, @NonNull LocalDate endDate, Application application) {
+        this.idBaumaschine = idBaumaschine;
         this.amount = amount;
-        this.operatingHours_begin = machine.getOperatingHours();
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.application = application;
+
         this.operatingHours_end = null;
 
+        baumaschinenRepository = BaumaschinenRepository.getInstance(application);
+        Baumaschine baumaschine = baumaschinenRepository.getBaumaschineById(idBaumaschine);
 
-        long rental_period = ChronoUnit.DAYS.between(begin_date, end_date) + 1;  // +1 to include last day
+        this.operatingHours_begin = baumaschine.getOperatingHours();
+
+
+
+        long rental_period = ChronoUnit.DAYS.between(beginDate, endDate) + 1;  // +1 to include last day
 
         //TODO: Check & adjust logic of if-elif-else
         if ((4 == rental_period) &&
-                (DayOfWeek.FRIDAY == begin_date.getDayOfWeek()) &&
-                (DayOfWeek.MONDAY == end_date.getDayOfWeek())) {
+                (DayOfWeek.FRIDAY == beginDate.getDayOfWeek()) &&
+                (DayOfWeek.MONDAY == endDate.getDayOfWeek())) {
 
-            this.price = machine.getPricePerWeekend();
+            this.price = baumaschine.getPricePerWeekend();
         } else if (30 < rental_period) {
-            this.price = machine.getPricePerMonth().multiply(BigDecimal.valueOf(rental_period / 30));
+            this.price = baumaschine.getPricePerMonth().multiply(BigDecimal.valueOf(rental_period / 30));
         } else {
-            this.price = machine.getPricePerDay().multiply(BigDecimal.valueOf(rental_period));
+            this.price = baumaschine.getPricePerDay().multiply(BigDecimal.valueOf(rental_period));
         }
     }
 
@@ -127,5 +150,20 @@ public class Stuecklisteneintrag {
         this.price = price;
     }
 
+    public LocalDate getBeginDate() {
+        return beginDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setBeginDate(LocalDate beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }
 

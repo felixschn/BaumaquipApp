@@ -16,7 +16,7 @@ public class ModifyKundenViewModel extends AndroidViewModel {
 
     public ModifyKundenViewModel(@NonNull Application application) {
         super(application);
-        kundenRepository = new KundenRepository(application);
+        kundenRepository = KundenRepository.getInstance(application);
     }
 
     public Kunde loadKundeById(int id) {

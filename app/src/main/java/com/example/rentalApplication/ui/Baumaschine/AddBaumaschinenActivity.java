@@ -102,6 +102,8 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
         Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
 
+
+
         addBaumaschinenViewModel.insert(new Baumaschine(baumaschinenName, anzahl, pricePerDay, pricePerWeekend, pricePerMonth, operatingHours, baumaschinenDegreeOfWear, baumaschinenAmountOfGas));
         finish();
         /*Integer addBaumaschinenAnzahlInteger = Integer.parseInt(addBaumaschinenAnzahlEditText.getText().toString());

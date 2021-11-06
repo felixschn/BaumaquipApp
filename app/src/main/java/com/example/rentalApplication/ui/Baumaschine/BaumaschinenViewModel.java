@@ -25,6 +25,8 @@ public class BaumaschinenViewModel extends AndroidViewModel {
 
 
     }
+    //method to create an test machine at start
+    public void insert(Baumaschine baumaschine){baumaschinenRepository.insert(baumaschine);}
 
     public LiveData<List<Baumaschine>> getAllBaumaschinen() {
         return allBaumaschinen;

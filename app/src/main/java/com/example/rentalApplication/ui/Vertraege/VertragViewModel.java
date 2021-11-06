@@ -17,7 +17,7 @@ public class VertragViewModel extends AndroidViewModel {
 
     public VertragViewModel(@NonNull Application application) {
         super(application);
-        vertragRepository = new VertragRepository(application);
+        vertragRepository = VertragRepository.getInstance(application);
         allVertrag = vertragRepository.getAllVertrag();
     }
 

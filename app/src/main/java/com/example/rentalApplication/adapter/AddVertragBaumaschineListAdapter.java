@@ -87,7 +87,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             Toast.makeText(context.getApplicationContext(), "Maschine bereits in Liste vorhanden!", Toast.LENGTH_SHORT).show();
             return;
         }
-        stueckliste.add(new Stuecklisteneintrag(baumaschine, ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag()));
+        stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
         notifyDataSetChanged();
 
     }

@@ -13,13 +13,12 @@ import java.util.List;
 @Fts4
 @Entity
 public class Vertrag {
-    @TypeConverters(Converters.class)
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rowid")
     public int idVertrag;
 
     @TypeConverters(Converters.class)
-    private List<Stuecklisteneintrag> stueckliste;
+    private List<Integer> stuecklisteIds;
 
     @NonNull
     private int idKunde;
@@ -35,8 +34,8 @@ public class Vertrag {
 
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
-    public Vertrag(@NonNull List<Stuecklisteneintrag> stueckliste, @NonNull int idKunde, @NonNull LocalDate beginnVertrag, @NonNull LocalDate endeVertrag) {
-        this.stueckliste = stueckliste;
+    public Vertrag(@NonNull List<Integer> stuecklisteIds, @NonNull int idKunde, @NonNull LocalDate beginnVertrag, @NonNull LocalDate endeVertrag) {
+        this.stuecklisteIds = stuecklisteIds;
         this.idKunde = idKunde;
         this.beginnVertrag = beginnVertrag;
         this.endeVertrag = endeVertrag;
@@ -51,8 +50,8 @@ public class Vertrag {
         return idVertrag;
     }
 
-    public List<Stuecklisteneintrag> getVertragStueckList() {
-        return stueckliste;
+    public List<Integer> getVertragStueckList() {
+        return stuecklisteIds;
     }
 
     @NonNull
@@ -82,12 +81,12 @@ public class Vertrag {
         this.endeVertrag = endeVertrag;
     }
 
-    public List<Stuecklisteneintrag> getStueckliste() {
-        return stueckliste;
+    public List<Integer> getStuecklisteIds() {
+        return stuecklisteIds;
     }
 
-    public void setStueckliste(List<Stuecklisteneintrag> stueckliste) {
-        stueckliste = stueckliste;
+    public void setStuecklisteIds(List<Integer> stuecklisteIds) {
+        stuecklisteIds = stuecklisteIds;
     }
 
     public Boolean getExpanded() {

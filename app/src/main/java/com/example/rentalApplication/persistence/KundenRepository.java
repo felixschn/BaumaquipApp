@@ -11,15 +11,23 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class KundenRepository {
+    private static  KundenRepository INSTANCE = null;
     private KundenDao kundenDao;
     private LiveData<List<Kunde>> allKunden;
     private LiveData<List<Kunde>> allArchivedKunden;
 
-    public KundenRepository(Application application) {
+    private KundenRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
         kundenDao = db.kundenDao();
         allKunden = kundenDao.getAllKunden();
         allArchivedKunden = kundenDao.getAllArchivedKunden();
+    }
+
+    public static synchronized KundenRepository getInstance(Application application) {
+        if (null == INSTANCE) {
+            INSTANCE = new KundenRepository(application);
+        }
+        return INSTANCE;
     }
 
     public LiveData<List<Kunde>> getAllKunden() {

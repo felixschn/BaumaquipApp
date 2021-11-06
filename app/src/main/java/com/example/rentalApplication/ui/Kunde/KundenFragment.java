@@ -81,6 +81,10 @@ public class KundenFragment extends Fragment implements KundenClickListener {
         final KundenListAdapter kundenListAdapter = new KundenListAdapter(this, this);
         recyclerView.setAdapter(kundenListAdapter);
         kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);
+
+
+        Kunde testKunde = new Kunde("TestKunde","1","2","3","4","5","6","7","8");
+        kundenViewModel.insert(testKunde);
         kundenViewModel.getAllKunden().observe(getViewLifecycleOwner(), new Observer<List<Kunde>>() {
             @Override
             public void onChanged(List<Kunde> kundes) {

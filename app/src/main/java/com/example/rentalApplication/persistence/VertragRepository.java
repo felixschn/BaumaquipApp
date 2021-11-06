@@ -10,13 +10,21 @@ import com.example.rentalApplication.models.Vertrag;
 import java.util.List;
 
 public class VertragRepository {
+    private static VertragRepository INSTANCE = null;
     private VertragDao vertragDao;
     private LiveData<List<Vertrag>> allVertrag;
 
-    public VertragRepository(Application application) {
+    private VertragRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
         vertragDao = db.vertragDao();
         allVertrag = vertragDao.getAllVertrag();
+    }
+
+    public static synchronized VertragRepository getInstance(Application application) {
+        if (null == INSTANCE) {
+            INSTANCE = new VertragRepository(application);
+        }
+        return INSTANCE;
     }
 
     public LiveData<List<Vertrag>> getAllVertrag() {

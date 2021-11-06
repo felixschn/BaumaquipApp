@@ -4,6 +4,7 @@ package com.example.rentalApplication.models;
 import android.os.Build;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
@@ -43,18 +44,22 @@ public class Converters implements Serializable {
         return gson.fromJson(vertragBaumaschineString, type);
     }
 
+
+    @NonNull
     @TypeConverter
-    public static String bigDecimalToString(BigDecimal price) {
+    public static String bigDecimalToString(@NonNull BigDecimal price) {
         return price.toString();
     }
 
+    @NonNull
+    @org.jetbrains.annotations.Contract("_ -> new")
     @TypeConverter
     public static BigDecimal stringToBigDecimal(String priceAsString) {
         return new BigDecimal(priceAsString);
     }
 
     @TypeConverter
-    public static String localDateToString(LocalDate date) {
+    public static String localDateToString(@NonNull LocalDate date) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.GERMAN);
         return date.format(dateFormat);
     }
@@ -66,18 +71,21 @@ public class Converters implements Serializable {
         return LocalDate.parse(strDate, formatter);
     }
 
-    public static LocalDate editTextToLocalDate(EditText editText) {
+    @TypeConverter
+    public static LocalDate editTextToLocalDate(@NonNull EditText editText) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         return LocalDate.parse(editText.getText().toString(), formatter);
     }
 
-    public static String dateToString(Date date) {
+    @TypeConverter
+    public static String dateToString(@NonNull Date date) {
         //format the Date Type in LocaleDate
         LocalDate ldate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDateToString(ldate);
 
     }
 
+    @TypeConverter
     public String fromIntegerList(List<Integer> intList) {
         if (intList == null) {
             return (null);
@@ -119,6 +127,26 @@ public class Converters implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<List<Baumaschine>>() {
         }.getType();
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public String baumaschineToString(Baumaschine baumaschine){
+        if(null == baumaschine){
+            return null;
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<Baumaschine>(){}.getType();
+        return gson.toJson(baumaschine, type);
+    }
+
+    @TypeConverter
+    public Baumaschine stringToBaumaschine(String string){
+        if(null == string){
+            return null;
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<Baumaschine>(){}.getType();
         return gson.fromJson(string, type);
     }
 }

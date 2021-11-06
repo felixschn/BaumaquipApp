@@ -15,6 +15,5 @@ public interface StuecklisteneintragDao {
     @Delete
     void delete(Stuecklisteneintrag stuecklisteneintrag);
     @Update
-    void
-    update(Stuecklisteneintrag stuecklisteneintrag);
+    void update(Stuecklisteneintrag stuecklisteneintrag);
 }
