@@ -31,7 +31,7 @@ public class Stuecklisteneintrag {
     @NonNull
     private Integer amount;
 
-    @NonNull
+
     @TypeConverters(Converters.class)
     private Double operatingHours_begin;
 

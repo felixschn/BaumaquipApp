@@ -37,8 +37,12 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenPricePerWeekendEditText = findViewById(R.id.addBaumaschinenPricePerWeekend);
         addBaumaschinenPricePerMonthEditText = findViewById(R.id.addBaumaschinenPricePerMonth);
         addBaumaschinenOperatingHours = findViewById(R.id.addBaumaschinenOperatingHours);
+        addBaumaschinenOperatingHours.setEnabled(false);
         addBaumaschinenDegreeOfWear = findViewById(R.id.addBaumaschinenDegreeOfWear);
+        addBaumaschinenDegreeOfWear.setEnabled(false);
         addBaumaschinenAmountOfGas = findViewById(R.id.addBaumaschinenAmountOfGas);
+        addBaumaschinenAmountOfGas.setEnabled(false);
+
 
         //retrieve Intent from starting activity
         intent = this.getIntent();
@@ -64,6 +68,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
 
 
         }
+        /*listen from which activity AddBaumaschinenActivity was called and adapt to context with different methods*/
         addBaumaschinenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +90,11 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         String baumaschinenPricePerDay = addBaumaschinenPricePerDayEditText.getText().toString();
         String baumaschinenPricePerWeekend = addBaumaschinenPricePerWeekendEditText.getText().toString();
         String baumaschinenPricePerMonth = addBaumaschinenPricePerMonthEditText.getText().toString();
+        if(baumaschinenAnzahl.equals("1")){
+            addBaumaschinenOperatingHours.setEnabled(true);
+            addBaumaschinenDegreeOfWear.setEnabled(true);
+            addBaumaschinenAmountOfGas.setEnabled(true);
+        }
         String baumaschinenOperatingHours = addBaumaschinenOperatingHours.getText().toString();
         String baumaschinenDegreeOfWear = addBaumaschinenDegreeOfWear.getText().toString();
         String baumaschinenAmountOfGas = addBaumaschinenAmountOfGas.getText().toString();
