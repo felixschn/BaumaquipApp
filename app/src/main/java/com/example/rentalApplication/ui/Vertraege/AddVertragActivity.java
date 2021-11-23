@@ -32,6 +32,7 @@ import com.example.rentalApplication.ui.Kunde.KundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomBaumaschinenAdapter;
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class AddVertragActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, VertragBaumaschinenListClickListener, View.OnClickListener {
+public class AddVertragActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, VertragBaumaschinenListClickListener, View.OnClickListener, AsyncTaskStuecklisteneintragIdResponse {
 
     private BaumaschinenViewModel baumaschinenViewModel;
     private KundenViewModel kundenViewModel;
@@ -58,6 +59,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private Spinner baumaschinenSpinner, kundenSpinner;
     private Baumaschine selectedBaumaschineFromSpinner;
     private Kunde selectedKundeFromSpinner;
+    private long stuecklisteneintragId;
+    private AsyncTaskStuecklisteneintragIdResponse asyncTaskStuecklisteneintragIdResponse;
 
 
     @Override
@@ -170,6 +173,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         announceRecyclerView = findViewById(R.id.announceRecyclerViewTextView);
 
         recyclerViewVisibility();
+
+        this.setOnDataListener(this);
     }
 
     /*method to in- or decrease the amount of the chosen Baumaschine through the spinner:
@@ -272,6 +277,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             for(int i = 0; i < stuecklisteInsert.size(); i++ ){
                 addStuecklisteneintragViewModel.insert(stuecklisteInsert.get(i));
                 stuecklisteIds.add(stuecklisteInsert.get(i).getIdStueckList());
+                Log.d(TAG,"StuecklistenID: " + stuecklisteneintragId);
+
 
 
 
@@ -312,4 +319,13 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     }
 
 
+    @Override
+    public void idAfterInsert(long id) {
+        stuecklisteneintragId = id;
+
+    }
+
+    private void setOnDataListener(AsyncTaskStuecklisteneintragIdResponse asyncTaskStuecklisteneintragIdResponse){
+        asyncTaskStuecklisteneintragIdResponse = this.asyncTaskStuecklisteneintragIdResponse;
+    }
 }
