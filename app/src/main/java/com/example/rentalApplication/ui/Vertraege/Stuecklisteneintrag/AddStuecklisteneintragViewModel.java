@@ -4,21 +4,25 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.persistence.StuecklisteneintragRepository;
 
+import java.util.concurrent.ExecutionException;
+
 public class AddStuecklisteneintragViewModel extends AndroidViewModel {
     private final StuecklisteneintragRepository stuecklisteneintragRepository;
-    private AsyncTaskStuecklisteneintragIdResponse asyncTaskStuecklisteneintragIdResponse;
+
 
     public AddStuecklisteneintragViewModel(@NonNull Application application) {
         super(application);
         stuecklisteneintragRepository = StuecklisteneintragRepository.getInstance(application);
     }
 
-
-    public void insert(Stuecklisteneintrag stuecklisteneintrag) {
-        stuecklisteneintragRepository.insert(stuecklisteneintrag);
+    /* method to insert Stuecklisteneintrag and automatically retrieve rowid value*/
+    public long insert(Stuecklisteneintrag stuecklisteneintrag) throws ExecutionException, InterruptedException {
+        return stuecklisteneintragRepository.insert(stuecklisteneintrag);
     }
+
 }

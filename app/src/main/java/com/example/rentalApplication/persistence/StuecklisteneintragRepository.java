@@ -5,9 +5,13 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
+
+import java.util.concurrent.ExecutionException;
 
 public class StuecklisteneintragRepository {
     private static StuecklisteneintragRepository INSTANCE = null;
@@ -28,23 +32,16 @@ public class StuecklisteneintragRepository {
         return INSTANCE;
     }
 
-    public Long insert(Stuecklisteneintrag stuecklisteneintrag){
-        asyncTaskStuecklisteneintragIdResponse = new AsyncTaskStuecklisteneintragIdResponse() {
-            @Override
-            public void idAfterInsert(long id) {
-
-            }
-        };
-        new InsertAsyncTask(stuecklisteneintragDao, asyncTaskStuecklisteneintragIdResponse).execute(stuecklisteneintrag);
-        return null;
+    public long insert( Stuecklisteneintrag stuecklisteneintrag) throws ExecutionException, InterruptedException {
+        return new InsertAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag).get();
     }
 
 
     private static class InsertAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Long>{
         private StuecklisteneintragDao mAsyncTaskDao;
-        public AsyncTaskStuecklisteneintragIdResponse delegate;
+
         public long insertId;
-        InsertAsyncTask(StuecklisteneintragDao dao, AsyncTaskStuecklisteneintragIdResponse asyncResponse){this.mAsyncTaskDao = dao; this.delegate = asyncResponse;}
+        InsertAsyncTask(StuecklisteneintragDao dao){this.mAsyncTaskDao = dao;}
 
         @Override
         protected Long doInBackground(Stuecklisteneintrag... stuecklisteneintrag){
@@ -52,11 +49,10 @@ public class StuecklisteneintragRepository {
             return insertId;
         }
 
-        @Override
+        /*@Override
         protected void onPostExecute(Long insertId) {
-
-            delegate.idAfterInsert(insertId);
-        }
+            super.onPostExecute(insertId);
+        }*/
     }
 
 

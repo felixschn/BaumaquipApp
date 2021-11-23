@@ -66,6 +66,7 @@ public class Stuecklisteneintrag {
         this.endDate = endDate;
         this.application = application;
 
+
         this.operatingHours_end = null;
 
         baumaschinenRepository = BaumaschinenRepository.getInstance(application);
