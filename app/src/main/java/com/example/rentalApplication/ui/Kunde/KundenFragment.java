@@ -27,7 +27,7 @@ public class KundenFragment extends Fragment implements KundenClickListener {
     private RecyclerView recyclerView;
     private KundenViewModel kundenViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
-    private Kunde archiveKunde;
+    private Kunde archivedkunde;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -98,9 +98,9 @@ public class KundenFragment extends Fragment implements KundenClickListener {
 
     public void archiveKunde(int id) {
         modifyKundenViewModel = new ViewModelProvider(requireActivity()).get(ModifyKundenViewModel.class);
-        archiveKunde = modifyKundenViewModel.loadKundeById(id);
-        archiveKunde.setArchived(true);
-        modifyKundenViewModel.update(archiveKunde);
+        archivedkunde = modifyKundenViewModel.loadKundeById(id);
+        archivedkunde.setArchived(true);
+        modifyKundenViewModel.update(archivedkunde);
 
     }
 

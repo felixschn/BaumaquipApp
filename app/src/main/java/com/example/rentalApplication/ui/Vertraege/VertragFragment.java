@@ -17,6 +17,7 @@ import com.example.rentalApplication.models.Vertrag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +30,8 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private VertragListAdapter vertragListAdapter;
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
+    private ModifyVertragViewModel modifyVertragViewModel;
+    private Vertrag archivedVertrag;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,6 +93,14 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         });
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public void archiveVertrag(int id){
+        modifyVertragViewModel = new ViewModelProvider(requireActivity()).get(ModifyVertragViewModel.class);
+        archivedVertrag = modifyVertragViewModel.loadVertragById(id);
+        archivedVertrag.setArchived(true);
+        modifyVertragViewModel.update(archivedVertrag);
+
     }
 
     @Override

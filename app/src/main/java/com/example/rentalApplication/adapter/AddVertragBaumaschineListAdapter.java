@@ -34,6 +34,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     private final VertragBaumaschinenListClickListener listener;
     private Context context;
     private Application application;
+
     private final BaumaschinenRepository baumaschinenRepository = BaumaschinenRepository.getInstance(application);
 
     public AddVertragBaumaschineListAdapter(Application application, VertragBaumaschinenListClickListener listener, Context context) {
@@ -87,6 +88,11 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             Toast.makeText(context.getApplicationContext(), "Maschine bereits in Liste vorhanden!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if(((AddVertragActivity) context).checkIfDateIsSet()){
+            Toast.makeText(((AddVertragActivity) context), "Bitte zuerst Datum auswählen!", Toast.LENGTH_LONG).show();
+            return;
+        }
         stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
         notifyDataSetChanged();
 
@@ -125,6 +131,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             deleteButton = itemView.findViewById(R.id.deleteButton);
             modifyButton = itemView.findViewById(R.id.modifyButton);
             insuranceCheckbox = itemView.findViewById(R.id.insuranceCheckBox);
+            insuranceCheckbox.setChecked(false);
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
             modifyButton.setVisibility(View.GONE);
@@ -136,13 +143,19 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         @Override
         public void onClick(View v) {
             listenerRef.get().onPositionClicked(getAdapterPosition());
-
+            //TODO: check if insurance is cleared, when machine is remvoed from stueckliste
             if (v.getId() == deleteButton.getId()) {
                 removeAddVertragBaumaschine(getAdapterPosition());
+                //clear the checkbox if an already deleted Baumaschine is set again in Stueckliste
+                insuranceCheckbox.setChecked(false);
+
+
             }
             if(v.getId() == insuranceCheckbox.getId()){
                 stueckliste.get(getAdapterPosition()).setInsurance(true);
             }
+
+
 
         }
     }

@@ -20,6 +20,7 @@ import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity
 import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
 import com.example.rentalApplication.ui.Kunde.ArchivedKundenActivity;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
+import com.example.rentalApplication.ui.Vertraege.ArchivedVertragActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -211,6 +212,9 @@ public class MainPageActivity extends AppCompatActivity {
                 MainPageActivity.this.startActivity(archivedKundenIntent);
                 return true;
             case R.id.archivedVertrag:
+                Intent archivedVertragIntent = new Intent(MainPageActivity.this, ArchivedVertragActivity.class);
+                archivedVertragIntent.putExtra("Class","MainPageActivity");
+                MainPageActivity.this.startActivity(archivedVertragIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.persistence.StuecklisteneintragRepository;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddStuecklisteneintragViewModel extends AndroidViewModel {
@@ -24,5 +25,7 @@ public class AddStuecklisteneintragViewModel extends AndroidViewModel {
     public long insert(Stuecklisteneintrag stuecklisteneintrag) throws ExecutionException, InterruptedException {
         return stuecklisteneintragRepository.insert(stuecklisteneintrag);
     }
+
+    public List<Stuecklisteneintrag> getAllStuecklisteneintragForId (int id){return stuecklisteneintragRepository.getAllStuecklisteneintragForId(id);}
 
 }

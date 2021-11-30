@@ -3,6 +3,7 @@ package com.example.rentalApplication.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -33,6 +34,7 @@ public class Baumaschine {
     private String degreeOfWear;
     private String amountOfGas;
     //create Boolean variable for expandable recyclerview
+    @Ignore
     private Boolean expanded;
     private Boolean archived;
 

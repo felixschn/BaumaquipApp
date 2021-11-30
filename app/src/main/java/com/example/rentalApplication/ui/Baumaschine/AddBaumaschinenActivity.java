@@ -2,6 +2,8 @@ package com.example.rentalApplication.ui.Baumaschine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,11 +39,44 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenPricePerWeekendEditText = findViewById(R.id.addBaumaschinenPricePerWeekend);
         addBaumaschinenPricePerMonthEditText = findViewById(R.id.addBaumaschinenPricePerMonth);
         addBaumaschinenOperatingHours = findViewById(R.id.addBaumaschinenOperatingHours);
-        addBaumaschinenOperatingHours.setEnabled(false);
         addBaumaschinenDegreeOfWear = findViewById(R.id.addBaumaschinenDegreeOfWear);
-        addBaumaschinenDegreeOfWear.setEnabled(false);
         addBaumaschinenAmountOfGas = findViewById(R.id.addBaumaschinenAmountOfGas);
+
+        addBaumaschinenOperatingHours.setEnabled(false);
+        addBaumaschinenDegreeOfWear.setEnabled(false);
         addBaumaschinenAmountOfGas.setEnabled(false);
+
+        addBaumaschinenAnzahlEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().matches("1")) {
+                    addBaumaschinenOperatingHours.setEnabled(true);
+                    addBaumaschinenDegreeOfWear.setEnabled(true);
+                    addBaumaschinenAmountOfGas.setEnabled(true);
+
+                } else {
+                    addBaumaschinenOperatingHours.setEnabled(false);
+                    addBaumaschinenDegreeOfWear.setEnabled(false);
+                    addBaumaschinenAmountOfGas.setEnabled(false);
+
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.equals("1")) {
+                    Log.d(TAG, "TEST");
+                }
+
+            }
+        });
 
 
         //retrieve Intent from starting activity
@@ -90,7 +125,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         String baumaschinenPricePerDay = addBaumaschinenPricePerDayEditText.getText().toString();
         String baumaschinenPricePerWeekend = addBaumaschinenPricePerWeekendEditText.getText().toString();
         String baumaschinenPricePerMonth = addBaumaschinenPricePerMonthEditText.getText().toString();
-        if(baumaschinenAnzahl.equals("1")){
+        if (baumaschinenAnzahl.equals("1")) {
             addBaumaschinenOperatingHours.setEnabled(true);
             addBaumaschinenDegreeOfWear.setEnabled(true);
             addBaumaschinenAmountOfGas.setEnabled(true);
@@ -110,9 +145,13 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         BigDecimal pricePerDay = new BigDecimal(baumaschinenPricePerDay);
         BigDecimal pricePerWeekend = new BigDecimal(baumaschinenPricePerWeekend);
         BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
-        Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
-
-
+        Double operatingHours;
+        if (baumaschinenOperatingHours.isEmpty()) {
+            operatingHours = null;
+        }
+        else {
+            operatingHours = Double.parseDouble(baumaschinenOperatingHours);
+        }
         addBaumaschinenViewModel.insert(new Baumaschine(baumaschinenName, anzahl, pricePerDay, pricePerWeekend, pricePerMonth, operatingHours, baumaschinenDegreeOfWear, baumaschinenAmountOfGas));
         finish();
     }

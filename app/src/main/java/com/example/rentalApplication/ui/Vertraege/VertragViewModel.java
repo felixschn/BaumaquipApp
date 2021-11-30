@@ -14,11 +14,13 @@ import java.util.List;
 public class VertragViewModel extends AndroidViewModel {
     private VertragRepository vertragRepository;
     private final LiveData<List<Vertrag>> allVertrag;
+    private final LiveData<List<Vertrag>> allArchivedVertrag;
 
     public VertragViewModel(@NonNull Application application) {
         super(application);
         vertragRepository = VertragRepository.getInstance(application);
         allVertrag = vertragRepository.getAllVertrag();
+        allArchivedVertrag = vertragRepository.getAllArchivedVertrag();
     }
 
     public LiveData<List<Vertrag>> getAllVertrag() {
@@ -28,4 +30,8 @@ public class VertragViewModel extends AndroidViewModel {
     public void insert(Vertrag vertrag) {
         vertragRepository.insert(vertrag);
     }
+
+    public LiveData<List<Vertrag>> getAllArchivedVertrag() {return allArchivedVertrag;}
+
+    public void delete(Vertrag vertrag) { vertragRepository.delete(vertrag);}
 }

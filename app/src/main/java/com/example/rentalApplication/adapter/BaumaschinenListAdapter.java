@@ -59,8 +59,12 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
             holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
             holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
-            holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
-
+            if (current.getOperatingHours() != null) {
+                holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
+            }
+            else{
+                holder.baumaschineOperatingHours.setText("");
+            }
             boolean isExpanded = baumaschineList.get(position).getExpanded();
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);

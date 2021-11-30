@@ -106,15 +106,13 @@
             android:id="@+id/announceRecyclerViewTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/announceRecyclerView"
-
-            />
+            android:text="@string/announceRecyclerView"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/addVertragBaumaschinenListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/emptyRecyclerviewTextView"
@@ -122,7 +120,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone"
-            android:text="@string/emptyRecyclerView" />
+            android:text="@string/emptyRecyclerView"/>
 
     </RelativeLayout>
 

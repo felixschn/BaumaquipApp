@@ -1,5 +1,7 @@
 package com.example.rentalApplication.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +10,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Baumaschine.BaumaschinenViewModel;
+import com.example.rentalApplication.ui.Kunde.KundenViewModel;
+import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
+import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragClickListener;
+import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragFragment;
 
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +38,9 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
     private List<Vertrag> vertragList = new ArrayList<>();
     private final VertragClickListener listener;
     private VertragFragment vertragFragment;
-    private TextView vertragBaumaschinenTextView;
+    private Context context;
+    private ModifyKundenViewModel modifyKundenViewModel;
+
 
     public VertragListAdapter(VertragClickListener listener, VertragFragment vertragFragment) {
         this.listener = listener;
@@ -40,6 +51,7 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
     @Override
     public VertragViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_vertrag_item, parent, false);
+        context = parent.getContext();
         return new VertragViewHolder(itemView, listener);
     }
 
@@ -47,19 +59,16 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
     public void onBindViewHolder(@NonNull VertragViewHolder holder, int position) {
         if (vertragList != null) {
             Vertrag current = vertragList.get(position);
-            String intToString = String.valueOf(current.getIdVertrag());
-            holder.vertragId.setText(intToString);
-            holder.vertragKunde.setText(current.getIdKunde());
+            holder.vertragId.setText(String.valueOf(current.getIdVertrag()));
+
+            //database call to retrieve kunden name from kunden id
+            modifyKundenViewModel = new ViewModelProvider(vertragFragment.requireActivity()).get(ModifyKundenViewModel.class);
+            String kundenName = modifyKundenViewModel.loadKundeById(current.getIdKunde()).getName();
+            holder.vertragKunde.setText(kundenName);
+
             holder.vertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
             holder.vertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
 
-            boolean isExpanded = vertragList.get(position).getExpanded();
-            holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-
-            /*List<Stuecklisteneintrag> stuecklisteneintragList = new ArrayList<>();
-            for(int i = 0; i < stuecklisteneintragList.size(); i++){
-                stuecklisteneintragList.get(i).getIdStuecklist;
-            }*/
         }
     }
 
@@ -79,10 +88,8 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
 
     //method to format LocalDate from StartLeihe and EndLeihe to String for TextView
     public String setDate(LocalDate localDate) {
-        Converters converters = new Converters();
-        converters.localDateToString(localDate);
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.GERMAN);
-        return dateFormat.format(localDate);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.GERMAN);
+        return localDate.format(dateFormat);
     }
 
     class VertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -92,9 +99,8 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
         private final TextView vertragEndeLeihe;
         private final ImageButton deleteButton;
         private final ImageButton modifyButton;
-        private final ConstraintLayout expandableConstraintLayout;
         private WeakReference<VertragClickListener> listenerRef;
-        private RecyclerView vertragBaumaschinenRecyclerView;
+
 
         public VertragViewHolder(@NonNull View itemView, VertragClickListener vertragClickListener) {
             super(itemView);
@@ -103,13 +109,14 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             vertragKunde = itemView.findViewById(R.id.vertragKundeTextView);
             vertragStartLeihe = itemView.findViewById(R.id.vertragStartLeihe);
             vertragEndeLeihe = itemView.findViewById(R.id.vertragEndLeihe);
-            expandableConstraintLayout = itemView.findViewById(R.id.expandableConstraintLayoutKunde);
-            vertragBaumaschinenRecyclerView = itemView.findViewById(R.id.vertragBaumaschinenRecyclerView);
+            //expandableConstraintLayout = itemView.findViewById(R.id.expandableConstraintLayoutKunde);
+
             deleteButton = itemView.findViewById(R.id.deleteButton);
             modifyButton = itemView.findViewById(R.id.modifyButton);
 
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
+            modifyButton.setOnClickListener(this);
 
 
         }
@@ -118,15 +125,18 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
         public void onClick(View v) {
             Vertrag vertrag = vertragList.get(getAdapterPosition());
 
-            if (v.getId() == deleteButton.getId()) {
+            if (v.getId() == modifyButton.getId()) {
+                Intent modifyVertragIntent = new Intent(context, VertragDetailsActivity.class);
+                modifyVertragIntent.putExtra("vertragRowId", vertrag.getIdVertrag());
+                modifyVertragIntent.putExtra("Class", "VertragListAdapter");
+                context.startActivity(modifyVertragIntent);
 
             }
-            if (v.getId() == modifyButton.getId()) {
+            if (v.getId() == deleteButton.getId()) {
+                vertragFragment.archiveVertrag(vertragList.get(getAdapterPosition()).getIdVertrag());
             } else {
-                vertragList.get(getAdapterPosition()).setExpanded(!vertrag.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
-
             listenerRef.get().onPositionClicked(getAdapterPosition());
         }
     }

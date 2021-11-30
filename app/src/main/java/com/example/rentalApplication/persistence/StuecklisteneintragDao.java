@@ -9,6 +9,8 @@ import androidx.room.Update;
 
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 
+import java.util.List;
+
 @Dao
 public interface StuecklisteneintragDao {
 
@@ -18,5 +20,8 @@ public interface StuecklisteneintragDao {
     void delete(Stuecklisteneintrag stuecklisteneintrag);
     @Update
     void update(Stuecklisteneintrag stuecklisteneintrag);
+
+    @Query("SELECT *, rowid From stuecklisteneintrag WHERE idBaumaschine = :id")
+    List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id);
 
 }

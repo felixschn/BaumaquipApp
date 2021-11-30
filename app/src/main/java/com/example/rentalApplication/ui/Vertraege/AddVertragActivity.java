@@ -137,6 +137,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 rentCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 //TODO: check if date < now() --> warning / error message
                 beginnVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
+                Toast.makeText(getApplicationContext(),"asdfasdf", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -153,10 +154,12 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         };
 
 
+
         beginnVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, rentCalendar.get(Calendar.YEAR), rentCalendar.get(Calendar.MONTH), rentCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                
 
             }
         });
@@ -178,6 +181,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         announceRecyclerView = findViewById(R.id.announceRecyclerViewTextView);
 
         recyclerViewVisibility();
+
+        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
     }
 
     /*method to in- or decrease the amount of the chosen Baumaschine through the spinner:
@@ -210,6 +215,12 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             case R.id.spinnerBaumaschinen:
                 selectedBaumaschineFromSpinner = (Baumaschine) parent.getAdapter().getItem(position);
                 //TODO: calculate maxAmount based on selected date
+                Log.d(TAG,"Spinner aktualisiert!");
+                List<Stuecklisteneintrag> bufferList = addStuecklisteneintragViewModel.getAllStuecklisteneintragForId(selectedBaumaschineFromSpinner.getIdBaumaschine());
+                for (int i = 0; i < bufferList.size(); i++){
+                    //if(bufferList.get(i).getEndDate())
+
+                }
                 maxAmount = selectedBaumaschineFromSpinner.getAmount();
                 amountInt = 1;
                 amountTextView.setText(String.valueOf(amountInt));
@@ -248,6 +259,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             amountInt++;
             amountTextView.setText(String.valueOf(amountInt));
             buttonVisibility();
+            return;
         }
 
         /*decrease the amount of the chosen Baumaschine which should be rented*/
@@ -256,6 +268,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             amountInt--;
             amountTextView.setText(String.valueOf(amountInt));
             buttonVisibility();
+            return;
         }
 
         if (v.getId() == addBaumaschinenListButton.getId()) {
@@ -263,11 +276,12 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             if (selectedBaumaschineFromSpinner != null) {
                 addVertragBaumaschineListAdapter.addBaumaschinenToVertrag(selectedBaumaschineFromSpinner);
                 recyclerViewVisibility();
+
             }
+            return;
         }
 
         if (v.getId() == addVertragButton.getId()) {
-            int currentStuecklisteneintragId;
             addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
             addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
             List<Stuecklisteneintrag> stuecklisteInsert = addVertragBaumaschineListAdapter.getStueckliste();
@@ -276,6 +290,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             for (int i = 0; i < stuecklisteInsert.size(); i++) {
                 long id = 0;
                 try {
+                    /*retrieve id from inserted Stuecklisteneintrag and save it in variable id*/
                     id = addStuecklisteneintragViewModel.insert(stuecklisteInsert.get(i));
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -283,6 +298,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                     e.printStackTrace();
                 }
                 if (id != 0) {
+                    //TODO: change list type to long --> stuecklisteIds
                     stuecklisteIds.add(toIntExact(id));
                     Log.d(TAG, "Nächster Versuch: " + id);
                 } else {
@@ -299,6 +315,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 /*check if list of Stuecklisteintrag-Id is not empty, to avoid Verträge without stuecklisteintrag-Ids*/
                 if (!stuecklisteIds.isEmpty()) {
                     addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), getBeginnVertrag(), getEndeVertrag()));
+                    finish();
                 } else {
                     Toast.makeText(this, "Bitte Baumaschine(n) auswählen!", Toast.LENGTH_SHORT).show();
 
@@ -312,9 +329,6 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
 
 
-            //addVertragViewModel.insert(new Vertrag(stuecklisteIds,selectedKundeFromSpinner.getIdKunde(),getBeginnVertrag(),getEndeVertrag()));
-            //TODO: save to DB
-            //insertNewVertrag();
         }
 
     }
@@ -339,6 +353,11 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
     public LocalDate getBeginnVertrag() {
         return Converters.editTextToLocalDate(beginnVertrag);
+    }
+
+    //method to check in AddVertragBaumaschinenListAdapter if the start and end date of the rental is already set or not
+    public boolean checkIfDateIsSet(){
+        return beginnVertrag.getText().toString().matches("") && endeVertrag.getText().toString().matches("");
     }
 
     public LocalDate getEndeVertrag() {

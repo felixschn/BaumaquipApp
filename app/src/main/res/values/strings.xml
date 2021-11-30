@@ -36,6 +36,11 @@
     <string name="contact_person">contact person: </string>
     <string name="email">email: </string>
 
+    <!--Vertrag Strings-->
+    <string name="total_price">total price</string>
+    <string name="vertragDetailsStart">start of contract</string>
+    <string name="vertragDetailsEnd">end of contract</string>
+
     <!--Buttons-->
     <string name="button_add">add</string>
     <string name="button_save">save</string>
