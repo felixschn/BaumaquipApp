@@ -5,6 +5,7 @@ import static java.lang.Math.toIntExact;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,6 +53,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private AddVertragViewModel addVertragViewModel;
     private EditText beginnVertrag, endeVertrag;
+    private LocalDate begin, end;
     private final Calendar rentCalendar = Calendar.getInstance();
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
@@ -132,10 +134,14 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         DatePickerDialog.OnDateSetListener dateBeginnLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                rentCalendar.set(Calendar.YEAR, year);
-                rentCalendar.set(Calendar.MONTH, month);
-                rentCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                //TODO: check if date < now() --> warning / error message
+                rentCalendar.set(year, month, dayOfMonth);
+                begin = LocalDate.of(year, month, dayOfMonth);
+                //check if date < now() --> warning / error message
+                if(begin.isBefore(LocalDate.now())){
+                    Log.d(TAG, "Startdatum sollte nicht vor heute liegen");
+                    //TODO:Taost ?
+                    Toast.makeText(getApplicationContext(), "Start liegt vor heute!?!", Toast.LENGTH_SHORT).show();
+                };
                 beginnVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
 
 
@@ -144,10 +150,14 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         DatePickerDialog.OnDateSetListener dateEndeLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                rentCalendar.set(Calendar.YEAR, year);
-                rentCalendar.set(Calendar.MONTH, month);
-                rentCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                rentCalendar.set(year, month, dayOfMonth);
+                end = LocalDate.of(year, month, dayOfMonth);
                 //TODO: check if date <= begin --> warning / error message
+                if(end.isBefore(begin)){
+                    Log.d(TAG, "Ende sollte nicht vor Anfang liegen");
+                    //TODO:Taost ?
+                    Toast.makeText(getApplicationContext(), "Ende vor Anfang !?!", Toast.LENGTH_SHORT).show();
+                };
                 endeVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
             }
         };

@@ -50,8 +50,8 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             String intToString = String.valueOf(current.getIdVertrag());
             holder.vertragId.setText(intToString);
             holder.vertragKunde.setText(current.getIdKunde());
-            holder.vertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
-            holder.vertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
+            holder.vertragStart.setText(setDate(current.getBeginnVertrag()));
+            holder.vertragEnde.setText(setDate(current.getEndeVertrag()));
 
             boolean isExpanded = vertragList.get(position).getExpanded();
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -88,8 +88,8 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
     class VertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView vertragId;
         private final TextView vertragKunde;
-        private final TextView vertragStartLeihe;
-        private final TextView vertragEndeLeihe;
+        private final TextView vertragStart;
+        private final TextView vertragEnde;
         private final ImageButton deleteButton;
         private final ImageButton modifyButton;
         private final ConstraintLayout expandableConstraintLayout;
@@ -101,8 +101,8 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             listenerRef = new WeakReference<>(vertragClickListener);
             vertragId = itemView.findViewById(R.id.vertragIdTextView);
             vertragKunde = itemView.findViewById(R.id.vertragKundeTextView);
-            vertragStartLeihe = itemView.findViewById(R.id.vertragStartLeihe);
-            vertragEndeLeihe = itemView.findViewById(R.id.vertragEndLeihe);
+            vertragStart = itemView.findViewById(R.id.vertragStartLeihe);
+            vertragEnde = itemView.findViewById(R.id.vertragEndLeihe);
             expandableConstraintLayout = itemView.findViewById(R.id.expandableConstraintLayoutKunde);
             vertragBaumaschinenRecyclerView = itemView.findViewById(R.id.vertragBaumaschinenRecyclerView);
             deleteButton = itemView.findViewById(R.id.deleteButton);
@@ -119,9 +119,9 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             Vertrag vertrag = vertragList.get(getAdapterPosition());
 
             if (v.getId() == deleteButton.getId()) {
-
+                //TODO: why?
             }
-            if (v.getId() == modifyButton.getId()) {
+            if (v.getId() == modifyButton.getId()) { //TODO: why?
             } else {
                 vertragList.get(getAdapterPosition()).setExpanded(!vertrag.getExpanded());
                 notifyItemChanged(getAdapterPosition());
