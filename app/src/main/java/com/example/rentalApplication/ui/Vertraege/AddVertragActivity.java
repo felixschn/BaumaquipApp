@@ -40,7 +40,6 @@ import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskS
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +53,6 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private AddVertragViewModel addVertragViewModel;
     private EditText beginnVertrag, endeVertrag;
     private LocalDate begin, end;
-    private final Calendar rentCalendar = Calendar.getInstance();
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
     private ImageButton increaseButton, decreaseButton, addBaumaschinenListButton;
@@ -131,35 +129,39 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         beginnVertrag = (EditText) findViewById(R.id.dateBeginnLeihe);
         endeVertrag = (EditText) findViewById(R.id.dateEndeLeihe);
 
+        begin = LocalDate.now();
+        beginnVertrag.setText(Converters.localDateToString(begin));
+
+        //TODO: How long should the default renting time be?
+
+        end = begin.plusDays(7);
+        endeVertrag.setText(Converters.localDateToString(end));
+
         DatePickerDialog.OnDateSetListener dateBeginnLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                rentCalendar.set(year, month, dayOfMonth);
                 begin = LocalDate.of(year, month, dayOfMonth);
                 //check if date < now() --> warning / error message
                 if(begin.isBefore(LocalDate.now())){
+                    //TODO: if begin <= today --> warning / error message
                     Log.d(TAG, "Startdatum sollte nicht vor heute liegen");
-                    //TODO:Taost ?
                     Toast.makeText(getApplicationContext(), "Start liegt vor heute!?!", Toast.LENGTH_SHORT).show();
                 };
-                beginnVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
+                beginnVertrag.setText(Converters.localDateToString(begin));
                 Toast.makeText(getApplicationContext(),"asdfasdf", Toast.LENGTH_SHORT).show();
-
-
             }
         };
+
         DatePickerDialog.OnDateSetListener dateEndeLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                rentCalendar.set(year, month, dayOfMonth);
                 end = LocalDate.of(year, month, dayOfMonth);
-                //TODO: check if date <= begin --> warning / error message
                 if(end.isBefore(begin)){
+                    //TODO: if end <= begin --> warning / error message
                     Log.d(TAG, "Ende sollte nicht vor Anfang liegen");
-                    //TODO:Taost ?
                     Toast.makeText(getApplicationContext(), "Ende vor Anfang !?!", Toast.LENGTH_SHORT).show();
                 };
-                endeVertrag.setText(Converters.dateToString(rentCalendar.getTime()));
+                endeVertrag.setText(Converters.localDateToString(end));
             }
         };
 
@@ -168,16 +170,14 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         beginnVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, rentCalendar.get(Calendar.YEAR), rentCalendar.get(Calendar.MONTH), rentCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                
-
+                new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, begin.getYear(), begin.getMonthValue(), begin.getDayOfMonth()).show();
             }
         });
 
         endeVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, rentCalendar.get(Calendar.YEAR), rentCalendar.get(Calendar.MONTH), rentCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, end.getYear(), end.getMonthValue(), end.getDayOfMonth()).show();
             }
         });
 
@@ -324,7 +324,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
                 /*check if list of Stuecklisteintrag-Id is not empty, to avoid Verträge without stuecklisteintrag-Ids*/
                 if (!stuecklisteIds.isEmpty()) {
-                    addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), getBeginnVertrag(), getEndeVertrag()));
+                    addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end));
                     finish();
                 } else {
                     Toast.makeText(this, "Bitte Baumaschine(n) auswählen!", Toast.LENGTH_SHORT).show();
