@@ -74,6 +74,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_add_vertrag);
 
 
+        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+
         //create Spinner objects and link them to the xml objects --> tutorial: https://abhiandroid.com/ui/custom-spinner-examples.html
         baumaschinenSpinner = (Spinner) findViewById(R.id.spinnerBaumaschinen);
         baumaschinenSpinner.setOnItemSelectedListener(this);
@@ -82,7 +84,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         kundenSpinner.setOnItemSelectedListener(this);
 
         //create new customAdapter object and link Spinner with adapter
-        customBaumaschinenAdapter = new CustomBaumaschinenAdapter(getApplicationContext());
+        customBaumaschinenAdapter = new CustomBaumaschinenAdapter(this);
         baumaschinenSpinner.setAdapter(customBaumaschinenAdapter);
 
 
@@ -113,7 +115,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
 
         //create new customAdapter object and link Spinner with adapter
-        CustomKundeAdapter customKundeAdapter = new CustomKundeAdapter(getApplicationContext());
+        CustomKundeAdapter customKundeAdapter = new CustomKundeAdapter(this);
         kundenSpinner.setAdapter(customKundeAdapter);
 
         //create new ViewModel and get all instances of the database entry
@@ -161,6 +163,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                     Log.d(TAG, "Ende sollte nicht vor Anfang liegen");
                     Toast.makeText(getApplicationContext(), "Ende vor Anfang !?!", Toast.LENGTH_SHORT).show();
                 };
+                customBaumaschinenAdapter.notifyDataSetChanged();
                 endeVertrag.setText(Converters.localDateToString(end));
             }
         };
@@ -192,7 +195,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         recyclerViewVisibility();
 
-        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+
     }
 
     /*method to in- or decrease the amount of the chosen Baumaschine through the spinner:
@@ -226,12 +229,10 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 selectedBaumaschineFromSpinner = (Baumaschine) parent.getAdapter().getItem(position);
                 //TODO: calculate maxAmount based on selected date
                 Log.d(TAG,"Spinner aktualisiert!");
-                List<Stuecklisteneintrag> bufferList = addStuecklisteneintragViewModel.getAllStuecklisteneintragForId(selectedBaumaschineFromSpinner.getIdBaumaschine());
-                for (int i = 0; i < bufferList.size(); i++){
-                    //if(bufferList.get(i).getEndDate())
 
-                }
-                maxAmount = selectedBaumaschineFromSpinner.getAmount();
+                getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, selectedBaumaschineFromSpinner);
+
+                Log.d(TAG, "Anzahl der verfügbaren Maschinen im Zeitraum: " + maxAmount);
                 amountInt = 1;
                 amountTextView.setText(String.valueOf(amountInt));
                 buttonVisibility();
@@ -359,6 +360,17 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
     public int getSelectedBaumaschinenAmount() {
         return amountInt;
+    }
+
+    public int getAvailableBaumaschinenAmount(AddStuecklisteneintragViewModel addStuecklisteneintragViewModel, Baumaschine selectedBaumaschineFromSpinner){
+        List<Stuecklisteneintrag> bufferList = addStuecklisteneintragViewModel.getAllStuecklisteneintragForId(selectedBaumaschineFromSpinner.getIdBaumaschine());
+        maxAmount = selectedBaumaschineFromSpinner.getAmount();
+        for (int i = 0; i < bufferList.size(); i++){
+            if(!bufferList.get(i).getBeginDate().isAfter(begin) && !bufferList.get(i).getEndDate().isBefore(end)){
+                maxAmount = maxAmount - bufferList.get(i).getAmount();
+            }
+        }
+        return maxAmount;
     }
 
     public LocalDate getBeginnVertrag() {

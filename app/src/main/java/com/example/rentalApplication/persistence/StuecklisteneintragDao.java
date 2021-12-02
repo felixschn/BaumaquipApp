@@ -24,4 +24,5 @@ public interface StuecklisteneintragDao {
     @Query("SELECT *, rowid From stuecklisteneintrag WHERE idBaumaschine = :id")
     List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id);
 
+
 }
