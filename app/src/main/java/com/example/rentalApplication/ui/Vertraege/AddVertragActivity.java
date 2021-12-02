@@ -2,10 +2,8 @@ package com.example.rentalApplication.ui.Vertraege;
 
 import static java.lang.Math.toIntExact;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,7 +40,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 
 public class AddVertragActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, VertragBaumaschinenListClickListener, View.OnClickListener {
@@ -142,7 +139,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         DatePickerDialog.OnDateSetListener dateBeginnLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                begin = LocalDate.of(year, month, dayOfMonth);
+                begin = LocalDate.of(year, month + 1, dayOfMonth);
                 //check if date < now() --> warning / error message
                 if(begin.isBefore(LocalDate.now())){
                     //TODO: if begin <= today --> warning / error message
@@ -157,7 +154,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         DatePickerDialog.OnDateSetListener dateEndeLeihe = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                end = LocalDate.of(year, month, dayOfMonth);
+                end = LocalDate.of(year, month + 1, dayOfMonth);
                 if(end.isBefore(begin)){
                     //TODO: if end <= begin --> warning / error message
                     Log.d(TAG, "Ende sollte nicht vor Anfang liegen");
@@ -173,14 +170,14 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         beginnVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, begin.getYear(), begin.getMonthValue(), begin.getDayOfMonth()).show();
+                new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, begin.getYear(), begin.getMonthValue() - 1, begin.getDayOfMonth()).show();
             }
         });
 
         endeVertrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, end.getYear(), end.getMonthValue(), end.getDayOfMonth()).show();
+                new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth()).show();
             }
         });
 
