@@ -144,10 +144,17 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 if(begin.isBefore(LocalDate.now())){
                     //TODO: if begin <= today --> warning / error message
                     Log.d(TAG, "Startdatum sollte nicht vor heute liegen");
-                    Toast.makeText(getApplicationContext(), "Start liegt vor heute!?!", Toast.LENGTH_SHORT).show();
+                    begin = LocalDate.now();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.startDateBeforCurrentDate), Toast.LENGTH_SHORT).show();
                 };
+                if(begin.isAfter(end)){
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.startDateAfterEndDate), Toast.LENGTH_SHORT).show();
+                    end = begin.plusDays(1);
+                    customBaumaschinenAdapter.notifyDataSetChanged();
+                    endeVertrag.setText(Converters.localDateToString(end));
+                }
                 beginnVertrag.setText(Converters.localDateToString(begin));
-                Toast.makeText(getApplicationContext(),"asdfasdf", Toast.LENGTH_SHORT).show();
+                customBaumaschinenAdapter.notifyDataSetChanged();
             }
         };
 
@@ -363,8 +370,18 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         List<Stuecklisteneintrag> bufferList = addStuecklisteneintragViewModel.getAllStuecklisteneintragForId(selectedBaumaschineFromSpinner.getIdBaumaschine());
         maxAmount = selectedBaumaschineFromSpinner.getAmount();
         for (int i = 0; i < bufferList.size(); i++){
+            //logic to restrict the amount of the chosen machine in case that an contract during the desired time for that machine is already existing
             if(!bufferList.get(i).getBeginDate().isAfter(begin) && !bufferList.get(i).getEndDate().isBefore(end)){
                 maxAmount = maxAmount - bufferList.get(i).getAmount();
+                continue;
+
+            }
+            if (bufferList.get(i).getBeginDate().isBefore(end)  && !bufferList.get(i).getEndDate().isBefore(end) || begin.isBefore(bufferList.get(i).getEndDate())&& ! end.isBefore(bufferList.get(i).getEndDate()) ){
+                maxAmount = maxAmount - bufferList.get(i).getAmount();
+
+            }
+            else if(bufferList.get(i).getBeginDate().isEqual(end) || bufferList.get(i).getEndDate().isEqual(begin)){
+                maxAmount = maxAmount -bufferList.get(i).getAmount();
             }
         }
         return maxAmount;

@@ -54,4 +54,9 @@
     <string name="emptyRecyclerView">Keine Baumaschine ausgewählt</string>
     <string name="announceRecyclerView">Ausgewählte Baumaschinen</string>
     <string name="insurance">versichert</string>
+
+    <!--ToastMessages-->
+    <string name="startDateBeforCurrentDate">Startdatum kann nicht in der Vergangenheit liegen!</string>
+    <string name="startDateAfterEndDate">Startdatum kann nicht nach Enddatum sein!</string>
+
 </resources>

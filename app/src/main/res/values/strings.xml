@@ -55,5 +55,10 @@
     <string name="announceRecyclerView">selected machines</string>
     <string name="insurance">insured</string>
 
+    <!--ToastMessages-->
+    <string name="startDateBeforCurrentDate">Start cant be in the past!</string>
+    <string name="startDateAfterEndDate">Start date must be before end date!</string>
+
+
 
 </resources>
