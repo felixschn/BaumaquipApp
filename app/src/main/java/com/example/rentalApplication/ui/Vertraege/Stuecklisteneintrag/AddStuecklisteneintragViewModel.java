@@ -28,4 +28,8 @@ public class AddStuecklisteneintragViewModel extends AndroidViewModel {
 
     public List<Stuecklisteneintrag> getAllStuecklisteneintragForId (int id){return stuecklisteneintragRepository.getAllStuecklisteneintragForId(id);}
 
+    public Stuecklisteneintrag stuecklisteneintragById (int id){ return stuecklisteneintragRepository.getStuecklisteneintragById(id);}
+
+    public void delete (Stuecklisteneintrag stuecklisteneintrag){stuecklisteneintragRepository.delete(stuecklisteneintrag);}
+
 }

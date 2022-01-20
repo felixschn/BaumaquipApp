@@ -3,12 +3,8 @@ package com.example.rentalApplication.persistence;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.rentalApplication.models.Stuecklisteneintrag;
-import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
 
 import java.util.List;
@@ -36,10 +32,26 @@ public class StuecklisteneintragRepository {
         return new InsertAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag).get();
     }
 
+    public void delete(Stuecklisteneintrag stuecklisteneintrag){
+        new DeleteAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag);
+    }
+
     public List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id){
         Integer rowid = id;
         try {
             return new ModifyAsyncTask(stuecklisteneintragDao).execute(rowid).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Stuecklisteneintrag getStuecklisteneintragById (int id){
+        Integer rowid = id;
+        try {
+            return new StuecklisteneintragByIdAsyncTask(stuecklisteneintragDao).execute(rowid).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -67,16 +79,42 @@ public class StuecklisteneintragRepository {
         }*/
     }
 
+    private static class StuecklisteneintragByIdAsyncTask extends AsyncTask<Integer, Void, Stuecklisteneintrag>{
+        private StuecklisteneintragDao mAsyncTaskDao;
+
+        StuecklisteneintragByIdAsyncTask(StuecklisteneintragDao dao){
+            this.mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Stuecklisteneintrag doInBackground(Integer... integers) {
+            return  mAsyncTaskDao.getStuecklisteneintragById(integers[0]);
+        }
+    }
+
     private static class ModifyAsyncTask extends AsyncTask<Integer, Void, List<Stuecklisteneintrag>>{
-        private StuecklisteneintragDao stuecklisteneintragDao;
+        private StuecklisteneintragDao mAsyncTaskDao;
 
         ModifyAsyncTask(StuecklisteneintragDao stuecklisteneintragDao){
-            this.stuecklisteneintragDao = stuecklisteneintragDao;
+            this.mAsyncTaskDao = stuecklisteneintragDao;
         }
 
         @Override
         protected List<Stuecklisteneintrag> doInBackground(Integer... integers) {
-            return stuecklisteneintragDao.getAllStuecklisteneintragForId(integers[0]);
+            return mAsyncTaskDao.getAllStuecklisteneintragForId(integers[0]);
+        }
+    }
+
+    private static class DeleteAsyncTask extends  AsyncTask<Stuecklisteneintrag, Void, Void>{
+        private StuecklisteneintragDao mAsyncTaskDao;
+        DeleteAsyncTask(StuecklisteneintragDao stuecklisteneintragDao){
+            this.mAsyncTaskDao =stuecklisteneintragDao;
+        }
+
+        @Override
+        protected Void doInBackground(Stuecklisteneintrag... stuecklisteneintrags) {
+            mAsyncTaskDao.delete(stuecklisteneintrags[0]);
+            return null;
         }
     }
 

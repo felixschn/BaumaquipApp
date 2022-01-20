@@ -50,9 +50,6 @@ public class Vertrag {
         return idVertrag;
     }
 
-    public List<Integer> getVertragStueckList() {
-        return stuecklisteIds;
-    }
 
     @NonNull
     public int getIdKunde() {
