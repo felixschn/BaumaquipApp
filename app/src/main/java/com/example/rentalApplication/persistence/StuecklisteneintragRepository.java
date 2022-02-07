@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -40,9 +41,7 @@ public class StuecklisteneintragRepository {
         Integer rowid = id;
         try {
             return new ModifyAsyncTask(stuecklisteneintragDao).execute(rowid).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;
@@ -52,9 +51,16 @@ public class StuecklisteneintragRepository {
         Integer rowid = id;
         try {
             return new StuecklisteneintragByIdAsyncTask(stuecklisteneintragDao).execute(rowid).get();
-        } catch (ExecutionException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        return null;
+    }
+
+    public List<Stuecklisteneintrag> getStuecklisteneintragForDate (LocalDate start, LocalDate end, int id){
+        try {
+            return new StuecklisteneintragForDateAsyncTask(stuecklisteneintragDao, start, end, id).execute().get();
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;
@@ -115,6 +121,24 @@ public class StuecklisteneintragRepository {
         protected Void doInBackground(Stuecklisteneintrag... stuecklisteneintrags) {
             mAsyncTaskDao.delete(stuecklisteneintrags[0]);
             return null;
+        }
+    }
+
+    private static class StuecklisteneintragForDateAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>>{
+        private StuecklisteneintragDao mAsyncDao;
+        private LocalDate start, end;
+        private int id;
+
+        public StuecklisteneintragForDateAsyncTask(StuecklisteneintragDao mAsyncDao, LocalDate start, LocalDate end, int id) {
+            this.mAsyncDao = mAsyncDao;
+            this.start = start;
+            this.end = end;
+            this.id = id;
+        }
+
+        @Override
+        protected List<Stuecklisteneintrag> doInBackground(Void... voids) {
+            return mAsyncDao.getStuecklisteneintragForDate(start, end, id);
         }
     }
 

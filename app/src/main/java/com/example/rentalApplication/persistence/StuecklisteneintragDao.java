@@ -8,7 +8,9 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.rentalApplication.models.Stuecklisteneintrag;
+import com.example.rentalApplication.models.Vertrag;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Dao
@@ -26,6 +28,10 @@ public interface StuecklisteneintragDao {
 
     @Query("SELECT *, rowid From Stuecklisteneintrag WHERE rowid = :id")
     Stuecklisteneintrag getStuecklisteneintragById(int id);
+
+    @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE (beginDate BETWEEN :start AND :end OR endDate BETWEEN :start AND :end) and idBaumaschine = :id")
+    List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id);
+
 
 
 }

@@ -58,7 +58,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             holder.baumaschineName.setText(baumaschinenRepository.getBaumaschineById(currentMaschineId).getMachineName());
 
             /*get amount which the user has determined in the vertragBaumaschinenRecyclerView,
-            therefor call the method getSelectedBaumaschinenAmount() from AddVertragActivity
+            therefore call the method getSelectedBaumaschinenAmount() from AddVertragActivity
             which is accessible through ((AddVertragActivity)context)*/
             int selectedAmount = stueckliste.get(position).getAmount();
             holder.amountBaumaschine.setText(String.valueOf(selectedAmount));
@@ -81,6 +81,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         for (Stuecklisteneintrag stuecklisteneintrag : stueckliste) {
             if (stuecklisteneintrag.getIdBaumaschine() == baumaschine.getIdBaumaschine()) {
                 maschineAlreadyListed = true;
+                break;
             }
         }
         if (maschineAlreadyListed) {
@@ -90,7 +91,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         }
 
         if(((AddVertragActivity) context).checkIfDateIsSet()){
-            Toast.makeText(((AddVertragActivity) context), "Bitte zuerst Datum auswählen!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Bitte zuerst Datum auswählen!", Toast.LENGTH_LONG).show();
             return;
         }
         stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));

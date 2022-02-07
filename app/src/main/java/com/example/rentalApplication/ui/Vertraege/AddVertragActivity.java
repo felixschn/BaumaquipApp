@@ -1,7 +1,10 @@
 package com.example.rentalApplication.ui.Vertraege;
 
+import static java.lang.Math.max;
 import static java.lang.Math.toIntExact;
+import static java.time.temporal.ChronoUnit.DAYS;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,12 +75,13 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
 
         addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+        addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
 
         //create Spinner objects and link them to the xml objects --> tutorial: https://abhiandroid.com/ui/custom-spinner-examples.html
-        baumaschinenSpinner = (Spinner) findViewById(R.id.spinnerBaumaschinen);
+        baumaschinenSpinner = findViewById(R.id.spinnerBaumaschinen);
         baumaschinenSpinner.setOnItemSelectedListener(this);
 
-        kundenSpinner = (Spinner) findViewById(R.id.spinnerKunden);
+        kundenSpinner = findViewById(R.id.spinnerKunden);
         kundenSpinner.setOnItemSelectedListener(this);
 
         //create new customAdapter object and link Spinner with adapter
@@ -87,12 +91,9 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         //create new ViewModel and get all instances of the database entry
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
-        baumaschinenViewModel.getAllBaumaschinen().observe(this, new Observer<List<Baumaschine>>() {
-            @Override
-            public void onChanged(List<Baumaschine> baumaschines) {
-                //create in CustomAdapter a method called setBaumaschines to retrieve a list of all Database entries
-                customBaumaschinenAdapter.setBaumaschinen(baumaschines);
-            }
+        baumaschinenViewModel.getAllBaumaschinen().observe(this, baumaschines -> {
+            //create in CustomAdapter a method called setBaumaschines to retrieve a list of all Database entries
+            customBaumaschinenAdapter.setBaumaschinen(baumaschines);
         });
 
         decreaseButton = findViewById(R.id.baumaschinenAmountDecreaseButton);
@@ -125,8 +126,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             }
         });
 
-        beginnVertrag = (EditText) findViewById(R.id.dateBeginnLeihe);
-        endeVertrag = (EditText) findViewById(R.id.dateEndeLeihe);
+        beginnVertrag = findViewById(R.id.dateBeginnLeihe);
+        endeVertrag = findViewById(R.id.dateEndeLeihe);
 
         begin = LocalDate.now();
         beginnVertrag.setText(Converters.localDateToString(begin));
@@ -141,13 +142,14 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 begin = LocalDate.of(year, month + 1, dayOfMonth);
                 //check if date < now() --> warning / error message
-                if(begin.isBefore(LocalDate.now())){
+                if (begin.isBefore(LocalDate.now())) {
                     //TODO: if begin <= today --> warning / error message
                     Log.d(TAG, "Startdatum sollte nicht vor heute liegen");
                     begin = LocalDate.now();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.startDateBeforCurrentDate), Toast.LENGTH_SHORT).show();
-                };
-                if(begin.isAfter(end)){
+                }
+                ;
+                if (begin.isAfter(end)) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.startDateAfterEndDate), Toast.LENGTH_SHORT).show();
                     end = begin.plusDays(1);
                     customBaumaschinenAdapter.notifyDataSetChanged();
@@ -162,16 +164,15 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 end = LocalDate.of(year, month + 1, dayOfMonth);
-                if(end.isBefore(begin)){
+                if (end.isBefore(begin)) {
                     //TODO: if end <= begin --> warning / error message
                     Log.d(TAG, "Ende sollte nicht vor Anfang liegen");
                     Toast.makeText(getApplicationContext(), "Ende vor Anfang !?!", Toast.LENGTH_SHORT).show();
-                };
+                }
                 customBaumaschinenAdapter.notifyDataSetChanged();
                 endeVertrag.setText(Converters.localDateToString(end));
             }
         };
-
 
 
         beginnVertrag.setOnClickListener(new View.OnClickListener() {
@@ -226,15 +227,15 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
      * if the maxAmount is higher than 1, show increase button
      * if amountInt is higher than 1 show decrease button
      */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spinnerBaumaschinen:
                 selectedBaumaschineFromSpinner = (Baumaschine) parent.getAdapter().getItem(position);
-                //TODO: calculate maxAmount based on selected date
-                Log.d(TAG,"Spinner aktualisiert!");
+                Log.d(TAG, "Spinner aktualisiert!");
 
-                getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, selectedBaumaschineFromSpinner);
+                maxAmount = getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, selectedBaumaschineFromSpinner);
 
                 Log.d(TAG, "Anzahl der verfügbaren Maschinen im Zeitraum: " + maxAmount);
                 amountInt = 1;
@@ -298,7 +299,6 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         if (v.getId() == addVertragButton.getId()) {
             addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
-            addVertragViewModel = new ViewModelProvider(this).get(AddVertragViewModel.class);
             List<Stuecklisteneintrag> stuecklisteInsert = addVertragBaumaschineListAdapter.getStueckliste();
             List<Integer> stuecklisteIds = new ArrayList<>();
 
@@ -333,19 +333,12 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                     finish();
                 } else {
                     Toast.makeText(this, "Bitte Baumaschine(n) auswählen!", Toast.LENGTH_SHORT).show();
-
-                    return;
                 }
 
             } else {
                 Toast.makeText(this, "Bitte Start und Enddatum wählen!", Toast.LENGTH_SHORT).show();
-                return;
             }
-
-
-
         }
-
     }
 
     /* set visibility of the recyclerview to true, if an machine is added, else let the recyclerview disappear*/
@@ -366,10 +359,33 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         return amountInt;
     }
 
-    public int getAvailableBaumaschinenAmount(AddStuecklisteneintragViewModel addStuecklisteneintragViewModel, Baumaschine selectedBaumaschineFromSpinner){
+    public int getAvailableBaumaschinenAmount(AddStuecklisteneintragViewModel addStuecklisteneintragViewModel, Baumaschine selectedBaumaschineFromSpinner) {
         List<Stuecklisteneintrag> bufferList = addStuecklisteneintragViewModel.getAllStuecklisteneintragForId(selectedBaumaschineFromSpinner.getIdBaumaschine());
-        maxAmount = selectedBaumaschineFromSpinner.getAmount();
-        for (int i = 0; i < bufferList.size(); i++){
+        //maxAmount = selectedBaumaschineFromSpinner.getAmount();
+        List<Stuecklisteneintrag> existingStuecklisteneintrageForBaumaschine = addStuecklisteneintragViewModel.getStuecklisteneintragForDate(begin, end, selectedBaumaschineFromSpinner.getIdBaumaschine());
+        int maxRentingAmountPerDay = 0;
+        int maxRentingAmount = 0;
+
+        for (int j = 0; j < (DAYS.between(begin, end)); j++) {
+            for (int i = 0; i < existingStuecklisteneintrageForBaumaschine.size(); i++) {
+                if ((existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isBefore(begin.plusDays(j)) ||
+                        existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isEqual(begin.plusDays(j))) &&
+                        (existingStuecklisteneintrageForBaumaschine.get(i).getEndDate().isAfter(begin.plusDays(j)) ||
+                                existingStuecklisteneintrageForBaumaschine.get(i).getEndDate().isEqual(begin.plusDays(j)))) {
+
+                    maxRentingAmountPerDay = maxRentingAmountPerDay + existingStuecklisteneintrageForBaumaschine.get(i).getAmount();
+                }
+
+            }
+            maxRentingAmount = max(maxRentingAmountPerDay, maxRentingAmount);
+            maxRentingAmountPerDay = 0;
+        }
+        return selectedBaumaschineFromSpinner.getAmount() - maxRentingAmount;
+
+
+
+
+        /*for (int i = 0; i < bufferList.size(); i++){
             //logic to restrict the amount of the chosen machine in case that an contract during the desired time for that machine is already existing
             if(!bufferList.get(i).getBeginDate().isAfter(begin) && !bufferList.get(i).getEndDate().isBefore(end)){
                 maxAmount = maxAmount - bufferList.get(i).getAmount();
@@ -383,8 +399,10 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             else if(bufferList.get(i).getBeginDate().isEqual(end) || bufferList.get(i).getEndDate().isEqual(begin)){
                 maxAmount = maxAmount -bufferList.get(i).getAmount();
             }
-        }
-        return maxAmount;
+            addVertragViewModel.getAllVertragDuringDesiredTime(begin,end);
+
+        }*/
+
     }
 
     public LocalDate getBeginnVertrag() {
@@ -392,7 +410,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     }
 
     //method to check in AddVertragBaumaschinenListAdapter if the start and end date of the rental is already set or not
-    public boolean checkIfDateIsSet(){
+    public boolean checkIfDateIsSet() {
         return beginnVertrag.getText().toString().matches("") && endeVertrag.getText().toString().matches("");
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.rentalApplication.models.Vertrag;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -34,9 +35,7 @@ public class VertragRepository {
         Integer rowid = id;
         try {
             return new ModifyAsyncTask(vertragDao).execute(rowid).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;
@@ -112,5 +111,6 @@ public class VertragRepository {
             return null;
         }
     }
+
 }
 

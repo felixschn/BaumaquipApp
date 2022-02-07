@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.persistence.VertragRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddVertragViewModel extends AndroidViewModel {

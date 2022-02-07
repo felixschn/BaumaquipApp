@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.persistence.StuecklisteneintragRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -31,5 +32,7 @@ public class AddStuecklisteneintragViewModel extends AndroidViewModel {
     public Stuecklisteneintrag stuecklisteneintragById (int id){ return stuecklisteneintragRepository.getStuecklisteneintragById(id);}
 
     public void delete (Stuecklisteneintrag stuecklisteneintrag){stuecklisteneintragRepository.delete(stuecklisteneintrag);}
+
+    public List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id){return stuecklisteneintragRepository.getStuecklisteneintragForDate(start,end,id);}
 
 }

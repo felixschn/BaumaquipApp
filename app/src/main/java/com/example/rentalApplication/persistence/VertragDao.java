@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.example.rentalApplication.models.Vertrag;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Dao
@@ -33,5 +34,6 @@ public interface VertragDao {
 
     @Query("SELECT *, rowid From Vertrag WHERE archived = 1")
     LiveData<List<Vertrag>> getAllArchivedVertrag();
+
 
 }
