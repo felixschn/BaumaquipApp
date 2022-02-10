@@ -44,16 +44,19 @@
     <!--Buttons-->
     <string name="button_add">add</string>
     <string name="button_save">save</string>
+    <string name="button_save_vertrag">conclude contract</string>
 
     <!--AlertDialog-->
     <string name="alertDialog">Do you really delete this machine? This could lead to significant application failures due to the connectivity between contract and machines</string>
     <string name="okDialog">Noticed!</string>
     <string name="cancelDialog">Cancel</string>
 
-    <!--VertragStrings-->
+    <!--AddVertragStrings-->
     <string name="emptyRecyclerView">No machine selected</string>
-    <string name="announceRecyclerView">selected machines</string>
+    <string name="announceRecyclerView"><b>selected machines</b></string>
     <string name="insurance">insured</string>
+    <string name="startDate">starting date:</string>
+    <string name="endDate">ending date:</string>
 
     <!--ToastMessages-->
     <string name="startDateBeforCurrentDate">Start cant be in the past!</string>

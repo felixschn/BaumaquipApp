@@ -1,7 +1,9 @@
 package com.example.rentalApplication.ui.Kunde;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Kunde;
+
+import java.util.concurrent.ExecutionException;
 
 public class AddKundenActivity extends AppCompatActivity {
     private EditText addKundenName, addKundenTelefonNumber, addKundenStreetName, addKundenStreetNumber, addKundenEmail, addKundenZip, addKundenLocation, addKundenConstructionSide, addKundenContactPerson;

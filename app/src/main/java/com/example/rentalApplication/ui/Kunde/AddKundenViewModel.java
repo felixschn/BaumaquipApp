@@ -8,6 +8,8 @@ import androidx.lifecycle.AndroidViewModel;
 import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.persistence.KundenRepository;
 
+import java.util.concurrent.ExecutionException;
+
 public class AddKundenViewModel extends AndroidViewModel {
     private KundenRepository kundenRepository;
 

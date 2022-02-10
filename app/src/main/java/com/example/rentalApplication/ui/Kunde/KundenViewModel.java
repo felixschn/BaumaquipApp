@@ -10,6 +10,7 @@ import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.persistence.KundenRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class KundenViewModel extends AndroidViewModel {
     private KundenRepository kundenRepository;

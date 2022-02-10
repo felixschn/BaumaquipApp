@@ -1,9 +1,11 @@
 package com.example.rentalApplication.ui.Kunde;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -16,6 +18,7 @@ import com.example.rentalApplication.adapter.KundenListAdapter;
 import com.example.rentalApplication.models.Kunde;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,8 +86,14 @@ public class KundenFragment extends Fragment implements KundenClickListener {
         kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);
 
 
-        Kunde testKunde = new Kunde("TestKunde","1","2","3","4","5","6","7","8");
-        kundenViewModel.insert(testKunde);
+        Kunde testKunde = new Kunde("TestKunde", "1", "2", "3", "4", "5", "6", "7", "8");
+
+        try {
+            kundenViewModel.insert(testKunde);
+        }catch (SQLiteConstraintException exception){
+            Toast.makeText(getContext(), "Kunde schon vorhanden!", Toast.LENGTH_SHORT).show();
+        }
+
         kundenViewModel.getAllKunden().observe(getViewLifecycleOwner(), new Observer<List<Kunde>>() {
             @Override
             public void onChanged(List<Kunde> kundes) {

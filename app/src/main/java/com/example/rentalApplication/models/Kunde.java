@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
-@Entity
+@Entity(indices = {@Index(value = {"name", "location"},
+        unique = true)})
 public class Kunde {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rowid")
