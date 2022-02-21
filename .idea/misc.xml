@@ -6,24 +6,14 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/activity_add_baumaschinen.xml" value="0.134765625" />
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/cardview_header_baumaschine.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/fragment_kunden.xml" value="0.5" />
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/recyclerview_addvertragbaumaschine_item.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/recyclerview_baumaschinen_item.xml" value="1.3333333333333333" />
+        <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/recyclerview_baumaschinen_item.xml" value="0.3074866310160428" />
+        <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/layout/recyclerview_kunden_item.xml" value="0.5" />
         <entry key="..\:/Users/Felix/AndroidStudioProjects/BaumaquipApp/app/src/main/res/mipmap-anydpi-v26/modify_button.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/backwithborder.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/custom_input.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/ic_button_add_24.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/line_divider.xml" value="0.334" />
         <entry key="app/src/main/res/drawable/linear_layout_border.xml" value="0.27890625" />
-        <entry key="app/src/main/res/drawable/modify_button_foreground.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/recyclerview_selector.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/remove_machine.xml" value="0.334" />
-        <entry key="app/src/main/res/drawable/top_border.xml" value="0.2505" />
         <entry key="app/src/main/res/layout/activity_add_baumaschinen.xml" value="0.16171875" />
-        <entry key="app/src/main/res/layout/activity_add_vertrag.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_add_vertrag.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_vertrag_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/archived_baumaschinen.xml" value="0.14528508771929824" />
         <entry key="app/src/main/res/layout/archived_kunden.xml" value="0.14528508771929824" />
@@ -35,9 +25,9 @@
         <entry key="app/src/main/res/layout/main_page.xml" value="0.22" />
         <entry key="app/src/main/res/layout/modify_delete_buttons.xml" value="0.14921875" />
         <entry key="app/src/main/res/layout/recyclerview_addvertragbaumaschine_item.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/recyclerview_addvertragbaumaschinenlist_item.xml" value="0.22814207650273224" />
+        <entry key="app/src/main/res/layout/recyclerview_addvertragbaumaschinenlist_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/recyclerview_baumaschinen_item.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/recyclerview_kunden_item.xml" value="0.9" />
+        <entry key="app/src/main/res/layout/recyclerview_kunden_item.xml" value="0.3837037037037037" />
         <entry key="app/src/main/res/layout/recyclerview_vertrag_details_item.xml" value="0.4046208530805687" />
         <entry key="app/src/main/res/layout/recyclerview_vertrag_item.xml" value="0.4622222222222222" />
       </map>

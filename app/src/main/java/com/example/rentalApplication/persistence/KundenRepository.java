@@ -57,9 +57,7 @@ public class KundenRepository {
         Integer rowid = id;
         try {
             return new ModifyAsyncTask(kundenDao).execute(rowid).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;

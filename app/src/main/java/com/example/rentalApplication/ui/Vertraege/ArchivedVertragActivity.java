@@ -44,16 +44,24 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
         });
 
         stuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
-        }
+    }
 
     //TODO: if vertrag is deleted, Stuecklisteneintrag should also be deleted!
-    public void deleteArchivedVertrag(Vertrag vertrag){
+    public void deleteArchivedVertrag(Vertrag vertrag) {
         List<Integer> deleteStuecklisteneintragList = vertrag.getStuecklisteIds();
 
-        for(int i = 0; i < deleteStuecklisteneintragList.size(); i++){
+        for (int i = 0; i < deleteStuecklisteneintragList.size(); i++) {
             stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
         }
-        vertragViewModel.delete(vertrag);}
+        vertragViewModel.delete(vertrag);
+    }
+
+    public void restoreVertrag(int id){
+        modifyVertragViewModel = new ViewModelProvider(this).get(ModifyVertragViewModel.class);
+        restoreVertrag = modifyVertragViewModel.loadVertragById(id);
+        restoreVertrag.setArchived(false);
+        modifyVertragViewModel.update(restoreVertrag);
+    }
 
     @Override
     public void onPositionClicked(int position) {

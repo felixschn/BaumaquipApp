@@ -83,4 +83,8 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     public void onPositionClicked(int position) {
 
     }
+
+    public Vertrag getVertragDetails (){
+        return vertrag;
+    }
 }

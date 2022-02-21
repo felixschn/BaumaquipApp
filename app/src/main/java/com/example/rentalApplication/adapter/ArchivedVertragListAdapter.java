@@ -78,6 +78,7 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
     }
 
     public void deleteVertrag(Vertrag vertrag){archivedVertragActivity.deleteArchivedVertrag(vertrag);}
+    public void restoreVertrag(int id){archivedVertragActivity.restoreVertrag(id);}
 
     class ArchivedVertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView archiveVertragId;
@@ -112,6 +113,7 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
             Vertrag vertrag = vertragList.get(getAdapterPosition());
 
             if (v.getId() == modifyButton.getId()) {
+                restoreVertrag(vertrag.getIdVertrag());
 
 
             }

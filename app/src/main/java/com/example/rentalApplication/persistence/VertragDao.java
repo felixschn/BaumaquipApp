@@ -32,7 +32,7 @@ public interface VertragDao {
     @Query("SELECT *, rowid From Vertrag WHERE archived = 0")
     LiveData<List<Vertrag>> getAllVertrag();
 
-    @Query("SELECT *, rowid From Vertrag WHERE archived = 1")
+        @Query("SELECT *, rowid From Vertrag WHERE archived = 1")
     LiveData<List<Vertrag>> getAllArchivedVertrag();
 
 
