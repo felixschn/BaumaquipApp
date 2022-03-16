@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,7 +95,8 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             Toast.makeText(context, "Bitte zuerst Datum auswählen!", Toast.LENGTH_LONG).show();
             return;
         }
-        stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
+
+        stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(),((AddVertragActivity)context).calcPriceForRent(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
         notifyDataSetChanged();
 
     }
@@ -117,6 +119,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     class AddVertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView baumaschineName;
         private final TextView amountBaumaschine;
+        private final EditText priceForRent;
         private final ImageButton deleteButton;
         private final ImageButton modifyButton;
         private final CheckBox insuranceCheckbox;
@@ -129,6 +132,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             itemView.setOnClickListener(this);
             baumaschineName = itemView.findViewById(R.id.addVertragBaumaschinenListName);
             amountBaumaschine = itemView.findViewById(R.id.addVertragAmountBaumaschineList);
+            priceForRent = itemView.findViewById(R.id.addVertragPriceForRent);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             modifyButton = itemView.findViewById(R.id.modifyButton);
             insuranceCheckbox = itemView.findViewById(R.id.insuranceCheckBox);

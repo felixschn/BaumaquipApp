@@ -95,8 +95,8 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         });*/
 
         //method to create an test machine at start
-        Baumaschine testBaumaschine = new Baumaschine("TestMaschine", 20, BigDecimal.valueOf(1),BigDecimal.valueOf(2), BigDecimal.valueOf(3), 10.0,"gut", "voll");
-        baumaschinenViewModel.insert(testBaumaschine);
+        //Baumaschine testBaumaschine = new Baumaschine("TestMaschine", 20, BigDecimal.valueOf(1),BigDecimal.valueOf(2), BigDecimal.valueOf(3), 10.0,"gut", "voll");
+        //baumaschinenViewModel.insert(testBaumaschine);
 
 
         baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), new Observer<List<Baumaschine>>() {

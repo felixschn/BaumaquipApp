@@ -104,6 +104,7 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
 
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
+            modifyButton.setOnClickListener(this);
 
 
         }

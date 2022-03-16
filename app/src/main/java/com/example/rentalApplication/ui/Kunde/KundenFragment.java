@@ -86,13 +86,13 @@ public class KundenFragment extends Fragment implements KundenClickListener {
         kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);
 
 
-        Kunde testKunde = new Kunde("TestKunde", "1", "2", "3", "4", "5", "6", "7", "8");
+       /* Kunde testKunde = new Kunde("TestKunde", "1", "2", "3", "4", "5", "6", "7", "8");
 
         try {
             kundenViewModel.insert(testKunde);
         }catch (SQLiteConstraintException exception){
             Toast.makeText(getContext(), "Kunde schon vorhanden!", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         kundenViewModel.getAllKunden().observe(getViewLifecycleOwner(), new Observer<List<Kunde>>() {
             @Override

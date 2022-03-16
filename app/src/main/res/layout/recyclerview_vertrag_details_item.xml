@@ -31,7 +31,7 @@
                 android:id="@+id/vertragDetailsBaumaschineName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_between_text"
+                android:layout_marginStart="15dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -41,40 +41,52 @@
                 android:id="@+id/textVertragDetailsBaumaschinenAnzahl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="350dp"
                 android:gravity="center"
                 android:text="@string/amount"
-
-                app:layout_constraintStart_toEndOf="@+id/vertragDetailsBaumaschineName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutVertagDetails"
+                app:layout_constraintEnd_toStartOf="@+id/vertragDetailsBaumaschineAnzahl"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/vertragDetailsBaumaschineAnzahl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/space_between_text_and_number"
-                app:layout_constraintStart_toEndOf="@+id/textVertragDetailsBaumaschinenAnzahl"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@sample/baumaschinenAnzahl" />
+                android:layout_marginStart="550dp"
+                android:gravity="center"
+                android:text="@string/amount"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutVertagDetails"
+                app:layout_constraintEnd_toStartOf="@+id/textVertragDetailsTotalPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" /> />
 
             <TextView
                 android:id="@+id/textVertragDetailsTotalPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_between_new_text"
-                android:text="@string/total_price"
-                app:layout_constraintStart_toEndOf="@id/vertragDetailsBaumaschineAnzahl"
+                android:layout_marginStart="650dp"
+                android:gravity="center"
+                android:text="@string/amount"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutVertagDetails"
+                app:layout_constraintEnd_toStartOf="@+id/baumaschineVertragDetailsTotalPrice"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/baumaschineVertragDetailsTotalPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_between_text_and_number"
-                app:layout_constraintStart_toEndOf="@+id/textVertragDetailsTotalPrice"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@sample/baumaschinenPreis" />
+                android:layout_marginStart="800dp"
+                android:gravity="center"
+                android:text="@string/amount"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutVertagDetails"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <include layout="@layout/modify_delete_buttons" />
 
@@ -91,45 +103,49 @@
 
                 <TextView
                     android:id="@+id/textVertragDetailsOperatingHours"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_between_text"
-                    android:text="@string/operating_hours"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
+                    android:text="@string/price_per_day"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/baumaschineVertragDetailsOperatingHours"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_between_text_and_number"
-                    android:text="200"
-                    app:layout_constraintStart_toEndOf="@id/textVertragDetailsOperatingHours"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textVertragDetailsAmountOfGas"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_between_new_text"
-                    android:text="@string/amount_of_gas"
-                    app:layout_constraintStart_toEndOf="@id/baumaschineVertragDetailsOperatingHours"
+                    android:layout_marginStart="350dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
+                    android:text="@string/price_per_day"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/baumschineVertragDetailsAmountOfGas"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_between_text_and_number"
-                    android:text="200"
-                    app:layout_constraintStart_toEndOf="@id/textVertragDetailsAmountOfGas"
+                    android:layout_marginStart="550dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textVertragDetailsDegreeOfWear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/space_between_text"
                     android:text="@string/degree_of_wear"
                     app:layout_constraintStart_toStartOf="parent"
@@ -139,11 +155,13 @@
                     android:id="@+id/baumaschineVertragDetailsDegreeOfWear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_between_text"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="@dimen/space_between_text"
-                    android:text="20"
-                    app:layout_constraintStart_toEndOf="@id/textVertragDetailsDegreeOfWear"
-                    app:layout_constraintTop_toBottomOf="@id/baumaschineVertragDetailsOperatingHours" />
+                    android:text="200"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/baumaschineVertragDetailsOperatingHours" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,13 +58,14 @@ public class Stuecklisteneintrag {
     public Stuecklisteneintrag() {
     }
 
-    public Stuecklisteneintrag(@NonNull int idBaumaschine, @NonNull Integer amount,
+    public Stuecklisteneintrag(@NonNull int idBaumaschine, @NonNull Integer amount, @NonNull BigDecimal price,
                                @NonNull LocalDate beginDate, @NonNull LocalDate endDate, Application application) {
         this.idBaumaschine = idBaumaschine;
         this.amount = amount;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.application = application;
+        this.price = price;
 
 
         this.operatingHours_end = null;

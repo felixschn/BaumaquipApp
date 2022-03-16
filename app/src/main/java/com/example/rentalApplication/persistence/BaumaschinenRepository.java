@@ -15,6 +15,7 @@ public class BaumaschinenRepository {
 
     private BaumaschinenDao baumaschinenDao;
     private LiveData<List<Baumaschine>> allBaumaschinen;
+    private LiveData<List<Baumaschine>> allBaumaschinenForSpinner;
     private LiveData<List<Baumaschine>> allArchivedBaumaschinen;
     private Baumaschine anyBaumaschine;
     private String DB_NAME = "rent_db";
@@ -23,6 +24,7 @@ public class BaumaschinenRepository {
         RentDatabase db = RentDatabase.getDatabase(application);
         baumaschinenDao = db.baumaschinenDao();
         allBaumaschinen = baumaschinenDao.getAllBaumaschinen();
+        allBaumaschinenForSpinner = baumaschinenDao.getAllBaumaschinenForSpinner();
         allArchivedBaumaschinen = baumaschinenDao.getAllArchivedBaumaschinen();
     }
 
@@ -40,6 +42,8 @@ public class BaumaschinenRepository {
     public LiveData<List<Baumaschine>> getAllBaumaschinen() {
         return allBaumaschinen;
     }
+
+    public LiveData<List<Baumaschine>> getAllBaumaschinenForSpinner(){return allBaumaschinenForSpinner;}
 
     //retrieving all archived Baumaschinen
     public LiveData<List<Baumaschine>> getAllArchivedBaumaschinen() {

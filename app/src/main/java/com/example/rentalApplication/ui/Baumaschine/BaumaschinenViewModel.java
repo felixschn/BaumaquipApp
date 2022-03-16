@@ -15,6 +15,7 @@ public class BaumaschinenViewModel extends AndroidViewModel {
     private BaumaschinenRepository baumaschinenRepository;
     private final LiveData<List<Baumaschine>> allBaumaschinen;
     private final LiveData<List<Baumaschine>> allArchivedBaumaschinen;
+    private final LiveData<List<Baumaschine>> allBaumaschinenForSpinner;
 
 
     public BaumaschinenViewModel(@NonNull Application application) {
@@ -22,6 +23,7 @@ public class BaumaschinenViewModel extends AndroidViewModel {
         baumaschinenRepository = BaumaschinenRepository.getInstance(application);
         allBaumaschinen = baumaschinenRepository.getAllBaumaschinen();
         allArchivedBaumaschinen = baumaschinenRepository.getAllArchivedBaumaschinen();
+        allBaumaschinenForSpinner = baumaschinenRepository.getAllBaumaschinenForSpinner();
 
 
     }
@@ -35,6 +37,8 @@ public class BaumaschinenViewModel extends AndroidViewModel {
     public LiveData<List<Baumaschine>> getAllArchivedBaumaschine() {
         return allArchivedBaumaschinen;
     }
+
+    public LiveData<List<Baumaschine>> getAllBaumaschinenForSpinner() {return allBaumaschinenForSpinner;}
 
     public void delete(Baumaschine baumaschine) {
         baumaschinenRepository.delete(baumaschine);

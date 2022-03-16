@@ -56,6 +56,8 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             boolean isExpanded = baumaschineList.get(position).getExpanded();
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+            //TODO: make whole CardView clickable to expand and shrink the card
         }
 
     }

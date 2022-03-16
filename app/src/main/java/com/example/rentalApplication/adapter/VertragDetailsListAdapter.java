@@ -43,7 +43,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
     public void onBindViewHolder(@NonNull VertragDetailsViewHolder holder, int position) {
         Baumaschine current = baumaschineVertragDetailsList.get(position);
         holder.vertragDetailsBaumaschineName.setText(current.getMachineName());
-        holder.vertragDetailsBaumaschineAnzahl.setText(String.valueOf(((VertragDetailsActivity)context).getVertragDetails()));
+        holder.vertragDetailsBaumaschineAnzahl.setText(current.getAmount().toString());
         //TODO: calculate total price
         holder.baumaschineVertragDetailsTotalPrice.setText("100");
         holder.baumaschineVertragDetailsOperatingHours.setText(String.valueOf(current.getOperatingHours()));

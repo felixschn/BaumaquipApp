@@ -39,6 +39,7 @@ import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +92,14 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         //create new ViewModel and get all instances of the database entry
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
-        baumaschinenViewModel.getAllBaumaschinen().observe(this, baumaschines -> {
-            //create in CustomAdapter a method called setBaumaschines to retrieve a list of all Database entries
+        baumaschinenViewModel.getAllBaumaschinenForSpinner().observe(this, baumaschines -> {
+            //check for machines who are currently not available and remove them from the list so that the spinner can't show them
+            for(int i = 0; i <= baumaschines.size(); i++){
+                if(getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, baumaschines.get(i)) < 1){
+                    baumaschines.remove(baumaschines.get(i));
+                }
+            }
+            //send a list of all Database entries to the set method in the custom adapter
             customBaumaschinenAdapter.setBaumaschinen(baumaschines);
         });
 
@@ -357,6 +364,9 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
     public int getSelectedBaumaschinenAmount() {
         return amountInt;
+    }
+    public BigDecimal calcPriceForRent(){
+        return new BigDecimal(selectedBaumaschineFromSpinner.getPricePerDay().longValue() * DAYS.between(begin,end) * getSelectedBaumaschinenAmount());
     }
 
     public int getAvailableBaumaschinenAmount(AddStuecklisteneintragViewModel addStuecklisteneintragViewModel, Baumaschine selectedBaumaschineFromSpinner) {

@@ -109,7 +109,6 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             deleteButtonKunde = itemView.findViewById(R.id.deleteButton);
 
             itemView.setOnClickListener(this);
-            kundenName.setOnClickListener(this);
             modifyButtonKunde.setOnClickListener(this);
             deleteButtonKunde.setOnClickListener(this);
 

@@ -7,7 +7,6 @@
     android:orientation="horizontal"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
-    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -32,11 +31,11 @@
                 android:id="@+id/textKundeName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_marginStart="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Bergolz Kinder GmbH" />
 
             <TextView
                 android:id="@+id/textShowKundeLocation"
@@ -54,7 +53,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="500dp"
                 android:text="Pausa"
-
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutKunde"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="700dp"
                 android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutKunde"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -159,7 +158,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/space_between_text"
                     android:text="@string/construction_side"
                     app:layout_constraintStart_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -171,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="150dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/space_between_text"
                     android:text="Pausa"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="350dp"
 
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/space_between_text"
                     android:text="@string/construction_side"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textKundeStreetNumber" />
@@ -193,7 +192,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="500dp"
-
                     android:layout_marginTop="10dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toStartOf="parent"
