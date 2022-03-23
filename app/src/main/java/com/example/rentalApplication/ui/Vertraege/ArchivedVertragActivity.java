@@ -19,7 +19,7 @@ import java.util.List;
 public class ArchivedVertragActivity extends AddVertragActivity implements VertragClickListener {
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
-    private AddStuecklisteneintragViewModel stuecklisteneintragViewModel;
+
     private ModifyVertragViewModel modifyVertragViewModel;
     private Vertrag restoreVertrag;
     private Stuecklisteneintrag stuecklisteneintrag;
@@ -43,16 +43,12 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
             }
         });
 
-        stuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+
     }
 
-    //TODO: if vertrag is deleted, Stuecklisteneintrag should also be deleted!
-    public void deleteArchivedVertrag(Vertrag vertrag) {
-        List<Integer> deleteStuecklisteneintragList = vertrag.getStuecklisteIds();
 
-        for (int i = 0; i < deleteStuecklisteneintragList.size(); i++) {
-            stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
-        }
+    public void deleteArchivedVertrag(Vertrag vertrag) {
+
         vertragViewModel.delete(vertrag);
     }
 

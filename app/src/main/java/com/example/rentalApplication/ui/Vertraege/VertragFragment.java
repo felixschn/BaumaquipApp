@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.VertragListAdapter;
 import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private VertragListAdapter vertragListAdapter;
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
+    private AddStuecklisteneintragViewModel stuecklisteneintragViewModel;
     private ModifyVertragViewModel modifyVertragViewModel;
     private Vertrag archivedVertrag;
     // TODO: Rename parameter arguments, choose names that match
@@ -106,6 +108,16 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         modifyVertragViewModel = new ViewModelProvider(requireActivity()).get(ModifyVertragViewModel.class);
         archivedVertrag = modifyVertragViewModel.loadVertragById(id);
         archivedVertrag.setArchived(true);
+
+        if(!archivedVertrag.getStuecklisteIds().isEmpty()) {
+            List<Integer> deleteStuecklisteneintragList = archivedVertrag.getStuecklisteIds();
+            stuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+            for (int i = 0; i < deleteStuecklisteneintragList.size(); i++) {
+                stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
+            }
+            //TODO: if contract is archived and therefore Stuecklisteneinträge in database deleted, scrutinize if also the list in the contract object has to be remove or if it necessarry at all because I disabled the function of restoring an archived contract
+            archivedVertrag.setStuecklisteIds(new ArrayList<>());
+        }
         modifyVertragViewModel.update(archivedVertrag);
 
     }

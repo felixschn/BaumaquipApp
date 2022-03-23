@@ -2,6 +2,8 @@ package com.example.rentalApplication.adapter;
 
 import android.app.Application;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragBaumaschinenListClickListener;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     private final VertragBaumaschinenListClickListener listener;
     private Context context;
     private Application application;
+    private final BigDecimal sumRentPrice = new BigDecimal("0");
 
     private final BaumaschinenRepository baumaschinenRepository = BaumaschinenRepository.getInstance(application);
 
@@ -48,7 +52,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     @Override
     public AddVertragViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_addvertragbaumaschinenlist_item, parent, false);
-        return new AddVertragViewHolder(itemView, listener);
+        return new AddVertragViewHolder(itemView, listener, new CustomEditTextListener());
     }
 
 
@@ -63,6 +67,10 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             which is accessible through ((AddVertragActivity)context)*/
             int selectedAmount = stueckliste.get(position).getAmount();
             holder.amountBaumaschine.setText(String.valueOf(selectedAmount));
+
+            holder.customEditTextListener.updatePosition(holder.getAdapterPosition());
+            holder.priceForRent.setText(stueckliste.get(holder.getAdapterPosition()).getPrice().toString());
+
         }
     }
 
@@ -124,11 +132,12 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         private final ImageButton modifyButton;
         private final CheckBox insuranceCheckbox;
         private WeakReference<VertragBaumaschinenListClickListener> listenerRef;
+        public CustomEditTextListener customEditTextListener;
 
-
-        public AddVertragViewHolder(@NonNull View itemView, VertragBaumaschinenListClickListener vertragBaumaschinenListClickListener) {
+        public AddVertragViewHolder(@NonNull View itemView, VertragBaumaschinenListClickListener vertragBaumaschinenListClickListener, CustomEditTextListener customEditTextListener) {
             super(itemView);
             listenerRef = new WeakReference<>(vertragBaumaschinenListClickListener);
+            this.customEditTextListener = customEditTextListener;
             itemView.setOnClickListener(this);
             baumaschineName = itemView.findViewById(R.id.addVertragBaumaschinenListName);
             amountBaumaschine = itemView.findViewById(R.id.addVertragAmountBaumaschineList);
@@ -141,7 +150,8 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             deleteButton.setOnClickListener(this);
             modifyButton.setVisibility(View.GONE);
             insuranceCheckbox.setOnClickListener(this);
-
+            //sumRentPrice.add(((AddVertragActivity)context).calcPriceForRent());
+            //Log.d(TAG, "Summe Preis des VertragssumRentPrice" + sumRentPrice.toString());
 
         }
 
@@ -161,6 +171,30 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             }
 
 
+
+        }
+    }
+
+    private class CustomEditTextListener implements TextWatcher{
+        private int position;
+
+        public void updatePosition(int position){
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            stueckliste.get(position).setPrice(((AddVertragActivity)context).calcPriceForRent());
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            stueckliste.get(position).setPrice(new BigDecimal(s.toString()));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
 
         }
     }

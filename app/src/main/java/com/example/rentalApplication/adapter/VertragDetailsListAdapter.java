@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -44,8 +45,6 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         Baumaschine current = baumaschineVertragDetailsList.get(position);
         holder.vertragDetailsBaumaschineName.setText(current.getMachineName());
         holder.vertragDetailsBaumaschineAnzahl.setText(current.getAmount().toString());
-        //TODO: calculate total price
-        holder.baumaschineVertragDetailsTotalPrice.setText("100");
         holder.baumaschineVertragDetailsOperatingHours.setText(String.valueOf(current.getOperatingHours()));
         holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
         holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
@@ -76,7 +75,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         private final TextView textVertragDetailsBaumaschinenAnzahl;
         private final TextView vertragDetailsBaumaschineAnzahl;
         private final TextView textVertragDetailsTotalPrice;
-        private final TextView baumaschineVertragDetailsTotalPrice;
+        private final EditText addVertragPriceForRent;
+
 
         private final ImageButton deleteButtonVertragDetails;
         private final ImageButton modifyButtonVertragDetails;
@@ -99,7 +99,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
             textVertragDetailsBaumaschinenAnzahl = itemView.findViewById(R.id.textVertragDetailsBaumaschinenAnzahl);
             vertragDetailsBaumaschineAnzahl = itemView.findViewById(R.id.vertragDetailsBaumaschineAnzahl);
             textVertragDetailsTotalPrice = itemView.findViewById(R.id.textVertragDetailsTotalPrice);
-            baumaschineVertragDetailsTotalPrice = itemView.findViewById(R.id.baumaschineVertragDetailsTotalPrice);
+            addVertragPriceForRent = itemView.findViewById(R.id.addVertragPriceForRent);
+
 
             deleteButtonVertragDetails = itemView.findViewById(R.id.deleteButton);
             modifyButtonVertragDetails = itemView.findViewById(R.id.modifyButton);

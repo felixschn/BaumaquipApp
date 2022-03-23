@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.ArchivedBaumaschinenActivity;
+import com.example.rentalApplication.ui.Baumaschine.BaumaschinenClickListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +27,12 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
     private Context context;
     private static final String TAG = "ArchivedBaumaschinenListAdapter.java";
     private final ArchivedBaumaschinenActivity archivedBaumaschinenActivity;
+    private final BaumaschinenClickListener baumaschinenClickListener;
 
     //constructor expanded with Activity Param to call the method delete later on in the activity (in RecyclerView Adapter no ViewModel is creatable therefor we execute the delete method in the calling activity)
-    public ArchivedBaumaschineListAdapter(ArchivedBaumaschinenActivity archivedBaumaschinenActivity) {
+    public ArchivedBaumaschineListAdapter(ArchivedBaumaschinenActivity archivedBaumaschinenActivity, BaumaschinenClickListener baumaschinenClickListener) {
         this.archivedBaumaschinenActivity = archivedBaumaschinenActivity;
+        this.baumaschinenClickListener = baumaschinenClickListener;
     }
 
     @NonNull
@@ -36,7 +40,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
     public ArchivedBaumaschineListAdapter.ArchivedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_baumaschinen_item, parent, false);
         context = parent.getContext();
-        return new ArchivedBaumaschineListAdapter.ArchivedViewHolder(itemView);
+        return new ArchivedBaumaschineListAdapter.ArchivedViewHolder(itemView, baumaschinenClickListener);
     }
 
     // binds the data to the TextView in each row
@@ -57,7 +61,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
-            //TODO: make whole CardView clickable to expand and shrink the card
+
         }
 
     }
@@ -82,7 +86,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
     }
 
 
-    class ArchivedViewHolder extends RecyclerView.ViewHolder {
+    class ArchivedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView baumaschineName;
         private final TextView baumaschineAnzahl;
         private final TextView baumaschinePreisPerDay;
@@ -94,9 +98,10 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
         private final ImageButton modifyButton;
         private final ImageButton deleteButton;
         private final ConstraintLayout expandableConstraintLayout;
+        private final WeakReference<BaumaschinenClickListener> listenerRef;
 
 
-        public ArchivedViewHolder(@NonNull View itemView) {
+        public ArchivedViewHolder(@NonNull View itemView, BaumaschinenClickListener baumaschinenClickListener) {
             super(itemView);
             baumaschineName = itemView.findViewById(R.id.baumaschineName);
             baumaschineAnzahl = itemView.findViewById(R.id.baumaschineAnzahl);
@@ -110,21 +115,24 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             modifyButton = itemView.findViewById(R.id.modifyButton);
             modifyButton.setImageResource(R.drawable.ic_baseline_add_24);
             deleteButton = itemView.findViewById(R.id.deleteButton);
+            listenerRef = new WeakReference<>(baumaschinenClickListener);
 
-            //create OnClickListener to baumaschineName expand the recyclerview after userclick on the name
-            baumaschineName.setOnClickListener(v -> {
-                Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                baumaschine.setExpanded(!baumaschine.getExpanded());
-                notifyItemChanged(getAdapterPosition());
-            });
+            itemView.setOnClickListener(this);
+            modifyButton.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
 
-            modifyButton.setOnClickListener(v -> {
+        }
+        @Override
+        public void onClick(View v){
+            Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
+
+            if(v.getId() == modifyButton.getId()){
                 archivedBaumaschinenActivity.restoreBaumaschine(baumaschineList.get(getAdapterPosition()).getIdBaumaschine());
+            }
 
-            });
-            deleteButton.setOnClickListener(v -> {
+            if(v.getId() == deleteButton.getId()){
+                //TODO app crashes if current contract is referencing to machine who should be deleted
                 Log.d(TAG, "Delete Button clicked");
-                Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getResources().getString(R.string.alertDialog));
                 builder.setCancelable(true);
@@ -132,11 +140,19 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
                 builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
                 AlertDialog deleteAlert = builder.create();
                 deleteAlert.show();
+            }
+
+            else{
+                baumaschine.setExpanded(!baumaschine.getExpanded());
+                notifyItemChanged(getAdapterPosition());
+            }
+            listenerRef.get().onPositionClicked(getAdapterPosition());
 
 
-            });
+
         }
     }
+
 }
 
 

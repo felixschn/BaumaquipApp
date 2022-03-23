@@ -54,6 +54,13 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
 
     //method to retrieve a list of all Database entries from the calling activity
     public void setBaumaschinen(List<Baumaschine> baumaschineList) {
+        //check for machines who are currently not available and remove them from the list so that the spinner can't show them
+        /*for(int i = 0; i < baumaschineList.size(); i++){
+            if(((AddVertragActivity)context).getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, baumaschineList.get(i)) == 0){
+                baumaschineList.remove(i);
+            }*/
+
+
         this.baumaschineList = baumaschineList;
         notifyDataSetChanged();
     }
@@ -66,8 +73,11 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
         TextView name = (TextView) view.findViewById(R.id.customSpinnerBaumaschinenName);
         TextView amount = (TextView) view.findViewById(R.id.customSpinnerBaumaschinenAmount);
         name.setText(current.getMachineName());
-        amount.setText(String.valueOf(((AddVertragActivity)context).getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel,current)));
+        amount.setText(String.valueOf(((AddVertragActivity) context).getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, current)));
+
 
         return view;
     }
+
+
 }

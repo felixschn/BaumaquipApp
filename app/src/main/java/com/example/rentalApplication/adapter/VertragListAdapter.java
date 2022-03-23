@@ -1,5 +1,6 @@
 package com.example.rentalApplication.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -133,7 +134,14 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
 
             }
             if (v.getId() == deleteButton.getId()) {
-                vertragFragment.archiveVertrag(vertragList.get(getAdapterPosition()).getIdVertrag());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(context.getResources().getString(R.string.alertDialog));
+                builder.setCancelable(true);
+                builder.setPositiveButton(context.getResources().getString(R.string.okDialog), (dialog, which) -> vertragFragment.archiveVertrag(vertragList.get(getAdapterPosition()).getIdVertrag()));
+                builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
+                AlertDialog deleteAlert = builder.create();
+                deleteAlert.show();
+
             } else {
                 notifyItemChanged(getAdapterPosition());
             }

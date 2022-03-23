@@ -160,6 +160,7 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
                 archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getIdKunde());
             }
             if (v.getId() == deleteButtonKunde.getId()) {
+                //TODO app crashes if current contract is referencing to customer who should be deleted
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getResources().getString(R.string.alertDialog));
                 builder.setCancelable(true);

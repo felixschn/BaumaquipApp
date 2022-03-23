@@ -12,7 +12,7 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.ArchivedBaumaschineListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
 
-public class ArchivedBaumaschinenActivity extends AppCompatActivity {
+public class ArchivedBaumaschinenActivity extends AppCompatActivity implements BaumaschinenClickListener{
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
@@ -27,7 +27,7 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //creating new Adapter for the recyclerview and within this adapter send an instance of this activity, that the adapter can call this activities delete method
-        final ArchivedBaumaschineListAdapter archivedBaumaschineListAdapter = new ArchivedBaumaschineListAdapter(this);
+        final ArchivedBaumaschineListAdapter archivedBaumaschineListAdapter = new ArchivedBaumaschineListAdapter(this, this);
         recyclerView.setAdapter(archivedBaumaschineListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
@@ -46,6 +46,11 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity {
         if (modifyBaumaschineViewModel.getAnyBaumaschine() == null) {
             finish();
         }
+
+    }
+
+    @Override
+    public void onPositionClicked(int position) {
 
     }
 }
