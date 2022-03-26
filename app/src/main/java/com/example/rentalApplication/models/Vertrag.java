@@ -7,6 +7,7 @@ import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,9 +33,12 @@ public class Vertrag {
     private Boolean expanded;
     private Boolean archived;
 
+    private BigDecimal sumOfRent;
+    private BigDecimal discountOfRent;
+
     /*liste erstellen, die eine Reihe von Baumaschinen IDs hält, um mehrere Baumaschinen einen Kunden zu zuordnen*/
 
-    public Vertrag(@NonNull List<Integer> stuecklisteIds, @NonNull int idKunde, @NonNull LocalDate beginnVertrag, @NonNull LocalDate endeVertrag) {
+    public Vertrag(@NonNull List<Integer> stuecklisteIds, @NonNull int idKunde, @NonNull LocalDate beginnVertrag, @NonNull LocalDate endeVertrag, @NonNull BigDecimal sumOfRent, @NonNull BigDecimal discountOfRent ) {
         this.stuecklisteIds = stuecklisteIds;
         this.idKunde = idKunde;
         this.beginnVertrag = beginnVertrag;
@@ -42,6 +46,9 @@ public class Vertrag {
         //set Boolean initially to false
         this.expanded = false;
         this.archived = false;
+
+        this.sumOfRent = sumOfRent;
+        this.discountOfRent = discountOfRent;
 
 
     }
@@ -100,5 +107,21 @@ public class Vertrag {
 
     public void setArchived(Boolean archived) {
         this.archived = archived;
+    }
+
+    public BigDecimal getSumOfRent() {
+        return sumOfRent;
+    }
+
+    public void setSumOfRent(BigDecimal sumOfRent) {
+        this.sumOfRent = sumOfRent;
+    }
+
+    public BigDecimal getDiscountOfRent() {
+        return discountOfRent;
+    }
+
+    public void setDiscountOfRent(BigDecimal discountOfRent) {
+        this.discountOfRent = discountOfRent;
     }
 }

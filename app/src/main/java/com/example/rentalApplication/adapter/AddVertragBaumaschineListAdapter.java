@@ -119,6 +119,16 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         }
     }
 
+    //in case that the start or end date is changed after the machine is already in the recyclerview, delete all recyclerview items to prevent false price calculations
+    public void clearAddVertragBaumaschinenRecyclerView() {
+        for(int i = 0; i < stueckliste.size(); i++){
+            stueckliste.remove(i);
+            notifyItemRemoved(i);
+        }
+
+
+    }
+
     public List<Stuecklisteneintrag> getStueckliste() {
         return stueckliste;
     }

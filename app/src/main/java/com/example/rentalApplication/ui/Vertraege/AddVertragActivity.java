@@ -40,7 +40,9 @@ import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStueckl
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -157,6 +159,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                     customBaumaschinenAdapter.notifyDataSetChanged();
                     endeVertrag.setText(Converters.localDateToString(end));
                 }
+
+
                 beginnVertrag.setText(Converters.localDateToString(begin));
                 customBaumaschinenAdapter.notifyDataSetChanged();
             }
@@ -167,9 +171,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 end = LocalDate.of(year, month + 1, dayOfMonth);
                 if (end.isBefore(begin)) {
-                    //TODO: if end <= begin --> warning / error message
-                    Log.d(TAG, "Ende sollte nicht vor Anfang liegen");
-                    Toast.makeText(getApplicationContext(), "Ende vor Anfang !?!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.endBeforeBegin), Toast.LENGTH_SHORT).show();
+                    end = begin;
                 }
                 customBaumaschinenAdapter.notifyDataSetChanged();
                 endeVertrag.setText(Converters.localDateToString(end));
@@ -181,6 +184,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, begin.getYear(), begin.getMonthValue() - 1, begin.getDayOfMonth()).show();
+                addVertragBaumaschineListAdapter.clearAddVertragBaumaschinenRecyclerView();
+                recyclerViewVisibility();
             }
         });
 
@@ -188,6 +193,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth()).show();
+                addVertragBaumaschineListAdapter.clearAddVertragBaumaschinenRecyclerView();
+                recyclerViewVisibility();
             }
         });
 
@@ -197,6 +204,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(addVertragBaumaschineListAdapter);
 
+
         emptyRecyclerViewTextView = findViewById(R.id.emptyRecyclerviewTextView);
         announceRecyclerView = findViewById(R.id.announceRecyclerViewTextView);
 
@@ -204,6 +212,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
 
     }
+
 
     /*method to in- or decrease the amount of the chosen Baumaschine through the spinner:
      * -if the the amount */
@@ -331,7 +340,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
                 /*check if list of Stuecklisteintrag-Id is not empty, to avoid Verträge without stuecklisteintrag-Ids*/
                 if (!stuecklisteIds.isEmpty()) {
-                    addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end));
+                    //TODO: add sumOfRent and discountOfRent to the contract
+                    addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end, new BigDecimal(0), new BigDecimal(0)));
                     finish();
                 } else {
                     Toast.makeText(this, "Bitte Baumaschine(n) auswählen!", Toast.LENGTH_SHORT).show();
@@ -360,8 +370,25 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     public int getSelectedBaumaschinenAmount() {
         return amountInt;
     }
-    public BigDecimal calcPriceForRent(){
-        return new BigDecimal(selectedBaumaschineFromSpinner.getPricePerDay().longValue() * DAYS.between(begin,end) * getSelectedBaumaschinenAmount());
+
+
+    //calculating price for the machine renting with different scenarios for example a renting during the weekend and therefore applying the weekend price
+    public BigDecimal calcPriceForRent() {
+        BigDecimal price;
+        long rental_period = ChronoUnit.DAYS.between(begin, end) + 1;  // +1 to include last day
+
+        if ((4 == rental_period) &&
+                (DayOfWeek.FRIDAY == begin.getDayOfWeek()) &&
+                (DayOfWeek.MONDAY == end.getDayOfWeek())) {
+
+            price = selectedBaumaschineFromSpinner.getPricePerWeekend();
+        } else if (30 < rental_period) {
+            price = selectedBaumaschineFromSpinner.getPricePerMonth().multiply(BigDecimal.valueOf(rental_period / 30));
+        } else {
+            price = selectedBaumaschineFromSpinner.getPricePerDay().multiply(BigDecimal.valueOf(rental_period));
+
+        }
+        return price;
     }
 
     public int getAvailableBaumaschinenAmount(AddStuecklisteneintragViewModel addStuecklisteneintragViewModel, Baumaschine selectedBaumaschineFromSpinner) {

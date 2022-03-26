@@ -40,6 +40,8 @@
     <string name="total_price">total price</string>
     <string name="vertragDetailsStart">start of contract</string>
     <string name="vertragDetailsEnd">end of contract</string>
+    <string name="endBeforeBegin">end date can\'t be befor start date</string>
+    <string name="startBefore">start date can not be bevore todays date</string>
 
     <!--Buttons-->
     <string name="button_add">add</string>

@@ -80,7 +80,7 @@ public class Stuecklisteneintrag {
         long rental_period = ChronoUnit.DAYS.between(beginDate, endDate) + 1;  // +1 to include last day
 
         //TODO: Check & adjust logic of if-elif-else
-        if ((4 == rental_period) &&
+       /* if ((4 == rental_period) &&
                 (DayOfWeek.FRIDAY == beginDate.getDayOfWeek()) &&
                 (DayOfWeek.MONDAY == endDate.getDayOfWeek())) {
 
@@ -89,7 +89,7 @@ public class Stuecklisteneintrag {
             this.price = baumaschine.getPricePerMonth().multiply(BigDecimal.valueOf(rental_period / 30));
         } else {
             this.price = baumaschine.getPricePerDay().multiply(BigDecimal.valueOf(rental_period));
-        }
+        }*/
     }
 
     public int getIdStueckList() {
