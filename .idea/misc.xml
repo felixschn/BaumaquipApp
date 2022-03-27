@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/drawable/remove_machine.xml" value="0.334" />
         <entry key="app/src/main/res/drawable/top_border.xml" value="0.2505" />
         <entry key="app/src/main/res/layout/activity_add_baumaschinen.xml" value="0.16171875" />
-        <entry key="app/src/main/res/layout/activity_add_vertrag.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_add_vertrag.xml" value="0.67" />
         <entry key="app/src/main/res/layout/activity_vertrag_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/archived_baumaschinen.xml" value="0.14528508771929824" />
         <entry key="app/src/main/res/layout/archived_kunden.xml" value="0.14528508771929824" />

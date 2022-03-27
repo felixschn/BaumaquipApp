@@ -52,8 +52,12 @@
 
             <EditText
                 android:id="@+id/addVertragPriceForRent"
-                android:layout_width="0dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
+                android:maxLines="1"
+                android:lines="1"
+                android:inputType="numberDecimal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/addVertragAmountBaumaschineList"
                 app:layout_constraintTop_toTopOf="parent"

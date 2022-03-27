@@ -69,7 +69,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             holder.amountBaumaschine.setText(String.valueOf(selectedAmount));
 
             holder.customEditTextListener.updatePosition(holder.getAdapterPosition());
-            holder.priceForRent.setText(stueckliste.get(holder.getAdapterPosition()).getPrice().toString());
+            holder.priceForRent.setText(stueckliste.get(holder.getAdapterPosition()).getPrice().toString().trim() + '€');
 
         }
     }
@@ -99,12 +99,12 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             return;
         }
 
-        if(((AddVertragActivity) context).checkIfDateIsSet()){
+        if (((AddVertragActivity) context).checkIfDateIsSet()) {
             Toast.makeText(context, "Bitte zuerst Datum auswählen!", Toast.LENGTH_LONG).show();
             return;
         }
 
-        stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(),((AddVertragActivity)context).calcPriceForRent(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
+        stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).calcPriceForRent(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
         notifyDataSetChanged();
 
     }
@@ -121,9 +121,9 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
     //in case that the start or end date is changed after the machine is already in the recyclerview, delete all recyclerview items to prevent false price calculations
     public void clearAddVertragBaumaschinenRecyclerView() {
-        for(int i = 0; i < stueckliste.size(); i++){
-            stueckliste.remove(i);
-            notifyItemRemoved(i);
+        if (stueckliste.size() > 0) {
+            stueckliste.clear();
+            notifyItemRangeRemoved(0, stueckliste.size());
         }
 
 
@@ -176,31 +176,31 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
 
             }
-            if(v.getId() == insuranceCheckbox.getId()){
+            if (v.getId() == insuranceCheckbox.getId()) {
                 stueckliste.get(getAdapterPosition()).setInsurance(true);
             }
-
 
 
         }
     }
 
-    private class CustomEditTextListener implements TextWatcher{
+    private class CustomEditTextListener implements TextWatcher {
         private int position;
 
-        public void updatePosition(int position){
+        public void updatePosition(int position) {
             this.position = position;
         }
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            stueckliste.get(position).setPrice(((AddVertragActivity)context).calcPriceForRent());
+            stueckliste.get(position).setPrice(((AddVertragActivity) context).calcPriceForRent());
 
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             stueckliste.get(position).setPrice(new BigDecimal(s.toString()));
+
         }
 
         @Override
