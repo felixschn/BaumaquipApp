@@ -153,4 +153,10 @@ public class Kunde {
     public void setArchived(Boolean archived) {
         this.archived = archived;
     }
+
+    public static Kunde[] populateKundeData(){
+        return new Kunde[]{
+                new Kunde("Bergholz GmbH", "01234567891", "bergholz@gmx.de", "Zum Spielplatz", "12", "08525", "Plauen", "Plauen", "Klaus Bergholz")
+        };
+    }
 }

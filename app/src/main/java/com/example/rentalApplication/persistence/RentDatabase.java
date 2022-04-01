@@ -43,7 +43,21 @@ public abstract class RentDatabase extends RoomDatabase {
             synchronized (RentDatabase.class) {
                 if (INSTANCE == null) {
                     // TODO fallBackOnDestructiveMigration löscht bei Update die Datenbank Inhalte -> Migrationen verwenden
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RentDatabase.class, "rent_database").fallbackToDestructiveMigration().addCallback(roomCallback).build();
+                    //INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RentDatabase.class, "rent_database").fallbackToDestructiveMigration().addCallback(roomCallback).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RentDatabase.class, "rent_database").fallbackToDestructiveMigration().addCallback(new Callback() {
+                        @Override
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
+                            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getDatabase(context).baumaschinenDao().insertAll(Baumaschine.populateBaumaschinenData());
+                                    getDatabase(context).kundenDao().insertAll(Kunde.populateKundeData());
+                                }
+                            });
+                        }
+                    }).build();
+
                 }
             }
         }

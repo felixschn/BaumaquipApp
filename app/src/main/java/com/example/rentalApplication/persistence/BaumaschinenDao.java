@@ -17,6 +17,9 @@ public interface BaumaschinenDao {
     @Insert
     void insert(Baumaschine baumaschine);
 
+    @Insert
+    void insertAll(Baumaschine... baumaschines);
+
     @Delete
     void delete(Baumaschine baumaschine);
 

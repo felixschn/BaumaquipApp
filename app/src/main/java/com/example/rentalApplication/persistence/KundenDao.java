@@ -18,6 +18,9 @@ public interface KundenDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     long insert(Kunde kunde);
 
+    @Insert
+    void insertAll(Kunde... kundes);
+
     @Delete
     void delete(Kunde kunde);
 

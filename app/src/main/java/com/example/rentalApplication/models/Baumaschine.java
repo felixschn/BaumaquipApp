@@ -146,4 +146,10 @@ public class Baumaschine {
     public void setArchived(Boolean archived) {
         this.archived = archived;
     }
+
+    public static Baumaschine[] populateBaumaschinenData(){
+        return new Baumaschine[]{
+                new Baumaschine("Bagger", 1,new BigDecimal(100), new BigDecimal(180), new BigDecimal(2000), 4000.0, "gut","voll")
+        };
+    }
 }
