@@ -6,6 +6,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -73,6 +75,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private Baumaschine selectedBaumaschineFromSpinner;
     private Kunde selectedKundeFromSpinner;
     private Switch switchDiscountMode;
+    private boolean switchOn = false;
+    private BigDecimal discount, sumWithoutDiscount, discountFromSum;
 
 
     @Override
@@ -231,7 +235,6 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         discountOfRent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -254,12 +257,31 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 sumOfRent.setText(calcSumOfRent().toString());
             }
         });
+
+        switchDiscountMode.setText("€");
+        switchDiscountMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                switchOn = isChecked;
+                if(isChecked){
+                    switchDiscountMode.setText("%");
+                    clearDiscount();
+                }
+                else{
+                    switchDiscountMode.setText("€");
+                    clearDiscount();
+                }
+
+            }
+        });
     }
 
 
     /*method to in- or decrease the amount of the chosen Baumaschine through the spinner:
      * -if the the amount */
     private void buttonVisibility() {
+        amountTextView.setVisibility(View.VISIBLE);
+        addBaumaschinenListButton.setVisibility(View.VISIBLE);
         if (amountInt >= maxAmount) {
             increaseButton.setVisibility(View.INVISIBLE);
         } else {
@@ -387,9 +409,9 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             /* check if the beginnVertrag & endeVertrag field is filled*/
             if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
                 /*check if list of Stuecklisteintrag-Id is not empty, to avoid Verträge without stuecklisteintrag-Ids*/
-                if (!stuecklisteIds.isEmpty()) {
+                if (!stuecklisteIds.isEmpty() && sumWithoutDiscount.compareTo(BigDecimal.ZERO) > 0) {
                     //TODO: add sumOfRent and discountOfRent to the contract
-                    addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end, new BigDecimal(0), new BigDecimal(0)));
+                    addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end, sumWithoutDiscount, discountFromSum));
                     finish();
                 } else {
                     Toast.makeText(this, "Bitte Baumaschine(n) auswählen!", Toast.LENGTH_SHORT).show();
@@ -449,22 +471,37 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     public BigDecimal calcSumOfRent() {
         List<Stuecklisteneintrag> calcList = addVertragBaumaschineListAdapter.getStueckliste();
         BigDecimal bigDeciamlsumOfRent = new BigDecimal(0);
+
         for (int i = 0; i < calcList.size(); i++) {
             BigDecimal stuecklisteneintragSum = new BigDecimal(String.valueOf(calcList.get(i).getPrice()));
             bigDeciamlsumOfRent = bigDeciamlsumOfRent.add(stuecklisteneintragSum);
         }
-        BigDecimal discount;
+        sumWithoutDiscount = new BigDecimal(String.valueOf(bigDeciamlsumOfRent));
+
         try {
             discount = new BigDecimal(discountOfRent.getText().toString().replace(",", ""));
 
         } catch (NumberFormatException e) {
+            // catch NumberFormatException if user has not altered the edittext discount
+            // if edittext was not edited than use 0 as discount value
             discount = new BigDecimal(0);
         }
-        discountOfRent.setFilters(new InputFilter[]{
-                new InputFilterMaxSum(0, bigDeciamlsumOfRent.intValue()) {
-                }
-        });
-        bigDeciamlsumOfRent = bigDeciamlsumOfRent.subtract(new BigDecimal(String.valueOf(discount)));
+        if (!switchOn) {
+            discountOfRent.setFilters(new InputFilter[]{
+                    new InputFilterMaxSum(0, bigDeciamlsumOfRent.intValue()) {
+                    }
+            });
+            bigDeciamlsumOfRent = bigDeciamlsumOfRent.subtract(new BigDecimal(String.valueOf(discount)));
+            discountFromSum = new BigDecimal(String.valueOf(sumWithoutDiscount.subtract(bigDeciamlsumOfRent)));
+        } else {
+            discountOfRent.setFilters(new InputFilter[]{
+                    new InputFilterMaxSum(0, 100) {
+                    }
+            });
+            bigDeciamlsumOfRent = bigDeciamlsumOfRent.subtract(bigDeciamlsumOfRent.multiply(discount).divide(new BigDecimal(100)));
+            discountFromSum = new BigDecimal(String.valueOf(sumWithoutDiscount.subtract(bigDeciamlsumOfRent)));
+        }
+
         sumOfRent.setText(bigDeciamlsumOfRent.toString());
 
 
