@@ -2,7 +2,9 @@ package com.example.rentalApplication.adapter;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -127,6 +129,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         }
 
 
+
     }
 
     public List<Stuecklisteneintrag> getStueckliste() {
@@ -152,6 +155,13 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             baumaschineName = itemView.findViewById(R.id.addVertragBaumaschinenListName);
             amountBaumaschine = itemView.findViewById(R.id.addVertragAmountBaumaschineList);
             priceForRent = itemView.findViewById(R.id.addVertragPriceForRent);
+            priceForRent.addTextChangedListener(customEditTextListener);
+            priceForRent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
             deleteButton = itemView.findViewById(R.id.deleteButton);
             modifyButton = itemView.findViewById(R.id.modifyButton);
             insuranceCheckbox = itemView.findViewById(R.id.insuranceCheckBox);
@@ -193,18 +203,34 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            stueckliste.get(position).setPrice(((AddVertragActivity) context).calcPriceForRent());
+            //stueckliste.get(position).setPrice(((AddVertragActivity) context).calcPriceForRent());
+            try {
+                ((AddVertragActivity) context).clearDiscount();
+                //TODO set discount edittext to 0 when stuecklisteneintrag price in recyclerview is edited
+            } catch (Resources.NotFoundException nf){
+
+            }
+
+
 
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            stueckliste.get(position).setPrice(new BigDecimal(s.toString()));
+            try{
+                stueckliste.get(position).setPrice(new BigDecimal(s.toString().replace("€", "")));
+            }catch (NumberFormatException nf){}
+            ((AddVertragActivity) context).calcSumOfRent();
+
+
+
+
 
         }
 
         @Override
         public void afterTextChanged(Editable s) {
+
 
         }
     }

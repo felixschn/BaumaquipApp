@@ -1,6 +1,8 @@
 package com.example.rentalApplication.ui.Baumaschine;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -91,8 +93,13 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 //retrieve the id from the intent
                 modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
                 loadBaumaschineById = modifyBaumaschineViewModel.getBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
+                int editableBaumaschineAmount = loadBaumaschineById.getAmount();
                 addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
-                addBaumaschinenAnzahlEditText.setText(loadBaumaschineById.getAmount().toString());
+                addBaumaschinenAnzahlEditText.setText(Integer.toString(editableBaumaschineAmount));
+                if(editableBaumaschineAmount == 1){
+                    addBaumaschinenAnzahlEditText.setFocusable(false);
+                    addBaumaschinenAnzahlEditText.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+                }
                 addBaumaschinenPricePerDayEditText.setText(loadBaumaschineById.getPricePerDay().toString());
                 addBaumaschinenPricePerWeekendEditText.setText(loadBaumaschineById.getPricePerWeekend().toString());
                 addBaumaschinenPricePerMonthEditText.setText(loadBaumaschineById.getPricePerMonth().toString());

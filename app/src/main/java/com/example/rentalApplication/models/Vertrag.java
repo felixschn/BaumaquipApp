@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Fts4
+
 @Entity
 public class Vertrag {
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rowid")
+    @PrimaryKey(autoGenerate = true)
     public int idVertrag;
 
     @TypeConverters(Converters.class)

@@ -123,7 +123,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         @Override
         public void onClick(View v) {
             Baumaschine baumaschine = baumaschineVertragDetailsList.get(getAdapterPosition());
-
+            //TODO
             if(v.getId() == deleteButtonVertragDetails.getId()){
 
             }

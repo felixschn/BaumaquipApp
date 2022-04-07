@@ -7,6 +7,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,12 +59,12 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private KundenViewModel kundenViewModel;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private AddVertragViewModel addVertragViewModel;
-    private EditText beginnVertrag, endeVertrag;
+    private EditText beginnVertrag, endeVertrag, discountOfRent;
     private LocalDate begin, end;
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
     private ImageButton increaseButton, decreaseButton, addBaumaschinenListButton;
-    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView;
+    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView, sumOfRent;
     int amountInt, maxAmount;
     private CustomBaumaschinenAdapter customBaumaschinenAdapter;
     private RecyclerView recyclerView;
@@ -67,8 +72,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private Spinner baumaschinenSpinner, kundenSpinner;
     private Baumaschine selectedBaumaschineFromSpinner;
     private Kunde selectedKundeFromSpinner;
-    private long stuecklisteneintragId;
-    private AsyncTaskStuecklisteneintragIdResponse asyncTaskStuecklisteneintragIdResponse;
+    private Switch switchDiscountMode;
 
 
     @Override
@@ -185,6 +189,9 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, begin.getYear(), begin.getMonthValue() - 1, begin.getDayOfMonth()).show();
                 addVertragBaumaschineListAdapter.clearAddVertragBaumaschinenRecyclerView();
+                sumOfRent.setVisibility(View.INVISIBLE);
+                discountOfRent.setVisibility(View.INVISIBLE);
+                switchDiscountMode.setVisibility(View.INVISIBLE);
                 recyclerViewVisibility();
             }
         });
@@ -194,6 +201,9 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             public void onClick(View v) {
                 new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth()).show();
                 addVertragBaumaschineListAdapter.clearAddVertragBaumaschinenRecyclerView();
+                sumOfRent.setVisibility(View.INVISIBLE);
+                discountOfRent.setVisibility(View.INVISIBLE);
+                switchDiscountMode.setVisibility(View.INVISIBLE);
                 recyclerViewVisibility();
             }
         });
@@ -210,7 +220,40 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         recyclerViewVisibility();
 
+        sumOfRent = findViewById(R.id.textSumOfRent);
+        discountOfRent = findViewById(R.id.editTextDiscountofRent);
+        switchDiscountMode = findViewById(R.id.switchDiscountMode);
+        sumOfRent.setVisibility(View.INVISIBLE);
+        discountOfRent.setVisibility(View.INVISIBLE);
+        switchDiscountMode.setVisibility(View.INVISIBLE);
 
+
+        discountOfRent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    Log.d(TAG, "Char: " + s);
+
+
+                    if (new BigDecimal(s.toString()).compareTo(calcSumOfRent()) > 0) {
+                        Log.d(TAG, "Discount zu groß!");
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sumOfRent.setText(calcSumOfRent().toString());
+            }
+        });
     }
 
 
@@ -226,6 +269,10 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             decreaseButton.setVisibility(View.INVISIBLE);
         } else {
             decreaseButton.setVisibility(View.VISIBLE);
+        }
+        if (amountInt > maxAmount) {
+            addBaumaschinenListButton.setVisibility(View.INVISIBLE);
+            amountTextView.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -302,6 +349,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
             if (selectedBaumaschineFromSpinner != null) {
                 addVertragBaumaschineListAdapter.addBaumaschinenToVertrag(selectedBaumaschineFromSpinner);
+
                 recyclerViewVisibility();
 
             }
@@ -359,10 +407,17 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             recyclerView.setVisibility(View.GONE);
             announceRecyclerView.setVisibility(View.GONE);
             emptyRecyclerViewTextView.setVisibility(View.VISIBLE);
+
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             announceRecyclerView.setVisibility(View.VISIBLE);
             emptyRecyclerViewTextView.setVisibility(View.GONE);
+            sumOfRent.setText(calcSumOfRent().toString());
+            sumOfRent.setVisibility(View.VISIBLE);
+            discountOfRent.setText("0");
+            discountOfRent.setVisibility(View.VISIBLE);
+            switchDiscountMode.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -391,9 +446,36 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         return price;
     }
 
+    public BigDecimal calcSumOfRent() {
+        List<Stuecklisteneintrag> calcList = addVertragBaumaschineListAdapter.getStueckliste();
+        BigDecimal bigDeciamlsumOfRent = new BigDecimal(0);
+        for (int i = 0; i < calcList.size(); i++) {
+            BigDecimal stuecklisteneintragSum = new BigDecimal(String.valueOf(calcList.get(i).getPrice()));
+            bigDeciamlsumOfRent = bigDeciamlsumOfRent.add(stuecklisteneintragSum);
+        }
+        BigDecimal discount;
+        try {
+            discount = new BigDecimal(discountOfRent.getText().toString().replace(",", ""));
+
+        } catch (NumberFormatException e) {
+            discount = new BigDecimal(0);
+        }
+        discountOfRent.setFilters(new InputFilter[]{
+                new InputFilterMaxSum(0, bigDeciamlsumOfRent.intValue()) {
+                }
+        });
+        bigDeciamlsumOfRent = bigDeciamlsumOfRent.subtract(new BigDecimal(String.valueOf(discount)));
+        sumOfRent.setText(bigDeciamlsumOfRent.toString());
+
+
+        return bigDeciamlsumOfRent;
+    }
+
+    public void clearDiscount() {
+        discountOfRent.setText("0");
+    }
+
     public int getAvailableBaumaschinenAmount(AddStuecklisteneintragViewModel addStuecklisteneintragViewModel, Baumaschine selectedBaumaschineFromSpinner) {
-        List<Stuecklisteneintrag> bufferList = addStuecklisteneintragViewModel.getAllStuecklisteneintragForId(selectedBaumaschineFromSpinner.getIdBaumaschine());
-        //maxAmount = selectedBaumaschineFromSpinner.getAmount();
         List<Stuecklisteneintrag> existingStuecklisteneintrageForBaumaschine = addStuecklisteneintragViewModel.getStuecklisteneintragForDate(begin, end, selectedBaumaschineFromSpinner.getIdBaumaschine());
         int maxRentingAmountPerDay = 0;
         int maxRentingAmount = 0;
@@ -437,6 +519,27 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
     }
 
+
+
+
+        /*for (int i = 0; i < bufferList.size(); i++){
+            //logic to restrict the amount of the chosen machine in case that an contract during the desired time for that machine is already existing
+            if(!bufferList.get(i).getBeginDate().isAfter(begin) && !bufferList.get(i).getEndDate().isBefore(end)){
+                maxAmount = maxAmount - bufferList.get(i).getAmount();
+                continue;
+
+            }
+            if (bufferList.get(i).getBeginDate().isBefore(end)  && !bufferList.get(i).getEndDate().isBefore(end) || begin.isBefore(bufferList.get(i).getEndDate())&& ! end.isBefore(bufferList.get(i).getEndDate()) ){
+                maxAmount = maxAmount - bufferList.get(i).getAmount();
+
+            }
+            else if(bufferList.get(i).getBeginDate().isEqual(end) || bufferList.get(i).getEndDate().isEqual(begin)){
+                maxAmount = maxAmount -bufferList.get(i).getAmount();
+            }
+            addVertragViewModel.getAllVertragDuringDesiredTime(begin,end);
+
+        }*/
+
     public LocalDate getBeginnVertrag() {
         return Converters.editTextToLocalDate(beginnVertrag);
     }
@@ -448,6 +551,32 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
     public LocalDate getEndeVertrag() {
         return Converters.editTextToLocalDate(endeVertrag);
+    }
+
+    public class InputFilterMaxSum implements InputFilter {
+        private int minValue, maxValue;
+
+        public InputFilterMaxSum(int minValue, int maxValue) {
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            try {
+                int inputValue = Integer.parseInt(dest.subSequence(0, dstart).toString() + source + dest.subSequence(dend, dest.length()));
+                if (inRange(minValue, maxValue, inputValue)) {
+                    return null;
+                }
+
+            } catch (NumberFormatException nfe) {
+            }
+            return "";
+        }
+
+        private boolean inRange(int min, int max, int input) {
+            return max > min ? input >= min && input <= max : input >= max && input <= min;
+        }
     }
 
 
