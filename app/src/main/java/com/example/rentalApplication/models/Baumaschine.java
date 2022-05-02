@@ -149,7 +149,8 @@ public class Baumaschine {
 
     public static Baumaschine[] populateBaumaschinenData(){
         return new Baumaschine[]{
-                new Baumaschine("Bagger", 1,new BigDecimal(100), new BigDecimal(180), new BigDecimal(2000), 4000.0, "gut","voll")
+                new Baumaschine("Bagger", 1,new BigDecimal(100), new BigDecimal(180), new BigDecimal(2000), 4000.0, "gut","voll"),
+                new Baumaschine("Kran", 1,new BigDecimal(200), new BigDecimal(280), new BigDecimal(4000), 1000.0, "schlecht","voll")
         };
     }
 }
