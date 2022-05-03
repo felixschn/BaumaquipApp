@@ -91,12 +91,12 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         vertragViewModel.getAllVertrag().observe(getViewLifecycleOwner(), new Observer<List<Vertrag>>() {
             @Override
             public void onChanged(List<Vertrag> vertrags) {
-                for(int i = 0; i<vertrags.size(); i++){
+                /*for(int i = 0; i<vertrags.size(); i++){
                     //TODO: test if this is a good way to automatically archieve expired contracts
                     if(vertrags.get(i).getEndeVertrag().isBefore(LocalDate.now())){
                         archiveVertrag(vertrags.get(i).getIdVertrag());
                     }
-                }
+                 }*/
                 vertragListAdapter.setVertrag(vertrags);
             }
         });
