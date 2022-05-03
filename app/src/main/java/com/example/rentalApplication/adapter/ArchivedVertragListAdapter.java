@@ -2,6 +2,7 @@ package com.example.rentalApplication.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Vertraege.ArchivedVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragClickListener;
+import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
 
 import java.lang.ref.WeakReference;
 import java.time.LocalDate;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVertragListAdapter.ArchivedVertragViewHolder>{
+public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVertragListAdapter.ArchivedVertragViewHolder> {
     private LayoutInflater mInflater;
     private List<Vertrag> vertragList = new ArrayList<>();
     private final VertragClickListener vertragClickListener;
@@ -77,7 +79,9 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
         return localDate.format(dateFormat);
     }
 
-    public void deleteVertrag(Vertrag vertrag){archivedVertragActivity.deleteArchivedVertrag(vertrag);}
+    public void deleteVertrag(Vertrag vertrag) {
+        archivedVertragActivity.deleteArchivedVertrag(vertrag);
+    }
     //public void restoreVertrag(int id){archivedVertragActivity.restoreVertrag(id);}
 
     class ArchivedVertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -114,10 +118,12 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
             Vertrag vertrag = vertragList.get(getAdapterPosition());
 
             if (v.getId() == modifyButton.getId()) {
-                //restoreVertrag(vertrag.getIdVertrag());
-
-
+                Intent modifyVertragIntent = new Intent(context, VertragDetailsActivity.class);
+                modifyVertragIntent.putExtra("vertragRowId", vertrag.getIdVertrag());
+                modifyVertragIntent.putExtra("Class", "ArchivedVertragListAdapter");
+                context.startActivity(modifyVertragIntent);
             }
+
             if (v.getId() == deleteButton.getId()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getResources().getString(R.string.alertDialog));
