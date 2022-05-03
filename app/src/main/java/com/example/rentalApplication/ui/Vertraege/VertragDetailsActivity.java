@@ -78,7 +78,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
             kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
             for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
                 int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
-                baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(stuecklisteneintragId));
+                baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
                 try {
                     baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
                 }catch (NullPointerException npe){
