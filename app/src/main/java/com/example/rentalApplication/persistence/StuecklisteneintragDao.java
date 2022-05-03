@@ -29,7 +29,7 @@ public interface StuecklisteneintragDao {
     @Query("SELECT *, rowid From Stuecklisteneintrag WHERE rowid = :id")
     Stuecklisteneintrag getStuecklisteneintragById(int id);
 
-    @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE (beginDate BETWEEN :start AND :end OR endDate BETWEEN :start AND :end OR (beginDate < :end AND :start < endDate)) and idBaumaschine = :id")
+    @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE archived = 0 AND (beginDate BETWEEN :start AND :end OR endDate BETWEEN :start AND :end OR (beginDate < :end AND :start < endDate)) and idBaumaschine = :id")
     List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id);
 
 

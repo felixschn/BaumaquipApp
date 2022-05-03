@@ -51,9 +51,9 @@ public class Stuecklisteneintrag {
     @Ignore
     private Application application;
 
-
-
     private LocalDate beginDate, endDate;
+
+    private Boolean archived;
 
     public Stuecklisteneintrag() {
     }
@@ -66,6 +66,7 @@ public class Stuecklisteneintrag {
         this.endDate = endDate;
         this.application = application;
         this.price = price;
+        this.archived = false;
 
 
         this.operatingHours_end = null;
@@ -166,6 +167,14 @@ public class Stuecklisteneintrag {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 }
 

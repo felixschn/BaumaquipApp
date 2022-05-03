@@ -16,28 +16,32 @@ public class StuecklisteneintragRepository {
     private StuecklisteneintragDao stuecklisteneintragDao;
     private AsyncTaskStuecklisteneintragIdResponse asyncTaskStuecklisteneintragIdResponse;
 
-    private StuecklisteneintragRepository(Application application){
+    private StuecklisteneintragRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
         stuecklisteneintragDao = db.stuecklisteneintragDao();
 
     }
 
-    public static synchronized StuecklisteneintragRepository getInstance(Application application){
-        if(null == INSTANCE){
+    public static synchronized StuecklisteneintragRepository getInstance(Application application) {
+        if (null == INSTANCE) {
             INSTANCE = new StuecklisteneintragRepository(application);
         }
         return INSTANCE;
     }
 
-    public long insert( Stuecklisteneintrag stuecklisteneintrag) throws ExecutionException, InterruptedException {
+    public long insert(Stuecklisteneintrag stuecklisteneintrag) throws ExecutionException, InterruptedException {
         return new InsertAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag).get();
     }
 
-    public void delete(Stuecklisteneintrag stuecklisteneintrag){
+    public void delete(Stuecklisteneintrag stuecklisteneintrag) {
         new DeleteAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag);
     }
 
-    public List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id){
+    public void update(Stuecklisteneintrag stuecklisteneintrag) {
+        new UpdateAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag);
+    }
+
+    public List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id) {
         Integer rowid = id;
         try {
             return new ModifyAsyncTask(stuecklisteneintragDao).execute(rowid).get();
@@ -47,7 +51,7 @@ public class StuecklisteneintragRepository {
         return null;
     }
 
-    public Stuecklisteneintrag getStuecklisteneintragById (int id){
+    public Stuecklisteneintrag getStuecklisteneintragById(int id) {
         Integer rowid = id;
         try {
             return new StuecklisteneintragByIdAsyncTask(stuecklisteneintragDao).execute(rowid).get();
@@ -57,7 +61,7 @@ public class StuecklisteneintragRepository {
         return null;
     }
 
-    public List<Stuecklisteneintrag> getStuecklisteneintragForDate (LocalDate start, LocalDate end, int id){
+    public List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id) {
         try {
             return new StuecklisteneintragForDateAsyncTask(stuecklisteneintragDao, start, end, id).execute().get();
         } catch (ExecutionException | InterruptedException e) {
@@ -67,14 +71,17 @@ public class StuecklisteneintragRepository {
     }
 
 
-    private static class InsertAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Long>{
+    private static class InsertAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Long> {
         private StuecklisteneintragDao mAsyncTaskDao;
 
         public long insertId;
-        InsertAsyncTask(StuecklisteneintragDao dao){this.mAsyncTaskDao = dao;}
+
+        InsertAsyncTask(StuecklisteneintragDao dao) {
+            this.mAsyncTaskDao = dao;
+        }
 
         @Override
-        protected Long doInBackground(Stuecklisteneintrag... stuecklisteneintrag){
+        protected Long doInBackground(Stuecklisteneintrag... stuecklisteneintrag) {
             insertId = mAsyncTaskDao.insert(stuecklisteneintrag[0]);
             return insertId;
         }
@@ -85,23 +92,37 @@ public class StuecklisteneintragRepository {
         }*/
     }
 
-    private static class StuecklisteneintragByIdAsyncTask extends AsyncTask<Integer, Void, Stuecklisteneintrag>{
+    private static class StuecklisteneintragByIdAsyncTask extends AsyncTask<Integer, Void, Stuecklisteneintrag> {
         private StuecklisteneintragDao mAsyncTaskDao;
 
-        StuecklisteneintragByIdAsyncTask(StuecklisteneintragDao dao){
+        StuecklisteneintragByIdAsyncTask(StuecklisteneintragDao dao) {
             this.mAsyncTaskDao = dao;
         }
 
         @Override
         protected Stuecklisteneintrag doInBackground(Integer... integers) {
-            return  mAsyncTaskDao.getStuecklisteneintragById(integers[0]);
+            return mAsyncTaskDao.getStuecklisteneintragById(integers[0]);
         }
     }
 
-    private static class ModifyAsyncTask extends AsyncTask<Integer, Void, List<Stuecklisteneintrag>>{
+    private static class UpdateAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Void> {
         private StuecklisteneintragDao mAsyncTaskDao;
 
-        ModifyAsyncTask(StuecklisteneintragDao stuecklisteneintragDao){
+        public UpdateAsyncTask(StuecklisteneintragDao mAsyncTaskDao) {
+            this.mAsyncTaskDao = mAsyncTaskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Stuecklisteneintrag... stuecklisteneintrags) {
+            mAsyncTaskDao.update(stuecklisteneintrags[0]);
+            return null;
+        }
+    }
+
+    private static class ModifyAsyncTask extends AsyncTask<Integer, Void, List<Stuecklisteneintrag>> {
+        private StuecklisteneintragDao mAsyncTaskDao;
+
+        ModifyAsyncTask(StuecklisteneintragDao stuecklisteneintragDao) {
             this.mAsyncTaskDao = stuecklisteneintragDao;
         }
 
@@ -111,10 +132,11 @@ public class StuecklisteneintragRepository {
         }
     }
 
-    private static class DeleteAsyncTask extends  AsyncTask<Stuecklisteneintrag, Void, Void>{
+    private static class DeleteAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Void> {
         private StuecklisteneintragDao mAsyncTaskDao;
-        DeleteAsyncTask(StuecklisteneintragDao stuecklisteneintragDao){
-            this.mAsyncTaskDao =stuecklisteneintragDao;
+
+        DeleteAsyncTask(StuecklisteneintragDao stuecklisteneintragDao) {
+            this.mAsyncTaskDao = stuecklisteneintragDao;
         }
 
         @Override
@@ -124,7 +146,7 @@ public class StuecklisteneintragRepository {
         }
     }
 
-    private static class StuecklisteneintragForDateAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>>{
+    private static class StuecklisteneintragForDateAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>> {
         private StuecklisteneintragDao mAsyncDao;
         private LocalDate start, end;
         private int id;
