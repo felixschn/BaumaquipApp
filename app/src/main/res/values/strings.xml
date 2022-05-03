@@ -42,8 +42,8 @@
     <string name="vertragDetailsDiscount">discount:</string>
     <string name="vertragDetailsStart">start of contract:</string>
     <string name="vertragDetailsEnd">end of contract:</string>
-    <string name="endBeforeBegin">end date can\'t be befor start date</string>
-    <string name="startBefore">start date can not be bevore today\'s date</string>
+    <string name="endBeforeBegin">end date can\'t be before start date</string>
+    <string name="startBefore">start date can not be before today\'s date</string>
     <string name="vertragId">contract id:</string>
 
     <!--Buttons-->
