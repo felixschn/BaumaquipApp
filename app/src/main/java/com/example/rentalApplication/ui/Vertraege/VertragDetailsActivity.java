@@ -57,12 +57,6 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsDiscountText = findViewById(R.id.vertragDetailsDiscountText);
         vertragDetailsDiscount = findViewById(R.id.vertragDetailsDiscount);
 
-        recyclerView = findViewById(R.id.vertragDetailsRecyclerview);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        final VertragDetailsListAdapter vertragDetailsListAdapter = new VertragDetailsListAdapter(this, this);
-        recyclerView.setAdapter(vertragDetailsListAdapter);
 
 
         intent = this.getIntent();
@@ -76,12 +70,13 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         if (intent != null) {
             vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId", 0));
             kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
+
             for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
                 int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
                 baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
                 try {
                     baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
-                }catch (NullPointerException npe){
+                } catch (NullPointerException npe) {
                     npe.printStackTrace();
                     //TODO: add archived parameter to Stuecklisteneintrag to manage displaying information after Stuecklisteneintrag is deleted/archived
                     return;
@@ -104,13 +99,25 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsSum.setText(String.format("%s€", vertrag.getSumOfRent()));
         vertragDetailsDiscount.setText(String.format("%s€", vertrag.getDiscountOfRent()));
 
-        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList, baumaschineContractAmount);
+        recyclerView = findViewById(R.id.vertragDetailsRecyclerview);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        final VertragDetailsListAdapter vertragDetailsListAdapter = new VertragDetailsListAdapter(this, this,);
+        recyclerView.setAdapter(vertragDetailsListAdapter);
+        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList, vertrag);
 
 
     }
 
     public Boolean hideButtonStatus() {
         return hideButton;
+    }
+
+    public void archiveStuecklisteneintrag(int position) {
+        Stuecklisteneintrag stuecklisteneintrag = addStuecklisteneintragViewModel.stuecklisteneintragById(position + 1);
+        stuecklisteneintrag.setArchived(true);
+        addStuecklisteneintragViewModel.update(stuecklisteneintrag);
     }
 
     @Override

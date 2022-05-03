@@ -4,12 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
@@ -23,11 +23,12 @@ import java.util.List;
 
 public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetailsListAdapter.VertragDetailsViewHolder> {
     private List<Baumaschine> baumaschineVertragDetailsList;
-    private List<Integer> baumaschineContractAmount;
     private Context context;
     private VertragDetailsActivity vertragDetailsActivity;
     private final VertragDetailsClickListener vertragDetailsClickListener;
     private Vertrag vertrag;
+    private Boolean stuecklisteneintragArchived;
+
 
 
     public VertragDetailsListAdapter(VertragDetailsActivity vertragDetailsActivity, VertragDetailsClickListener vertragDetailsClickListener) {
@@ -54,7 +55,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
 
 
         boolean isExpanded = baumaschineVertragDetailsList.get(position).getExpanded();
-        holder.expandableConstraintLayoutVertagDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.expandableConstraintLayoutVertragDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
 
     }
 
@@ -68,9 +70,10 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         }
     }
 
-    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList, List<Integer> baumaschineContractAmount) {
+    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList, Vertrag vertrag) {
         this.baumaschineVertragDetailsList = baumaschineVertragDetailsList;
-        this.baumaschineContractAmount = baumaschineContractAmount;
+        this.vertrag = vertrag;
+
     }
 
     class VertragDetailsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -83,7 +86,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         private final ImageButton deleteButtonVertragDetails;
         private final ImageButton modifyButtonVertragDetails;
 
-        private final ConstraintLayout expandableConstraintLayoutVertagDetails;
+        private final ConstraintLayout expandableConstraintLayoutVertragDetails;
+        private final ConstraintLayout vertragDetailsConstraintLayoutTop;
         private final TextView textVertragDetailsOperatingHours;
         private final TextView baumaschineVertragDetailsOperatingHours;
         private final TextView textVertragDetailsAmountOfGas;
@@ -105,7 +109,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
             deleteButtonVertragDetails = itemView.findViewById(R.id.deleteButton);
             modifyButtonVertragDetails = itemView.findViewById(R.id.modifyButton);
 
-            expandableConstraintLayoutVertagDetails = itemView.findViewById(R.id.expandableConstraintLayoutVertagDetails);
+            expandableConstraintLayoutVertragDetails = itemView.findViewById(R.id.expandableConstraintLayoutVertagDetails);
+            vertragDetailsConstraintLayoutTop = itemView.findViewById(R.id.vertragDetailsConstraintLayoutTop);
             textVertragDetailsOperatingHours = itemView.findViewById(R.id.textVertragDetailsOperatingHours);
             baumaschineVertragDetailsOperatingHours = itemView.findViewById(R.id.baumaschineVertragDetailsOperatingHours);
             textVertragDetailsAmountOfGas = itemView.findViewById(R.id.textVertragDetailsAmountOfGas);
@@ -132,8 +137,10 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
             if (v.getId() == deleteButtonVertragDetails.getId()) {
                 if (!((VertragDetailsActivity) context).hideButtonStatus()) {
                     deleteButtonVertragDetails.setVisibility(View.VISIBLE);
-
                 }
+                ((VertragDetailsActivity)context).archiveStuecklisteneintrag(getAdapterPosition());
+                vertragDetailsConstraintLayoutTop.setBackgroundColor(ContextCompat.getColor(context, R.color.baumaquip_main_color));
+
 
             } else {
                 baumaschine.setExpanded(!baumaschine.getExpanded());
