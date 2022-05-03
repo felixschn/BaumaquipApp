@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsClickListener;
 
@@ -22,9 +23,11 @@ import java.util.List;
 
 public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetailsListAdapter.VertragDetailsViewHolder> {
     private List<Baumaschine> baumaschineVertragDetailsList;
+    private List<Integer> baumaschineContractAmount;
     private Context context;
     private VertragDetailsActivity vertragDetailsActivity;
     private final VertragDetailsClickListener vertragDetailsClickListener;
+    private Vertrag vertrag;
 
 
     public VertragDetailsListAdapter(VertragDetailsActivity vertragDetailsActivity, VertragDetailsClickListener vertragDetailsClickListener) {
@@ -44,7 +47,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
     public void onBindViewHolder(@NonNull VertragDetailsViewHolder holder, int position) {
         Baumaschine current = baumaschineVertragDetailsList.get(position);
         holder.vertragDetailsBaumaschineName.setText(current.getMachineName());
-        holder.vertragDetailsBaumaschineAnzahl.setText(current.getAmount().toString());
+        holder.vertragDetailsBaumaschineAnzahl.setText(String.valueOf(baumaschineContractAmount.get(position)));
         holder.baumaschineVertragDetailsOperatingHours.setText(String.valueOf(current.getOperatingHours()));
         holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
         holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
@@ -65,16 +68,16 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         }
     }
 
-    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList) {
+    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList, List<Integer> baumaschineContractAmount) {
         this.baumaschineVertragDetailsList = baumaschineVertragDetailsList;
+        this.baumaschineContractAmount = baumaschineContractAmount;
     }
 
     class VertragDetailsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView vertragDetailsBaumaschineName;
         private final TextView textVertragDetailsBaumaschinenAnzahl;
         private final TextView vertragDetailsBaumaschineAnzahl;
-        private final TextView textVertragDetailsTotalPrice;
-        private final EditText addVertragPriceForRent;
+
 
 
         private final ImageButton deleteButtonVertragDetails;
@@ -97,8 +100,6 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
             vertragDetailsBaumaschineName = itemView.findViewById(R.id.vertragDetailsBaumaschineName);
             textVertragDetailsBaumaschinenAnzahl = itemView.findViewById(R.id.textVertragDetailsBaumaschinenAnzahl);
             vertragDetailsBaumaschineAnzahl = itemView.findViewById(R.id.vertragDetailsBaumaschineAnzahl);
-            textVertragDetailsTotalPrice = itemView.findViewById(R.id.textVertragDetailsTotalPrice);
-            addVertragPriceForRent = itemView.findViewById(R.id.addVertragPriceForRent);
 
 
             deleteButtonVertragDetails = itemView.findViewById(R.id.deleteButton);

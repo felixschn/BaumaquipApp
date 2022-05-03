@@ -19,6 +19,7 @@ import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
 import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,13 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private Vertrag vertrag;
     private Kunde kunde;
     private List<Baumaschine> baumaschineVertragDetailsList;
+    private List<Integer> baumaschineContractAmount;
     private Stuecklisteneintrag stuecklisteneintrag;
-    private TextView vertragDetailsTextView, vertragDetailsIdTextView, vertragDetailsKundeTextView, vertragDetailsKundeNameTextView, vertragDetailsStartDateTextTextView, vertragDetailsStartDateTextView, vertragDetailsEndDateTextTextView, vertragDetailsEndDateTextView;
+    private TextView vertragDetailsTextView, vertragDetailsIdTextView, vertragDetailsKundeTextView, vertragDetailsKundeNameTextView, vertragDetailsStartDateTextTextView, vertragDetailsStartDateTextView, vertragDetailsEndDateTextTextView, vertragDetailsEndDateTextView, vertragDetailsSumTextView, vertragDetailsSum, vertragDetailsDiscountText, vertragDetailsDiscount;
     private ModifyVertragViewModel modifyVertragViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
+    private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,10 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsStartDateTextView = findViewById(R.id.vertragDetailsStartDate);
         vertragDetailsEndDateTextTextView = findViewById(R.id.vertragDetailsEndDateText);
         vertragDetailsEndDateTextView = findViewById(R.id.vertragDetailsEndDate);
+        vertragDetailsSumTextView = findViewById(R.id.vertragDetailsSumText);
+        vertragDetailsSum = findViewById(R.id.vertragDetailsSum);
+        vertragDetailsDiscountText = findViewById(R.id.vertragDetailsDiscountText);
+        vertragDetailsDiscount = findViewById(R.id.vertragDetailsDiscount);
 
         recyclerView = findViewById(R.id.vertragDetailsRecyclerview);
         recyclerView.hasFixedSize();
@@ -57,34 +64,52 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         final VertragDetailsListAdapter vertragDetailsListAdapter = new VertragDetailsListAdapter(this, this);
         recyclerView.setAdapter(vertragDetailsListAdapter);
 
+
         intent = this.getIntent();
         modifyVertragViewModel = new ViewModelProvider(this).get(ModifyVertragViewModel.class);
+
         modifyKundenViewModel = new ViewModelProvider(this).get(ModifyKundenViewModel.class);
+        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
         modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
         baumaschineVertragDetailsList = new ArrayList<>();
+        baumaschineContractAmount = new ArrayList<>();
         if (intent != null) {
             vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId", 0));
             kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
             for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
-                baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(vertrag.getStuecklisteIds().get(i)));
+                int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
+                baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(stuecklisteneintragId));
+                try {
+                    baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
+                }catch (NullPointerException npe){
+                    npe.printStackTrace();
+                    //TODO: add archived parameter to Stuecklisteneintrag to manage displaying information after Stuecklisteneintrag is deleted/archived
+                    return;
+
+                }
             }
             String activityString = intent.getStringExtra("Class");
-            if(activityString.equals("ArchivedVertragListAdapter")){
+            if (activityString.equals("ArchivedVertragListAdapter")) {
                 hideButton = true;
             }
+        } else {
+            //TODO: catch if intent is null, e.g. close the activity
+            return;
         }
         Log.d(TAG, "Vertrag Id: " + vertrag.getIdVertrag());
         vertragDetailsIdTextView.setText(String.valueOf(vertrag.getIdVertrag()));
         vertragDetailsKundeNameTextView.setText(kunde.getName());
         vertragDetailsStartDateTextView.setText(vertrag.getBeginnVertrag().toString());
         vertragDetailsEndDateTextView.setText(vertrag.getEndeVertrag().toString());
+        vertragDetailsSum.setText(String.format("%s€", vertrag.getSumOfRent()));
+        vertragDetailsDiscount.setText(String.format("%s€", vertrag.getDiscountOfRent()));
 
-        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList);
+        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList, baumaschineContractAmount);
 
 
     }
 
-    public Boolean hideButtonStatus(){
+    public Boolean hideButtonStatus() {
         return hideButton;
     }
 
