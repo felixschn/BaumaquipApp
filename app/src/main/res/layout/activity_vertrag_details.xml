@@ -5,94 +5,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/vertragDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Vertrag ID"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="1284dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/vertragDetailsId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintStart_toEndOf="@+id/vertragDetails"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/vertragDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="28dp"
+            android:text="Vertrag ID"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/vertragDetailsKunde"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="32dp"
-        android:text="mit Kunde"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintStart_toEndOf="@+id/vertragDetailsId"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/vertragDetailsId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintStart_toEndOf="@+id/vertragDetails"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/vertragDetailsKundeId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_between_text"
-        android:layout_marginTop="32dp"
-        android:text="Bergholz GmbH"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintStart_toEndOf="@+id/vertragDetailsKunde"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/vertragDetailsKunde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="mit Kunde"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="234dp" />
 
-    <TextView
-        android:id="@+id/vertragDetailsStartDateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/vertragDetailsStart"
+        <TextView
+            android:id="@+id/vertragDetailsKundeId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="32dp"
+            android:text="Bergholz GmbH"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintStart_toEndOf="@+id/vertragDetailsKunde"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="1285dp"
+        android:layout_height="193dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vertragDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-    <TextView
-        android:id="@+id/vertragDetailsStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintStart_toEndOf="@+id/vertragDetailsStartDateText"
-        app:layout_constraintTop_toBottomOf="@+id/vertragDetailsId" />
+        <TextView
+            android:id="@+id/vertragDetailsStartDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/vertragDetailsStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.133" />
 
-    <TextView
-        android:id="@+id/vertragDetailsEndDateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/vertragDetailsEnd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vertragDetailsStartDateText" />
+        <TextView
+            android:id="@+id/vertragDetailsStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/vertragDetailsStartDateText"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/vertragDetailsEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_between_text_and_number"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/vertragDetailsEndDateText"
-        app:layout_constraintTop_toBottomOf="@+id/vertragDetailsStartDate" />
+        <TextView
+            android:id="@+id/vertragDetailsEndDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="44dp"
+            android:text="@string/vertragDetailsEnd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vertragDetailsStartDateText" />
+
+        <TextView
+            android:id="@+id/vertragDetailsEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="44dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/vertragDetailsEndDateText"
+            app:layout_constraintTop_toBottomOf="@+id/vertragDetailsStartDate" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        android:layout_marginTop="91dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vertragDetailsEndDateText"
-        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
@@ -104,7 +127,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vertragDetailsRecyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="226dp"
             android:layout_marginTop="20dp" />
 
     </RelativeLayout>
