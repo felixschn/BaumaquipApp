@@ -27,7 +27,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
     private final VertragDetailsClickListener vertragDetailsClickListener;
 
 
-    public VertragDetailsListAdapter(VertragDetailsActivity vertragDetailsActivity, VertragDetailsClickListener vertragDetailsClickListener ){
+    public VertragDetailsListAdapter(VertragDetailsActivity vertragDetailsActivity, VertragDetailsClickListener vertragDetailsClickListener) {
         this.vertragDetailsActivity = vertragDetailsActivity;
         this.vertragDetailsClickListener = vertragDetailsClickListener;
     }
@@ -56,21 +56,20 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
     }
 
 
-
     @Override
     public int getItemCount() {
-        if(baumaschineVertragDetailsList != null){
+        if (baumaschineVertragDetailsList != null) {
             return baumaschineVertragDetailsList.size();
-        } else{
+        } else {
             return 0;
         }
     }
 
-    public void setBaumaschineVertragDetailsList (List<Baumaschine> baumaschineVertragDetailsList){
+    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList) {
         this.baumaschineVertragDetailsList = baumaschineVertragDetailsList;
     }
 
-    class VertragDetailsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class VertragDetailsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView vertragDetailsBaumaschineName;
         private final TextView textVertragDetailsBaumaschinenAnzahl;
         private final TextView vertragDetailsBaumaschineAnzahl;
@@ -92,7 +91,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         private final WeakReference<VertragDetailsClickListener> listenerRef;
 
 
-        public VertragDetailsViewHolder(@NonNull View itemView, VertragDetailsClickListener vertragDetailsClickListener){
+        public VertragDetailsViewHolder(@NonNull View itemView, VertragDetailsClickListener vertragDetailsClickListener) {
             super(itemView);
             listenerRef = new WeakReference<>(vertragDetailsClickListener);
             vertragDetailsBaumaschineName = itemView.findViewById(R.id.vertragDetailsBaumaschineName);
@@ -115,6 +114,11 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
 
             itemView.setOnClickListener(this);
             deleteButtonVertragDetails.setOnClickListener(this);
+            if (((VertragDetailsActivity) context).hideButtonStatus()) {
+                deleteButtonVertragDetails.setVisibility(View.GONE);
+            } else {
+                deleteButtonVertragDetails.setVisibility(View.VISIBLE);
+            }
             modifyButtonVertragDetails.setVisibility(View.GONE);
 
 
@@ -124,10 +128,13 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         public void onClick(View v) {
             Baumaschine baumaschine = baumaschineVertragDetailsList.get(getAdapterPosition());
             //TODO
-            if(v.getId() == deleteButtonVertragDetails.getId()){
+            if (v.getId() == deleteButtonVertragDetails.getId()) {
+                if (!((VertragDetailsActivity) context).hideButtonStatus()) {
+                    deleteButtonVertragDetails.setVisibility(View.VISIBLE);
 
-            }
-            else{
+                }
+
+            } else {
                 baumaschine.setExpanded(!baumaschine.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }

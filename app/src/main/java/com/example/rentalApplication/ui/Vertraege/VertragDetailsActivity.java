@@ -26,6 +26,7 @@ import java.util.List;
 public class VertragDetailsActivity extends AppCompatActivity implements VertragDetailsClickListener {
     private static final String TAG = "VertragDetailsActivity.java";
     private RecyclerView recyclerView;
+    private boolean hideButton;
     private Intent intent;
     private Vertrag vertrag;
     private Kunde kunde;
@@ -43,7 +44,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsTextView = findViewById(R.id.vertragDetails);
         vertragDetailsIdTextView = findViewById(R.id.vertragDetailsId);
         vertragDetailsKundeTextView = findViewById(R.id.vertragDetailsKunde);
-        vertragDetailsKundeNameTextView = findViewById(R.id. vertragDetailsKundeId);
+        vertragDetailsKundeNameTextView = findViewById(R.id.vertragDetailsKundeId);
         vertragDetailsStartDateTextTextView = findViewById(R.id.vertragDetailsStartDateText);
         vertragDetailsStartDateTextView = findViewById(R.id.vertragDetailsStartDate);
         vertragDetailsEndDateTextTextView = findViewById(R.id.vertragDetailsEndDateText);
@@ -61,13 +62,17 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         modifyKundenViewModel = new ViewModelProvider(this).get(ModifyKundenViewModel.class);
         modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
         baumaschineVertragDetailsList = new ArrayList<>();
-        if (intent != null){
-            vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId",0));
+        if (intent != null) {
+            vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId", 0));
             kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
-            for(int i = 0; i < vertrag.getStuecklisteIds().size(); i++){
+            for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
                 baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(vertrag.getStuecklisteIds().get(i)));
             }
-                    }
+            String activityString = intent.getStringExtra("Class");
+            if(activityString.equals("ArchivedVertragListAdapter")){
+                hideButton = true;
+            }
+        }
         Log.d(TAG, "Vertrag Id: " + vertrag.getIdVertrag());
         vertragDetailsIdTextView.setText(String.valueOf(vertrag.getIdVertrag()));
         vertragDetailsKundeNameTextView.setText(kunde.getName());
@@ -79,12 +84,12 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
 
     }
 
+    public Boolean hideButtonStatus(){
+        return hideButton;
+    }
+
     @Override
     public void onPositionClicked(int position) {
 
-    }
-
-    public Vertrag getVertragDetails (){
-        return vertrag;
     }
 }
