@@ -35,13 +35,16 @@
     <string name="construction_side">construction side: </string>
     <string name="contact_person">contact person: </string>
     <string name="email">email: </string>
+    <string name="kunde">customer:</string>
 
     <!--Vertrag Strings-->
-    <string name="total_price">total price</string>
-    <string name="vertragDetailsStart">start of contract</string>
-    <string name="vertragDetailsEnd">end of contract</string>
+    <string name="vertragDetailsTotalPrice">total price:</string>
+    <string name="vertragDetailsDiscount">discount:</string>
+    <string name="vertragDetailsStart">start of contract:</string>
+    <string name="vertragDetailsEnd">end of contract:</string>
     <string name="endBeforeBegin">end date can\'t be befor start date</string>
-    <string name="startBefore">start date can not be bevore todays date</string>
+    <string name="startBefore">start date can not be bevore today\'s date</string>
+    <string name="vertragId">contract id:</string>
 
     <!--Buttons-->
     <string name="button_add">add</string>
@@ -61,7 +64,7 @@
     <string name="endDate">ending date:</string>
 
     <!--ToastMessages-->
-    <string name="startDateBeforCurrentDate">Start cant be in the past!</string>
+    <string name="startDateBeforCurrentDate">Start cannot be in the past!</string>
     <string name="startDateAfterEndDate">Start date must be before end date!</string>
 
 

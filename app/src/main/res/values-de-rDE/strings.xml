@@ -35,13 +35,16 @@
     <string name="construction_side">Baustelle: </string>
     <string name="contact_person">Kontaktperson: </string>
     <string name="email">Email: </string>
+    <string name="kunde">Kunde:</string>
 
     <!--Vertrag Strings-->
-    <string name="total_price">total price</string>
+    <string name="vertragDetailsTotalPrice">Gesamtpreis:</string>
+    <string name="vertragDetailsDiscount">Rabatt:</string>
     <string name="vertragDetailsStart">Startdatum des Vertrags</string>
     <string name="vertragDetailsEnd">Ablaufdatum des Vertrags</string>
     <string name="endBeforeBegin">Enddatum kann nicht vor Startdatum liegen</string>
     <string name="startBefore">Startdatum kann nicht vor dem heutigen Datum liegen</string>
+    <string name="vertragId">Vertrag-ID:</string>
 
     <!--Buttons-->
     <string name="button_add">Hinzufügen</string>
