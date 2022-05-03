@@ -3,6 +3,7 @@ package com.example.rentalApplication.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +71,14 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
 
             holder.vertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
             holder.vertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
+
+            if(LocalDate.now().equals(current.getEndeVertrag().minusDays(2))){
+                holder.vertragEndeLeihe.setBackgroundColor(ContextCompat.getColor(context, R.color.baumaquip_main_color));
+            }
+            if(current.getEndeVertrag().isBefore(LocalDate.now())){
+                holder.vertragEndeLeihe.setBackgroundColor(ContextCompat.getColor(context, R.color.rent_expire_color));
+            }
+
 
         }
     }
