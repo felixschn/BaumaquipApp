@@ -33,6 +33,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private Kunde kunde;
     private List<Baumaschine> baumaschineVertragDetailsList;
     private List<Integer> baumaschineContractAmount;
+    private List<Stuecklisteneintrag> stuecklisteneintragVertragDetailsList;
     private Stuecklisteneintrag stuecklisteneintrag;
     private TextView vertragDetailsTextView, vertragDetailsIdTextView, vertragDetailsKundeTextView, vertragDetailsKundeNameTextView, vertragDetailsStartDateTextTextView, vertragDetailsStartDateTextView, vertragDetailsEndDateTextTextView, vertragDetailsEndDateTextView, vertragDetailsSumTextView, vertragDetailsSum, vertragDetailsDiscountText, vertragDetailsDiscount;
     private ModifyVertragViewModel modifyVertragViewModel;
@@ -67,21 +68,23 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
         baumaschineVertragDetailsList = new ArrayList<>();
         baumaschineContractAmount = new ArrayList<>();
+        stuecklisteneintragVertragDetailsList = new ArrayList<>();
         if (intent != null) {
             vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId", 0));
             kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
 
             for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
                 int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
+                stuecklisteneintragVertragDetailsList.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId));
                 baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
-                try {
+                /*try {
                     baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
                 } catch (NullPointerException npe) {
                     npe.printStackTrace();
                     //TODO: add archived parameter to Stuecklisteneintrag to manage displaying information after Stuecklisteneintrag is deleted/archived
                     return;
 
-                }
+                }*/
             }
             String activityString = intent.getStringExtra("Class");
             if (activityString.equals("ArchivedVertragListAdapter")) {
@@ -103,9 +106,9 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final VertragDetailsListAdapter vertragDetailsListAdapter = new VertragDetailsListAdapter(this, this,);
+        final VertragDetailsListAdapter vertragDetailsListAdapter = new VertragDetailsListAdapter(this, this);
         recyclerView.setAdapter(vertragDetailsListAdapter);
-        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList, vertrag);
+        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList, stuecklisteneintragVertragDetailsList);
 
 
     }
@@ -115,7 +118,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     }
 
     public void archiveStuecklisteneintrag(int position) {
-        Stuecklisteneintrag stuecklisteneintrag = addStuecklisteneintragViewModel.stuecklisteneintragById(position + 1);
+        Stuecklisteneintrag stuecklisteneintrag = addStuecklisteneintragViewModel.stuecklisteneintragById(position);
         stuecklisteneintrag.setArchived(true);
         addStuecklisteneintragViewModel.update(stuecklisteneintrag);
     }

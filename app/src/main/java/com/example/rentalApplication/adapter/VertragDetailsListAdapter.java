@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsClickListener;
@@ -23,10 +24,11 @@ import java.util.List;
 
 public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetailsListAdapter.VertragDetailsViewHolder> {
     private List<Baumaschine> baumaschineVertragDetailsList;
+    private List<Stuecklisteneintrag> stuecklisteneintragVertragDetailsList;
+    private Vertrag vertrag;
     private Context context;
     private VertragDetailsActivity vertragDetailsActivity;
     private final VertragDetailsClickListener vertragDetailsClickListener;
-    private Vertrag vertrag;
     private Boolean stuecklisteneintragArchived;
 
 
@@ -46,14 +48,16 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
 
     @Override
     public void onBindViewHolder(@NonNull VertragDetailsViewHolder holder, int position) {
-        Baumaschine current = baumaschineVertragDetailsList.get(position);
-        holder.vertragDetailsBaumaschineName.setText(current.getMachineName());
-        holder.vertragDetailsBaumaschineAnzahl.setText(String.valueOf(baumaschineContractAmount.get(position)));
-        holder.baumaschineVertragDetailsOperatingHours.setText(String.valueOf(current.getOperatingHours()));
-        holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
-        holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
-
-
+        Baumaschine currentBaumaschine = baumaschineVertragDetailsList.get(position);
+        Stuecklisteneintrag currentStuecklisteneintrag = stuecklisteneintragVertragDetailsList.get(position);
+        holder.vertragDetailsBaumaschineName.setText(currentBaumaschine.getMachineName());
+        //holder.vertragDetailsBaumaschineAnzahl.setText(String.valueOf(baumaschineContractAmount.get(position)));
+        holder.baumaschineVertragDetailsOperatingHours.setText(String.valueOf(currentBaumaschine.getOperatingHours()));
+        holder.baumschineVertragDetailsAmountOfGas.setText(currentBaumaschine.getAmountOfGas());
+        holder.baumaschineVertragDetailsDegreeOfWear.setText(currentBaumaschine.getDegreeOfWear());
+        if(currentStuecklisteneintrag.getArchived()) {
+            holder.vertragDetailsConstraintLayoutTop.setBackgroundColor(ContextCompat.getColor(context, R.color.black));
+        }
         boolean isExpanded = baumaschineVertragDetailsList.get(position).getExpanded();
         holder.expandableConstraintLayoutVertragDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
@@ -70,9 +74,9 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         }
     }
 
-    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList, Vertrag vertrag) {
+    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList, List<Stuecklisteneintrag> stuecklisteneintragVertragDetailsList) {
         this.baumaschineVertragDetailsList = baumaschineVertragDetailsList;
-        this.vertrag = vertrag;
+        this.stuecklisteneintragVertragDetailsList = stuecklisteneintragVertragDetailsList;
 
     }
 
@@ -138,7 +142,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
                 if (!((VertragDetailsActivity) context).hideButtonStatus()) {
                     deleteButtonVertragDetails.setVisibility(View.VISIBLE);
                 }
-                ((VertragDetailsActivity)context).archiveStuecklisteneintrag(getAdapterPosition());
+                ((VertragDetailsActivity)context).archiveStuecklisteneintrag(stuecklisteneintragVertragDetailsList.get(getAdapterPosition()).idStueckList);
                 vertragDetailsConstraintLayoutTop.setBackgroundColor(ContextCompat.getColor(context, R.color.baumaquip_main_color));
 
 
