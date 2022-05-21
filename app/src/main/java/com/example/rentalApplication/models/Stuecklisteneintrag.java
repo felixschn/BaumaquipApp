@@ -46,6 +46,8 @@ public class Stuecklisteneintrag {
     @TypeConverters(Converters.class)
     private BigDecimal price;
 
+    private boolean archived;
+
     @Ignore
     private BaumaschinenRepository baumaschinenRepository;
     @Ignore
@@ -66,6 +68,7 @@ public class Stuecklisteneintrag {
         this.endDate = endDate;
         this.application = application;
         this.price = price;
+        this.archived = false;
 
 
         this.operatingHours_end = null;
@@ -166,6 +169,14 @@ public class Stuecklisteneintrag {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }
 

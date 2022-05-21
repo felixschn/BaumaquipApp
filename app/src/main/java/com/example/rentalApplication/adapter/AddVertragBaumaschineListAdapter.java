@@ -41,7 +41,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
     private Context context;
     private Application application;
     private final BigDecimal sumRentPrice = new BigDecimal("0");
-
     private final BaumaschinenRepository baumaschinenRepository = BaumaschinenRepository.getInstance(application);
 
     public AddVertragBaumaschineListAdapter(Application application, VertragBaumaschinenListClickListener listener, Context context) {
@@ -129,7 +128,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         }
 
 
-
     }
 
     public List<Stuecklisteneintrag> getStueckliste() {
@@ -178,7 +176,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         @Override
         public void onClick(View v) {
             listenerRef.get().onPositionClicked(getAdapterPosition());
-            //TODO: check if insurance is cleared, when machine is remvoed from stueckliste
             if (v.getId() == deleteButton.getId()) {
                 removeAddVertragBaumaschine(getAdapterPosition());
                 //clear the checkbox if an already deleted Baumaschine is set again in Stueckliste
@@ -206,24 +203,20 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             //stueckliste.get(position).setPrice(((AddVertragActivity) context).calcPriceForRent());
             try {
                 ((AddVertragActivity) context).clearDiscount();
-                //TODO set discount edittext to 0 when stuecklisteneintrag price in recyclerview is edited
-            } catch (Resources.NotFoundException nf){
+            } catch (Resources.NotFoundException nf) {
 
             }
-
 
 
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            try{
+            try {
                 stueckliste.get(position).setPrice(new BigDecimal(s.toString().replace("€", "")));
-            }catch (NumberFormatException nf){}
+            } catch (NumberFormatException nf) {
+            }
             ((AddVertragActivity) context).calcSumOfRent();
-
-
-
 
 
         }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.VertragListAdapter;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
@@ -44,18 +45,10 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private String mParam1;
     private String mParam2;
 
-    public VertragFragment() {
-        // Required empty public constructor
-    }
+    // Required empty public constructor
+    public VertragFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment VertraegeFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static VertragFragment newInstance(String param1, String param2) {
         VertragFragment fragment = new VertragFragment();
@@ -91,8 +84,8 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         vertragViewModel.getAllVertrag().observe(getViewLifecycleOwner(), new Observer<List<Vertrag>>() {
             @Override
             public void onChanged(List<Vertrag> vertrags) {
-                /*for(int i = 0; i<vertrags.size(); i++){
-                    //TODO: test if this is a good way to automatically archieve expired contracts
+                /* functionality to auto archive a contract after date is expired
+                for(int i = 0; i<vertrags.size(); i++){
                     if(vertrags.get(i).getEndeVertrag().isBefore(LocalDate.now())){
                         archiveVertrag(vertrags.get(i).getIdVertrag());
                     }
@@ -104,18 +97,21 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         return view;
     }
 
-    public void archiveVertrag(int id){
+    public void archiveVertrag(int id) {
         modifyVertragViewModel = new ViewModelProvider(requireActivity()).get(ModifyVertragViewModel.class);
         archivedVertrag = modifyVertragViewModel.loadVertragById(id);
         archivedVertrag.setArchived(true);
 
-        if(!archivedVertrag.getStuecklisteIds().isEmpty()) {
+
+        if (!archivedVertrag.getStuecklisteIds().isEmpty()) {
             List<Integer> deleteStuecklisteneintragList = archivedVertrag.getStuecklisteIds();
             stuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
             for (int i = 0; i < deleteStuecklisteneintragList.size(); i++) {
-                stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
+                Stuecklisteneintrag current = stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i));
+                //stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
+                current.setArchived(true);
+                stuecklisteneintragViewModel.update(current);
             }
-            //TODO: if contract is archived and therefore Stuecklisteneinträge in database deleted, scrutinize if also the list in the contract object has to be remove or if it necessarry at all because I disabled the function of restoring an archived contract
             archivedVertrag.setStuecklisteIds(new ArrayList<>());
         }
         modifyVertragViewModel.update(archivedVertrag);

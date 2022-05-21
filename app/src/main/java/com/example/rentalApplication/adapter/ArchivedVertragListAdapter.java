@@ -118,6 +118,7 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
             Vertrag vertrag = vertragList.get(getAdapterPosition());
 
             if (v.getId() == modifyButton.getId()) {
+                //TODO: due to the fact that the stuecklisteneintrag was deleted while vertrag was archived VertragDetailsActicity receives no information regarding the rented machines; possible workaround is to show the created pdf for this old vertrag
                 Intent modifyVertragIntent = new Intent(context, VertragDetailsActivity.class);
                 modifyVertragIntent.putExtra("vertragRowId", vertrag.getIdVertrag());
                 modifyVertragIntent.putExtra("Class", "ArchivedVertragListAdapter");

@@ -23,13 +23,13 @@ public interface StuecklisteneintragDao {
     @Update
     void update(Stuecklisteneintrag stuecklisteneintrag);
 
-    @Query("SELECT *, rowid From stuecklisteneintrag WHERE idBaumaschine = :id")
+    @Query("SELECT *, rowid From stuecklisteneintrag WHERE archived = 0 and idBaumaschine = :id")
     List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id);
 
     @Query("SELECT *, rowid From Stuecklisteneintrag WHERE rowid = :id")
     Stuecklisteneintrag getStuecklisteneintragById(int id);
 
-    @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE (beginDate BETWEEN :start AND :end OR endDate BETWEEN :start AND :end OR (beginDate < :end AND :start < endDate)) and idBaumaschine = :id")
+    @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE (beginDate BETWEEN :start AND :end OR endDate BETWEEN :start AND :end OR (beginDate < :end AND :start < endDate)) and idBaumaschine = :id and archived = 0")
     List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id);
 
 

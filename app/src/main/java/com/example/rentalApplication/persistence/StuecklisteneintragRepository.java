@@ -33,6 +33,8 @@ public class StuecklisteneintragRepository {
         return new InsertAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag).get();
     }
 
+    public void update(Stuecklisteneintrag stuecklisteneintrag){new UpdateAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag);}
+
     public void delete(Stuecklisteneintrag stuecklisteneintrag){
         new DeleteAsyncTask(stuecklisteneintragDao).execute(stuecklisteneintrag);
     }
@@ -95,6 +97,18 @@ public class StuecklisteneintragRepository {
         @Override
         protected Stuecklisteneintrag doInBackground(Integer... integers) {
             return  mAsyncTaskDao.getStuecklisteneintragById(integers[0]);
+        }
+    }
+
+    private static class UpdateAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Void>{
+        private StuecklisteneintragDao mAsyncTaskDao;
+
+        public UpdateAsyncTask(StuecklisteneintragDao stuecklisteneintragDao){this.mAsyncTaskDao = stuecklisteneintragDao;}
+
+        @Override
+        protected Void doInBackground(Stuecklisteneintrag... stuecklisteneintrags) {
+            mAsyncTaskDao.update(stuecklisteneintrags[0]);
+            return null;
         }
     }
 
