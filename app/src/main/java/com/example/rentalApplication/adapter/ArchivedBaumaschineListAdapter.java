@@ -53,9 +53,28 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
             holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
-            holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
-            holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
-            holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
+
+            holder.baumaschineOperatingHours.setEnabled(false);
+            holder.baumaschineOperatingHours.setText("");
+            holder.baumaschineAmountOfGas.setEnabled(false);
+            holder.baumaschineAmountOfGas.setText("");
+            holder.baumaschineDegreeOfWear.setEnabled(false);
+            holder.baumaschineDegreeOfWear.setText("");
+
+
+            if (current.getOperatingHours() != null) {
+                holder.baumaschineOperatingHours.setEnabled(true);
+                holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
+
+            }
+            if(current.getAmountOfGas() != null){
+                holder.baumaschineAmountOfGas.setEnabled(true);
+                holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
+            }
+            if(current.getDegreeOfWear() != null){
+                holder.baumaschineDegreeOfWear.setEnabled(true);
+                holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
+            }
 
             boolean isExpanded = baumaschineList.get(position).getExpanded();
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
@@ -122,15 +141,16 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             deleteButton.setOnClickListener(this);
 
         }
+
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
 
-            if(v.getId() == modifyButton.getId()){
+            if (v.getId() == modifyButton.getId()) {
                 archivedBaumaschinenActivity.restoreBaumaschine(baumaschineList.get(getAdapterPosition()).getIdBaumaschine());
             }
 
-            if(v.getId() == deleteButton.getId()){
+            if (v.getId() == deleteButton.getId()) {
                 //TODO app crashes if current contract is referencing to machine who should be deleted
                 Log.d(TAG, "Delete Button clicked");
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -140,14 +160,11 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
                 builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
                 AlertDialog deleteAlert = builder.create();
                 deleteAlert.show();
-            }
-
-            else{
+            } else {
                 baumaschine.setExpanded(!baumaschine.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
             listenerRef.get().onPositionClicked(getAdapterPosition());
-
 
 
         }
