@@ -1,6 +1,7 @@
 package com.example.rentalApplication.ui.Kunde;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.ArchivedKundenListAdapter;
 import com.example.rentalApplication.models.Kunde;
+import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Vertraege.VertragViewModel;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
     private RecyclerView recyclerView;
     private KundenViewModel kundenViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
+    private VertragViewModel vertragViewModel;
     private Kunde restoreKunde;
 
     @Override
@@ -44,7 +48,15 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
     }
 
     public void deleteKunde(Kunde kunde) {
-        kundenViewModel.delete(kunde);
+        vertragViewModel = new ViewModelProvider(this).get(VertragViewModel.class);
+        List<Vertrag> getAllExistingVertrag = vertragViewModel.getAllExistingVertrag();
+        for (int i = 0; i < getAllExistingVertrag.size(); i++) {
+            if (kunde.getIdKunde() == getAllExistingVertrag.get(i).getIdKunde()) {
+                Toast.makeText(this, R.string.not_removable, Toast.LENGTH_LONG).show();
+                return;
+            }
+            kundenViewModel.delete(kunde);
+        }
     }
 
     public void restoreKunde(int id) {

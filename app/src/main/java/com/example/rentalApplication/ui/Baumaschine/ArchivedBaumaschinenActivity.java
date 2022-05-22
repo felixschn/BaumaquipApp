@@ -20,7 +20,7 @@ import com.example.rentalApplication.ui.Vertraege.VertragViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArchivedBaumaschinenActivity extends AppCompatActivity implements BaumaschinenClickListener{
+public class ArchivedBaumaschinenActivity extends AppCompatActivity implements BaumaschinenClickListener {
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
@@ -46,14 +46,12 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
     public void deleteBaumaschine(Baumaschine baumaschine) {
         addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
         List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag();
-        for(int i = 0; i < getAllStuecklisteneintrag.size(); i++){
-            if(baumaschine.getIdBaumaschine() == getAllStuecklisteneintrag.get(i).getIdBaumaschine()){
+        for (int i = 0; i < getAllStuecklisteneintrag.size(); i++) {
+            if (baumaschine.getIdBaumaschine() == getAllStuecklisteneintrag.get(i).getIdBaumaschine()) {
                 Toast.makeText(this, R.string.not_removable, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-
-
         baumaschinenViewModel.delete(baumaschine);
     }
 
