@@ -17,6 +17,7 @@
     <string name="amount_of_gas">Tank-Füllstand</string>
     <string name="degree_of_wear">Zustand</string>
     <string name="not_removable">Aufgrund von Abhängigkeiten, kann die Maschine nicht gelöscht werden</string>
+    <string name="empty_baumaschine_spinner">Bitte Baumaschine auswählen</string>
 
 
     <!--Kunden Strings-->
@@ -37,6 +38,7 @@
     <string name="contact_person">Kontaktperson: </string>
     <string name="email">Email: </string>
     <string name="kunde">Kunde:</string>
+    <string name="empty_kunde_spinner">Bitte Kunde auswählen!</string>
 
     <!--Vertrag Strings-->
     <string name="vertragDetailsTotalPrice">Gesamtpreis:</string>

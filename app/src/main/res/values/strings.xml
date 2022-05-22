@@ -17,6 +17,7 @@
     <string name="amount_of_gas">amout of gas</string>
     <string name="degree_of_wear">degree of wear</string>
     <string name="not_removable">machine not removable due to dependencies</string>
+    <string name="empty_baumaschine_spinner">please select machine</string>
 
 
     <!--Kunden Strings-->
@@ -37,6 +38,7 @@
     <string name="contact_person">contact person: </string>
     <string name="email">email: </string>
     <string name="kunde">customer:</string>
+    <string name="empty_kunde_spinner">please select customer</string>
 
     <!--Vertrag Strings-->
     <string name="vertragDetailsTotalPrice">total price:</string>

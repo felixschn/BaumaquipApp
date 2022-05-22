@@ -408,9 +408,16 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
             /* check if the beginnVertrag & endeVertrag field is filled*/
             if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
+                if(baumaschinenSpinner.getSelectedItem() == null){
+                    Toast.makeText(this, R.string.empty_baumaschine_spinner, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(kundenSpinner.getSelectedItem() == null){
+                    Toast.makeText(this, R.string.empty_kunde_spinner, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 /*check if list of Stuecklisteintrag-Id is not empty, to avoid Verträge without stuecklisteintrag-Ids*/
                 if (!stuecklisteIds.isEmpty() && sumWithoutDiscount.compareTo(BigDecimal.ZERO) > 0) {
-                    //TODO: add sumOfRent and discountOfRent to the contract
                     addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end, sumWithoutDiscount, discountFromSum));
                     finish();
                 } else {
@@ -420,6 +427,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             } else {
                 Toast.makeText(this, "Bitte Start und Enddatum wählen!", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
