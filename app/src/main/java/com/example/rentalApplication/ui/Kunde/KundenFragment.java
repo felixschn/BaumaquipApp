@@ -16,7 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.KundenListAdapter;
 import com.example.rentalApplication.models.Kunde;
+import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
+import com.example.rentalApplication.ui.Vertraege.VertragViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -30,6 +34,7 @@ public class KundenFragment extends Fragment implements KundenClickListener {
     private RecyclerView recyclerView;
     private KundenViewModel kundenViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
+    private VertragViewModel vertragViewModel;
     private Kunde archivedkunde;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -106,6 +111,16 @@ public class KundenFragment extends Fragment implements KundenClickListener {
     }
 
     public void archiveKunde(int id) {
+        vertragViewModel = new ViewModelProvider(this).get(VertragViewModel.class);
+        List<Vertrag> getAllExistingVertrag = vertragViewModel.getAllExistingVertrag();
+        for(int i = 0; i < getAllExistingVertrag.size(); i++){
+            if(id == getAllExistingVertrag.get(i).getIdKunde()){
+                Toast.makeText(getActivity(), R.string.not_removable, Toast.LENGTH_LONG).show();
+                return;
+
+            }
+        }
+
         modifyKundenViewModel = new ViewModelProvider(requireActivity()).get(ModifyKundenViewModel.class);
         archivedkunde = modifyKundenViewModel.loadKundeById(id);
         archivedkunde.setArchived(true);

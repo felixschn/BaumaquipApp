@@ -35,7 +35,7 @@ public interface VertragDao {
     @Query("SELECT *, rowid From Vertrag WHERE archived = 1")
     LiveData<List<Vertrag>> getAllArchivedVertrag();
 
-    @Query("SELECT *, rowid From Vertrag")
+    @Query("SELECT *, rowid From Vertrag WHERE archived = 0")
     List<Vertrag> getAllExistingVertrag();
 
 
