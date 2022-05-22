@@ -31,7 +31,15 @@ public class VertragViewModel extends AndroidViewModel {
         vertragRepository.insert(vertrag);
     }
 
-    public LiveData<List<Vertrag>> getAllArchivedVertrag() {return allArchivedVertrag;}
+    public LiveData<List<Vertrag>> getAllArchivedVertrag() {
+        return allArchivedVertrag;
+    }
 
-    public void delete(Vertrag vertrag) { vertragRepository.delete(vertrag);}
+    public void delete(Vertrag vertrag) {
+        vertragRepository.delete(vertrag);
+    }
+
+    public List<Vertrag> getAllExistingVertrag() {
+        return vertragRepository.getAllExistingVertrag();
+    }
 }

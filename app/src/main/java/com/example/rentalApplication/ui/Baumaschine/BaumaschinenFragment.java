@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.BaumaschinenListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
+    private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private Baumaschine archiveBaumaschine;
     private static final String TAG = "BaumaschinenFragment.java";
 
@@ -113,6 +117,15 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
     }
 
     public void archiveBaumaschine(int id) {
+        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+        List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag();
+        for(int i = 0; i < getAllStuecklisteneintrag.size(); i++){
+            if(id == getAllStuecklisteneintrag.get(i).getIdBaumaschine()){
+                Toast.makeText(getActivity(), R.string.not_removable, Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
         Log.d(TAG, "id Wert: " + id);
         ModifyBaumaschineViewModel modifyBaumaschineViewModel = new ViewModelProvider(requireActivity()).get(ModifyBaumaschineViewModel.class);
         archiveBaumaschine = modifyBaumaschineViewModel.getBaumaschineById(id);

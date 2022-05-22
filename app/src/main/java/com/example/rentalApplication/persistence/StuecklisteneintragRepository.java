@@ -68,6 +68,15 @@ public class StuecklisteneintragRepository {
         return null;
     }
 
+    public List<Stuecklisteneintrag> getAllStuecklisteneintag(){
+        try{
+            return new AllStuecklisteneintragAsyncTask(stuecklisteneintragDao).execute().get();
+        }catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private static class InsertAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Long>{
         private StuecklisteneintragDao mAsyncTaskDao;
@@ -139,12 +148,12 @@ public class StuecklisteneintragRepository {
     }
 
     private static class StuecklisteneintragForDateAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>>{
-        private StuecklisteneintragDao mAsyncDao;
+        private StuecklisteneintragDao mAsyncTaskDao;
         private LocalDate start, end;
         private int id;
 
         public StuecklisteneintragForDateAsyncTask(StuecklisteneintragDao mAsyncDao, LocalDate start, LocalDate end, int id) {
-            this.mAsyncDao = mAsyncDao;
+            this.mAsyncTaskDao = mAsyncDao;
             this.start = start;
             this.end = end;
             this.id = id;
@@ -152,7 +161,20 @@ public class StuecklisteneintragRepository {
 
         @Override
         protected List<Stuecklisteneintrag> doInBackground(Void... voids) {
-            return mAsyncDao.getStuecklisteneintragForDate(start, end, id);
+            return mAsyncTaskDao.getStuecklisteneintragForDate(start, end, id);
+        }
+    }
+
+    private static class AllStuecklisteneintragAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>>{
+        private StuecklisteneintragDao mAsyncTaskDao;
+
+        public AllStuecklisteneintragAsyncTask(StuecklisteneintragDao mAsyncTaskDao) {
+            this.mAsyncTaskDao = mAsyncTaskDao;
+        }
+
+        @Override
+        protected List<Stuecklisteneintrag> doInBackground(Void... voids) {
+            return mAsyncTaskDao.getAllStuecklisteneintrag();
         }
     }
 

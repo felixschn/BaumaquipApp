@@ -26,16 +26,30 @@ public class AddStuecklisteneintragViewModel extends AndroidViewModel {
     public long insert(Stuecklisteneintrag stuecklisteneintrag) throws ExecutionException, InterruptedException {
         return stuecklisteneintragRepository.insert(stuecklisteneintrag);
     }
-    public void delete (Stuecklisteneintrag stuecklisteneintrag){stuecklisteneintragRepository.delete(stuecklisteneintrag);}
 
-    public void update (Stuecklisteneintrag stuecklisteneintrag){stuecklisteneintragRepository.update(stuecklisteneintrag);}
+    public void delete(Stuecklisteneintrag stuecklisteneintrag) {
+        stuecklisteneintragRepository.delete(stuecklisteneintrag);
+    }
 
-    public List<Stuecklisteneintrag> getAllStuecklisteneintragForId (int id){return stuecklisteneintragRepository.getAllStuecklisteneintragForId(id);}
+    public void update(Stuecklisteneintrag stuecklisteneintrag) {
+        stuecklisteneintragRepository.update(stuecklisteneintrag);
+    }
 
-    public Stuecklisteneintrag stuecklisteneintragById (int id){ return stuecklisteneintragRepository.getStuecklisteneintragById(id);}
+    public List<Stuecklisteneintrag> getAllStuecklisteneintragForId(int id) {
+        return stuecklisteneintragRepository.getAllStuecklisteneintragForId(id);
+    }
+
+    public Stuecklisteneintrag stuecklisteneintragById(int id) {
+        return stuecklisteneintragRepository.getStuecklisteneintragById(id);
+    }
 
 
+    public List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id) {
+        return stuecklisteneintragRepository.getStuecklisteneintragForDate(start, end, id);
+    }
 
-    public List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id){return stuecklisteneintragRepository.getStuecklisteneintragForDate(start,end,id);}
+    public List<Stuecklisteneintrag> getAllStuecklisteneintrag() {
+        return stuecklisteneintragRepository.getAllStuecklisteneintag();
+    }
 
 }

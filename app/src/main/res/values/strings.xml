@@ -16,6 +16,7 @@
     <string name="operating_hours">operating hours</string>
     <string name="amount_of_gas">amout of gas</string>
     <string name="degree_of_wear">degree of wear</string>
+    <string name="not_removable">machine not removable due to dependencies</string>
 
 
     <!--Kunden Strings-->

@@ -1,6 +1,7 @@
 package com.example.rentalApplication.ui.Baumaschine;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.ArchivedBaumaschineListAdapter;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
+import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
+import com.example.rentalApplication.ui.Vertraege.VertragViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArchivedBaumaschinenActivity extends AppCompatActivity implements BaumaschinenClickListener{
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
+    private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private Baumaschine restoreBaumaschine;
 
     @Override
@@ -35,6 +44,16 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
     }
 
     public void deleteBaumaschine(Baumaschine baumaschine) {
+        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+        List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag();
+        for(int i = 0; i < getAllStuecklisteneintrag.size(); i++){
+            if(baumaschine.getIdBaumaschine() == getAllStuecklisteneintrag.get(i).getIdBaumaschine()){
+                Toast.makeText(this, R.string.not_removable, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+
         baumaschinenViewModel.delete(baumaschine);
     }
 

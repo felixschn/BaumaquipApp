@@ -16,6 +16,7 @@
     <string name="operating_hours">Betriebsstunden</string>
     <string name="amount_of_gas">Tank-Füllstand</string>
     <string name="degree_of_wear">Zustand</string>
+    <string name="not_removable">Aufgrund von Abhängigkeiten, kann die Maschine nicht gelöscht werden</string>
 
 
     <!--Kunden Strings-->

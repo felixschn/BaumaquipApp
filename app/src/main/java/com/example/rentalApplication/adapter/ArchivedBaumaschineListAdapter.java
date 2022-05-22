@@ -55,11 +55,11 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
 
             holder.baumaschineOperatingHours.setEnabled(false);
-            holder.baumaschineOperatingHours.setText("");
+            holder.baumaschineOperatingHours.setText("-");
             holder.baumaschineAmountOfGas.setEnabled(false);
-            holder.baumaschineAmountOfGas.setText("");
+            holder.baumaschineAmountOfGas.setText("-");
             holder.baumaschineDegreeOfWear.setEnabled(false);
-            holder.baumaschineDegreeOfWear.setText("");
+            holder.baumaschineDegreeOfWear.setText("-");
 
 
             if (current.getOperatingHours() != null) {
@@ -151,7 +151,6 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             }
 
             if (v.getId() == deleteButton.getId()) {
-                //TODO app crashes if current contract is referencing to machine who should be deleted
                 Log.d(TAG, "Delete Button clicked");
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getResources().getString(R.string.alertDialog));
