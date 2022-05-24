@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 
 import java.math.BigDecimal;
 
@@ -37,6 +40,9 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenButton = findViewById(R.id.addBaumaschinenButton);
         addBaumaschinenNameEditText = findViewById(R.id.addBaumaschinenName);
         addBaumaschinenAnzahlEditText = findViewById(R.id.addBaumaschinenAnzahl);
+        addBaumaschinenAnzahlEditText.setFilters(new InputFilter[]{
+                new InputFilterMinAmount(0){}
+        });
         addBaumaschinenPricePerDayEditText = findViewById(R.id.addBaumaschinenPricePerDay);
         addBaumaschinenPricePerWeekendEditText = findViewById(R.id.addBaumaschinenPricePerWeekend);
         addBaumaschinenPricePerMonthEditText = findViewById(R.id.addBaumaschinenPricePerMonth);
@@ -104,10 +110,10 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 if (loadBaumaschineById.getOperatingHours() != null) {
                     addBaumaschinenOperatingHours.setText(loadBaumaschineById.getOperatingHours().toString());
                 }
-                if(loadBaumaschineById.getAmountOfGas() != null){
+                if (loadBaumaschineById.getAmountOfGas() != null) {
                     addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getOperatingHours().toString());
                 }
-                if(loadBaumaschineById.getDegreeOfWear() != null){
+                if (loadBaumaschineById.getDegreeOfWear() != null) {
                     addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
                 }
 
@@ -115,6 +121,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 if (editableBaumaschineAmount == 1) {
                     addBaumaschinenAnzahlEditText.setFocusable(false);
                     addBaumaschinenAnzahlEditText.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+                    addBaumaschinenAnzahlEditText.setEnabled(false);
                     addBaumaschinenOperatingHours.setEnabled(false);
                     addBaumaschinenAmountOfGas.setEnabled(false);
                     addBaumaschinenDegreeOfWear.setEnabled(false);
@@ -195,19 +202,54 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         BigDecimal pricePerDay = new BigDecimal(baumaschinenPricePerDay);
         BigDecimal pricePerWeekend = new BigDecimal(baumaschinenPricePerWeekend);
         BigDecimal pricePerMonth = new BigDecimal(baumaschinenPricePerMonth);
-        Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
         Baumaschine baumaschine = modifyBaumaschineViewModel.getBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
         baumaschine.setMachineName(baumaschinenName);
+
         baumaschine.setAmount(anzahl);
         baumaschine.setPricePerDay(pricePerDay);
         baumaschine.setPricePerWeekend(pricePerWeekend);
         baumaschine.setPricePerMonth(pricePerMonth);
-        baumaschine.setOperatingHours(operatingHours);
-        baumaschine.setDegreeOfWear(baumaschinenDegreeOfWear);
-        baumaschine.setAmountOfGas(baumaschinenAmountOfGas);
+
+        if (loadBaumaschineById.getOperatingHours() != null) {
+            Double operatingHours = Double.parseDouble(baumaschinenOperatingHours);
+            baumaschine.setOperatingHours(operatingHours);
+        }
+
+        if (loadBaumaschineById.getAmountOfGas() != null) {
+            baumaschine.setAmountOfGas(baumaschinenAmountOfGas);
+        }
+
+        if (loadBaumaschineById.getDegreeOfWear() != null) {
+            baumaschine.setDegreeOfWear(baumaschinenDegreeOfWear);
+        }
+
         Log.d(TAG, "ROW_ID vor setzen: " + baumaschine.getIdBaumaschine());
         modifyBaumaschineViewModel.update(baumaschine);
         finish();
+    }
+
+
+    public class InputFilterMinAmount implements InputFilter {
+        private int minValue;
+
+        public InputFilterMinAmount(int minValue) {
+            this.minValue = minValue;
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            try {
+                int inputValue = Integer.parseInt(dest.subSequence(0, dstart).toString() + source + dest.subSequence(dend, dest.length()));
+                if (inRange(minValue, inputValue)) {
+                    return null;
+                }
+            } catch (NumberFormatException nfe) {
+            }
+            return "";
+        }
+        private boolean inRange(int min, int input){
+            return input > min;
+        }
     }
 
 }
