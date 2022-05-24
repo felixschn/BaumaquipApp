@@ -33,12 +33,12 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private Kunde kunde;
     private List<Baumaschine> baumaschineVertragDetailsList;
     private List<Integer> baumaschineContractAmount;
-    private Stuecklisteneintrag stuecklisteneintrag;
     private TextView vertragDetailsTextView, vertragDetailsIdTextView, vertragDetailsKundeTextView, vertragDetailsKundeNameTextView, vertragDetailsStartDateTextTextView, vertragDetailsStartDateTextView, vertragDetailsEndDateTextTextView, vertragDetailsEndDateTextView, vertragDetailsSumTextView, vertragDetailsSum, vertragDetailsDiscountText, vertragDetailsDiscount;
     private ModifyVertragViewModel modifyVertragViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
+    private List<Stuecklisteneintrag> stuecklisteneintragListFromVertrag = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,15 +78,18 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
             kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
             for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
                 int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
-                addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId);
-                baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
-                try {
-                    baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
-                }catch (NullPointerException npe){
-                    npe.printStackTrace();
-                    //TODO: add archived parameter to Stuecklisteneintrag to manage displaying information after Stuecklisteneintrag is deleted/archived
-                    return;
+                Stuecklisteneintrag current = addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId);
+                //TODO somethings wrong with stuecklisteneintraege which are archived but shown like they are not
+                if (!current.isArchived()) {
+                    stuecklisteneintragListFromVertrag.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId));
 
+                    baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
+                    try {
+                        baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
+                    } catch (NullPointerException npe) {
+                        npe.printStackTrace();
+                        return;
+                    }
                 }
             }
             String activityString = intent.getStringExtra("Class");
@@ -105,13 +108,23 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsSum.setText(String.format("%s€", vertrag.getSumOfRent()));
         vertragDetailsDiscount.setText(String.format("%s€", vertrag.getDiscountOfRent()));
 
-        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(baumaschineVertragDetailsList, baumaschineContractAmount);
+        vertragDetailsListAdapter.setBaumaschineVertragDetailsList(stuecklisteneintragListFromVertrag, baumaschineVertragDetailsList, baumaschineContractAmount);
 
 
     }
 
     public Boolean hideButtonStatus() {
         return hideButton;
+    }
+
+    public void archiveStuecklisteneintragFromVertrag(int id) {
+        Stuecklisteneintrag current = addStuecklisteneintragViewModel.stuecklisteneintragById(id);
+        current.setArchived(true);
+        addStuecklisteneintragViewModel.update(current);
+    }
+
+    public Baumaschine getBaumaschineFromStuecklisteneintrag(int id) {
+        return modifyBaumaschineViewModel.getBaumaschineById(id);
     }
 
     @Override

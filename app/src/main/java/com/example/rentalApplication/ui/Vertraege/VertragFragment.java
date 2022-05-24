@@ -17,10 +17,8 @@ import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +31,7 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private VertragListAdapter vertragListAdapter;
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
-    private AddStuecklisteneintragViewModel stuecklisteneintragViewModel;
+    private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private ModifyVertragViewModel modifyVertragViewModel;
     private Vertrag archivedVertrag;
     // TODO: Rename parameter arguments, choose names that match
@@ -105,12 +103,12 @@ public class VertragFragment extends Fragment implements VertragClickListener {
 
         if (!archivedVertrag.getStuecklisteIds().isEmpty()) {
             List<Integer> deleteStuecklisteneintragList = archivedVertrag.getStuecklisteIds();
-            stuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
+            addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
             for (int i = 0; i < deleteStuecklisteneintragList.size(); i++) {
-                Stuecklisteneintrag current = stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i));
+                Stuecklisteneintrag current = addStuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i));
                 //stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
                 current.setArchived(true);
-                stuecklisteneintragViewModel.update(current);
+                addStuecklisteneintragViewModel.update(current);
             }
             archivedVertrag.setStuecklisteIds(new ArrayList<>());
         }

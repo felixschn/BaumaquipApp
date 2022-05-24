@@ -49,6 +49,9 @@
     <string name="startBefore">Startdatum kann nicht vor dem heutigen Datum liegen</string>
     <string name="vertragId">Vertrag-ID:</string>
 
+    <!--Stuecklisteneintrag Strings-->
+    <string name="removeStuecklisteneintrag">Letzte Maschine nicht entfernbar, kompletten Vertrag löschen!</string>
+
     <!--Buttons-->
     <string name="button_add">Hinzufügen</string>
     <string name="button_save">Speichern</string>

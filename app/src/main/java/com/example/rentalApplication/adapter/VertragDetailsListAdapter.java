@@ -1,12 +1,16 @@
 package com.example.rentalApplication.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,19 +18,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
+import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsClickListener;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetailsListAdapter.VertragDetailsViewHolder> {
     private List<Baumaschine> baumaschineVertragDetailsList;
+    private List<Stuecklisteneintrag> stuecklisteneintragVertragDetailsList;
     private List<Integer> baumaschineContractAmount;
     private Context context;
     private VertragDetailsActivity vertragDetailsActivity;
     private final VertragDetailsClickListener vertragDetailsClickListener;
+    private Baumaschine currentBaumaschine;
     private Vertrag vertrag;
 
 
@@ -55,7 +63,6 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
 
         boolean isExpanded = baumaschineVertragDetailsList.get(position).getExpanded();
         holder.expandableConstraintLayoutVertagDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-
     }
 
 
@@ -68,7 +75,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         }
     }
 
-    public void setBaumaschineVertragDetailsList(List<Baumaschine> baumaschineVertragDetailsList, List<Integer> baumaschineContractAmount) {
+    public void setBaumaschineVertragDetailsList(List<Stuecklisteneintrag> stuecklisteneintragVertragDetailsList, List<Baumaschine> baumaschineVertragDetailsList, List<Integer> baumaschineContractAmount) {
+        this.stuecklisteneintragVertragDetailsList = stuecklisteneintragVertragDetailsList;
         this.baumaschineVertragDetailsList = baumaschineVertragDetailsList;
         this.baumaschineContractAmount = baumaschineContractAmount;
     }
@@ -77,7 +85,6 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         private final TextView vertragDetailsBaumaschineName;
         private final TextView textVertragDetailsBaumaschinenAnzahl;
         private final TextView vertragDetailsBaumaschineAnzahl;
-
 
 
         private final ImageButton deleteButtonVertragDetails;
@@ -132,7 +139,27 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
             if (v.getId() == deleteButtonVertragDetails.getId()) {
                 if (!((VertragDetailsActivity) context).hideButtonStatus()) {
                     deleteButtonVertragDetails.setVisibility(View.VISIBLE);
-
+                }
+                if (stuecklisteneintragVertragDetailsList.size() > 1) {
+                    //TODO: error message throws ArrayOutOfBounds error and I have no clue why
+                /*new AlertDialog.Builder(context)
+                        .setTitle("Delete machine")
+                        .setMessage("Sure?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                          }
+                        })
+                                .setNegativeButton("No",null)
+                                        .show();*/
+                    ((VertragDetailsActivity) context).archiveStuecklisteneintragFromVertrag(stuecklisteneintragVertragDetailsList.get(getAdapterPosition()).getIdStueckList());
+                    stuecklisteneintragVertragDetailsList.remove(getAdapterPosition());
+                    baumaschineVertragDetailsList.remove(baumaschine);
+                    notifyItemRemoved(getAdapterPosition());
+                }
+                else{
+                    Toast.makeText(context, R.string.removeStuecklisteneintrag, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
             } else {
