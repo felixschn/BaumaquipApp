@@ -96,16 +96,30 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 int editableBaumaschineAmount = loadBaumaschineById.getAmount();
                 addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
                 addBaumaschinenAnzahlEditText.setText(Integer.toString(editableBaumaschineAmount));
-                if(editableBaumaschineAmount == 1){
-                    addBaumaschinenAnzahlEditText.setFocusable(false);
-                    addBaumaschinenAnzahlEditText.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
-                }
                 addBaumaschinenPricePerDayEditText.setText(loadBaumaschineById.getPricePerDay().toString());
                 addBaumaschinenPricePerWeekendEditText.setText(loadBaumaschineById.getPricePerWeekend().toString());
                 addBaumaschinenPricePerMonthEditText.setText(loadBaumaschineById.getPricePerMonth().toString());
-                addBaumaschinenOperatingHours.setText(loadBaumaschineById.getOperatingHours().toString());
-                addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
-                addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getAmountOfGas());
+
+                //check if machine has entries for parameters
+                if (loadBaumaschineById.getOperatingHours() != null) {
+                    addBaumaschinenOperatingHours.setText(loadBaumaschineById.getOperatingHours().toString());
+                }
+                if(loadBaumaschineById.getAmountOfGas() != null){
+                    addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getOperatingHours().toString());
+                }
+                if(loadBaumaschineById.getDegreeOfWear() != null){
+                    addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
+                }
+
+                //when there is only one machine, disable functions to alter amount and other params
+                if (editableBaumaschineAmount == 1) {
+                    addBaumaschinenAnzahlEditText.setFocusable(false);
+                    addBaumaschinenAnzahlEditText.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+                    addBaumaschinenOperatingHours.setEnabled(false);
+                    addBaumaschinenAmountOfGas.setEnabled(false);
+                    addBaumaschinenDegreeOfWear.setEnabled(false);
+                }
+
             }
 
 
@@ -155,8 +169,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         Double operatingHours;
         if (baumaschinenOperatingHours.isEmpty()) {
             operatingHours = null;
-        }
-        else {
+        } else {
             operatingHours = Double.parseDouble(baumaschinenOperatingHours);
         }
         addBaumaschinenViewModel.insert(new Baumaschine(baumaschinenName, anzahl, pricePerDay, pricePerWeekend, pricePerMonth, operatingHours, baumaschinenDegreeOfWear, baumaschinenAmountOfGas));
