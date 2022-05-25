@@ -54,7 +54,6 @@ public class Stuecklisteneintrag {
     private Application application;
 
 
-
     private LocalDate beginDate, endDate;
 
     public Stuecklisteneintrag() {
@@ -77,22 +76,6 @@ public class Stuecklisteneintrag {
         Baumaschine baumaschine = baumaschinenRepository.getBaumaschineById(idBaumaschine);
 
         this.operatingHours_begin = baumaschine.getOperatingHours();
-
-
-
-        long rental_period = ChronoUnit.DAYS.between(beginDate, endDate) + 1;  // +1 to include last day
-
-        //TODO: Check & adjust logic of if-elif-else
-       /* if ((4 == rental_period) &&
-                (DayOfWeek.FRIDAY == beginDate.getDayOfWeek()) &&
-                (DayOfWeek.MONDAY == endDate.getDayOfWeek())) {
-
-            this.price = baumaschine.getPricePerWeekend();
-        } else if (30 < rental_period) {
-            this.price = baumaschine.getPricePerMonth().multiply(BigDecimal.valueOf(rental_period / 30));
-        } else {
-            this.price = baumaschine.getPricePerDay().multiply(BigDecimal.valueOf(rental_period));
-        }*/
     }
 
     public int getIdStueckList() {
