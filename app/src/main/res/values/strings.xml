@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Baumaquip Mietprogramm</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="baumaschine_name">enter machine</string>
     <string name="baumaschine_amount">enter amount</string>
     <string name="baumaschine_pricePerDay">enter price per day</string>
