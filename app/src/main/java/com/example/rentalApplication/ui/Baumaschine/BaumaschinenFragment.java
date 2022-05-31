@@ -117,8 +117,9 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
     }
 
     public void archiveBaumaschine(int id) {
+        Boolean isArchived = false;
         addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
-        List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag();
+        List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag(false);
         for(int i = 0; i < getAllStuecklisteneintrag.size(); i++){
             if(id == getAllStuecklisteneintrag.get(i).getIdBaumaschine()){
                 Toast.makeText(getActivity(), R.string.not_removable, Toast.LENGTH_LONG).show();

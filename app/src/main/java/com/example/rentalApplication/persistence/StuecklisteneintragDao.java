@@ -35,5 +35,6 @@ public interface StuecklisteneintragDao {
     @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE archived = 0")
     List<Stuecklisteneintrag> getAllStuecklisteneintrag();
 
-
+    @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE archived = 1")
+    List<Stuecklisteneintrag> getAllArchivedStuecklisteneintrag();
 }

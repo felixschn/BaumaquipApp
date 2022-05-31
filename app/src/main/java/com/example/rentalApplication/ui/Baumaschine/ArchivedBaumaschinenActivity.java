@@ -44,8 +44,9 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
     }
 
     public void deleteBaumaschine(Baumaschine baumaschine) {
+        Boolean isArchived = true;
         addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
-        List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag();
+        List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag(isArchived);
         for (int i = 0; i < getAllStuecklisteneintrag.size(); i++) {
             if (baumaschine.getIdBaumaschine() == getAllStuecklisteneintrag.get(i).getIdBaumaschine()) {
                 Toast.makeText(this, R.string.not_removable, Toast.LENGTH_SHORT).show();

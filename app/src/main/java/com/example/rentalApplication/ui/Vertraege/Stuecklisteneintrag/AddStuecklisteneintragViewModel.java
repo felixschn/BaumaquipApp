@@ -48,8 +48,8 @@ public class AddStuecklisteneintragViewModel extends AndroidViewModel {
         return stuecklisteneintragRepository.getStuecklisteneintragForDate(start, end, id);
     }
 
-    public List<Stuecklisteneintrag> getAllStuecklisteneintrag() {
-        return stuecklisteneintragRepository.getAllStuecklisteneintag();
+    public List<Stuecklisteneintrag> getAllStuecklisteneintrag(Boolean isArchived) {
+        return stuecklisteneintragRepository.getAllStuecklisteneintag(isArchived);
     }
 
 }
