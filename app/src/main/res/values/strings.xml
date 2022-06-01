@@ -13,7 +13,7 @@
     <string name="price_per_month">price per month</string>
     <string name="amount">amount</string>
     <string name="operating_hours">operating hours</string>
-    <string name="amount_of_gas">amout of gas</string>
+    <string name="amount_of_gas">amount of gas</string>
     <string name="degree_of_wear">degree of wear</string>
     <string name="not_removable">machine not removable due to dependencies</string>
     <string name="empty_baumaschine_spinner">please select machine</string>
@@ -21,14 +21,14 @@
 
     <!--Kunden Strings-->
     <string name="kunde_name">enter customer name</string>
-    <string name="kunde_telefon_number">enter telefon number</string>
-    <string name="kunde_street_name">enter name of street</string>
+    <string name="kunde_telefon_number">enter telephone number</string>
+    <string name="kunde_street_name">enter street name</string>
     <string name="kunde_street_number">enter street number</string>
     <string name="kunde_zip">enter zip</string>
     <string name="kunde_location">enter location</string>
     <string name="kunde_construction_side">enter construction side</string>
     <string name="kunde_contact_person">enter name of contact person</string>
-    <string name="kunde_email">Email Adresse eingeben</string>
+    <string name="kunde_email">enter Email Address</string>
     <string name="street">street: </string>
     <string name="zip">zip: </string>
     <string name="location">location: </string>
@@ -44,8 +44,8 @@
     <string name="vertragDetailsDiscount">discount:</string>
     <string name="vertragDetailsStart">start of contract:</string>
     <string name="vertragDetailsEnd">end of contract:</string>
-    <string name="endBeforeBegin">end date can\'t be before start date</string>
-    <string name="startBefore">start date can not be before today\'s date</string>
+    <string name="endBeforeBegin">end date cannot be before start date</string>
+    <string name="startBefore">start date cannot be before today\'s date</string>
     <string name="vertragId">contract id:</string>
 
     <!--Stuecklisteneintrag Strings-->
@@ -57,7 +57,7 @@
     <string name="button_save_vertrag">conclude contract</string>
 
     <!--AlertDialog-->
-    <string name="alertDialog">Do you really delete this machine? This could lead to significant application failures due to the connectivity between contract and machines</string>
+    <string name="alertDialog">Do you really want to delete this machine? This could lead to significant application failures due to the relation between contract and machines</string>
     <string name="okDialog">Noticed!</string>
     <string name="cancelDialog">Cancel</string>
 
@@ -65,8 +65,8 @@
     <string name="emptyRecyclerView">No machine selected</string>
     <string name="announceRecyclerView"><b>selected machines</b></string>
     <string name="insurance">insured</string>
-    <string name="startDate">starting date:</string>
-    <string name="endDate">ending date:</string>
+    <string name="startDate">start date:</string>
+    <string name="endDate">end date:</string>
 
     <!--ToastMessages-->
     <string name="startDateBeforCurrentDate">Start cannot be in the past!</string>
