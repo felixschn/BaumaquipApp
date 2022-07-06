@@ -1,12 +1,27 @@
 package com.example.rentalApplication.ui.Vertraege;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,8 +36,17 @@ import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
 import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class VertragDetailsActivity extends AppCompatActivity implements VertragDetailsClickListener {
     private static final String TAG = "VertragDetailsActivity.java";
@@ -41,6 +65,15 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private List<Stuecklisteneintrag> stuecklisteneintragListFromVertrag = new ArrayList<>();
     private List<Stuecklisteneintrag> archivedStuecklisteneintragListFromVertrag = new ArrayList<>();
 
+    ImageButton generatePDFbtn;
+
+    // declaring width and height for our PDF file.
+    private int pageHeight = mmToPostscript(297);
+    private int pagewidth = mmToPostscript(210);
+    // constant code for runtime permissions
+    private static final int PERMISSION_REQUEST_CODE = 200;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +90,18 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsSum = findViewById(R.id.vertragDetailsSum);
         vertragDetailsDiscountText = findViewById(R.id.vertragDetailsDiscountText);
         vertragDetailsDiscount = findViewById(R.id.vertragDetailsDiscount);
+        generatePDFbtn = findViewById(R.id.vertragDetailsPrint);
+        if (checkPermission()) {
+            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+        } else {
+            requestPermission();
+        }
+        generatePDFbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generatePDF();
+            }
+        });
 
         recyclerView = findViewById(R.id.vertragDetailsRecyclerview);
         recyclerView.hasFixedSize();
@@ -136,6 +181,173 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
 
     @Override
     public void onPositionClicked(int position) {
+
+    }
+
+    private void generatePDF() {
+        // creating an object variable for our PDF document.
+        PdfDocument pdfDocument = new PdfDocument();
+
+        // two variables for paint
+        // "paint" is used for drawing shapes
+        // "title" for adding text in our PDF file.
+        Paint paint = new Paint();
+        Paint title = new Paint();
+        Paint description = new Paint();
+        Paint content = new Paint();
+
+        // we are adding page info to our PDF file in which we will be passing our pageWidth,
+        // pageHeight and number of pages and after that we are calling it to create our PDF.
+        PdfDocument.PageInfo mypageInfo = new PdfDocument.PageInfo.Builder(pagewidth, pageHeight, 1).create();
+
+        // below line is used for setting start page for our PDF file.
+        PdfDocument.Page myPage = pdfDocument.startPage(mypageInfo);
+
+        // creating a variable for canvas from our page of PDF.
+        Canvas canvas = myPage.getCanvas();
+
+        // below line is used to draw our image on our PDF file.
+        // the first parameter of our drawbitmap method is our bitmap
+        // second parameter is position from left
+        // third parameter is position from top and
+        // last one is our variable for paint.
+        //canvas.drawBitmap(scaledbmp, 56, 40, paint);
+
+        // below line is used for adding typeface for our text which we will be adding in our PDF file.
+        title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        description.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        content.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+
+        // below line is sued for setting color of our text inside our PDF file.
+        title.setColor(ContextCompat.getColor(this, R.color.baumaquip_main_color));
+        description.setColor(ContextCompat.getColor(this, R.color.black));
+        content.setColor(ContextCompat.getColor(this, R.color.black));
+        description.setTextSize(10);
+        content.setTextSize(10);
+
+        // below line is used to draw text in our PDF file.
+        // the first parameter is our text, second parameter
+        // is position from start, third parameter is position from top
+        // and then we are passing our variable of paint which is title.
+        title.setTextSize(18);
+        canvas.drawText("MIETVERTRAG", mmToPostscript(90), mmToPostscript(50), title);
+        title.setTextSize(14);
+
+        // block 1 = details costumer
+        int sb1 = 60;   // start block 1
+        int ds1 = 22;   // description start (distance from left border)
+        int vs1 = 60;   // value start (distance from left border)
+        int lineheight1 = 10;
+        int column1 = 80;
+        canvas.drawText("Angaben Mieter", mmToPostscript(ds1), mmToPostscript(sb1), title);
+        canvas.drawText("Name / Firma:",             mmToPostscript(ds1),        mmToPostscript(sb1+1*lineheight1), description);
+        canvas.drawText("Baumaquip",                 mmToPostscript(vs1),        mmToPostscript(sb1+1*lineheight1), content);      //TODO: value
+        canvas.drawText("Straße, Nr.:",              mmToPostscript(ds1),        mmToPostscript(sb1+2*lineheight1), description);
+        canvas.drawText("Fedor-Schnorr-Straße 7",    mmToPostscript(vs1),        mmToPostscript(sb1+2*lineheight1), content);      //TODO: value
+        canvas.drawText("PLZ, Ort",                  mmToPostscript(column1),    mmToPostscript(sb1+2*lineheight1), description);
+        canvas.drawText("08523 Plauen",              mmToPostscript(column1+vs1),mmToPostscript(sb1+2*lineheight1), content);      //TODO: value
+        canvas.drawText("Baustelle / Kostenstelle:", mmToPostscript(ds1),        mmToPostscript(sb1+3*lineheight1), description);
+        canvas.drawText("LoremIpsumLoremIpsum",      mmToPostscript(vs1),        mmToPostscript(sb1+3*lineheight1), content);      //TODO: value
+        canvas.drawText("Abholung von:",             mmToPostscript(column1),    mmToPostscript(sb1+3*lineheight1), description);
+        canvas.drawText("LoremIpsumLoremIpsum",      mmToPostscript(column1+vs1),mmToPostscript(sb1+3*lineheight1), content);      //TODO: value
+
+        // block 2 = details items
+        int sb2 = 93;   // start block 2
+        int ds2 = 22;   // description start (distance from left border)
+        int vs2 = 60;   // value start (distance from left border)
+        int lineheight = 10;
+        int column = 80;
+        canvas.drawText("Mietgegenstand", mmToPostscript(ds2), mmToPostscript(sb2), title);
+
+
+
+        canvas.drawText("Besondere Vereinbarung", mmToPostscript(22), mmToPostscript(210), title);
+        canvas.drawText("Übergabe (siehe Übergabeprotokoll)", mmToPostscript(22), mmToPostscript(235), title);
+        canvas.drawText("Rückgabe (siehe Übergabeprotokoll)", mmToPostscript(22), mmToPostscript(252), title);
+        canvas.drawText("A portal for IT professionals.", 209, 100, title);
+        canvas.drawText("Geeks for Geeks", 209, 80, title);
+
+        // similarly we are creating another text and in this
+        // we are aligning this text to center of our PDF file.
+        title.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        title.setColor(ContextCompat.getColor(this, R.color.purple_200));
+        title.setTextSize(15);
+
+        // below line is used for setting
+        // our text to center of PDF.
+        title.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("This is sample document which we have created.", 396, 560, title);
+
+        // after adding all attributes to our
+        // PDF file we will be finishing our page.
+        pdfDocument.finishPage(myPage);
+
+        // below line is used to set the name of our PDF file and its path.
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)  + "/contracts");
+        if (!dir.exists())
+            if(!dir.mkdir())
+                return; //TODO: Pfad konnte nicht erstellt werden
+        File file = new File(dir, "contract" + System.currentTimeMillis() / 1000L + ".pdf");
+        if (!file.exists()) { //sollte nicht mehr vorkommen, da contract mit Zeitstempel
+            try {
+                file.createNewFile();
+                Log.e(TAG, "savePdfFileToStorage: " + "file created" + file.getName() + "path: " + file.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            // after creating a file name we will write our PDF file to that location.
+            pdfDocument.writeTo(new FileOutputStream(file));
+
+            Toast.makeText(VertragDetailsActivity.this, "PDF file generated successfully.", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(VertragDetailsActivity.this, "PDF file NOT generated.", Toast.LENGTH_SHORT).show();
+        }
+        // after storing our pdf to that location we are closing our PDF file.
+        pdfDocument.close();
+    }
+
+    private boolean checkPermission() {
+        // checking of permissions.
+        int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        // requesting permissions if not provided.
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+
+                // after requesting permissions we are showing
+                // users a toast message of permission granted.
+                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (writeStorage && readStorage) {
+                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
+    }
+
+    private int mmToPostscript(int mm){
+        BigDecimal mmb = new BigDecimal(mm);
+        return mmb.divide(new BigDecimal("25.4"), 6, RoundingMode.HALF_UP)
+                    .multiply(new BigDecimal(72))
+                    .setScale(0, RoundingMode.HALF_UP)
+                    .intValue();
 
     }
 }
