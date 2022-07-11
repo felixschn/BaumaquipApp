@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Baumaquip Mietprogramm</string>
+    <string name="app_name">Baumaquip Rental Program</string>
+    <string name="baumachinen">Machines</string>
+    <string name="baumachinenAdd">add machines</string>
+    <string name="baumachinenArchived">archived machines</string>
     <string name="baumaschine_name">enter machine</string>
     <string name="baumaschine_amount">enter amount</string>
     <string name="baumaschine_pricePerDay">enter price per day</string>
@@ -20,6 +23,9 @@
 
 
     <!--Kunden Strings-->
+    <string name="kunden">Customers</string>
+    <string name="kundenAdd">add customers</string>
+    <string name="kundenArchived">archived customers</string>
     <string name="kunde_name">enter customer name</string>
     <string name="kunde_telefon_number">enter telephone number</string>
     <string name="kunde_street_name">enter street name</string>
@@ -40,6 +46,9 @@
     <string name="empty_kunde_spinner">please select customer</string>
 
     <!--Vertrag Strings-->
+    <string name="vertraege">Contracts</string>
+    <string name="vertraegeAdd">add contract</string>
+    <string name="vertraegeArchived">archived contracts</string>
     <string name="vertragDetailsTotalPrice">total price:</string>
     <string name="vertragDetailsDiscount">discount:</string>
     <string name="vertragDetailsStart">start of contract:</string>
@@ -71,6 +80,12 @@
     <!--ToastMessages-->
     <string name="startDateBeforCurrentDate">Start cannot be in the past!</string>
     <string name="startDateAfterEndDate">Start date must be before end date!</string>
+
+    <!--FragmentString-->
+    <string name="emptyBaumaschineRecyclerView">no machine available!</string>
+    <string name="emptyKundeRecyclerView">no customer available!</string>
+    <string name="emptyContractRecyclerView">no contract available!</string>
+
 
 
 

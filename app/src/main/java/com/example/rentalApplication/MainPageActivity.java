@@ -49,9 +49,9 @@ public class MainPageActivity extends AppCompatActivity {
         mAddKundeFabString = findViewById(R.id.addKundenFabString);
         mAddVertragFabString = findViewById(R.id.addVertragFabString);
 
-        mAddBaumaschinenFabString.setText("Baumaschine hinzufügen");
-        mAddKundeFabString.setText("Kunde hinzufügen");
-        mAddVertragFabString.setText("Vertrag hinzufügen");
+        mAddBaumaschinenFabString.setText(R.string.baumachinenAdd);
+        mAddKundeFabString.setText(R.string.kundenAdd);
+        mAddVertragFabString.setText(R.string.vertraegeAdd);
 
         mAddBaumaschineFab.setVisibility(View.GONE);
         mAddKundeFab.setVisibility(View.GONE);
@@ -176,13 +176,13 @@ public class MainPageActivity extends AppCompatActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText("Baumaschinen");
+                        tab.setText(R.string.baumachinen);
                         break;
                     case 1:
-                        tab.setText("Kunden");
+                        tab.setText(R.string.kunden);
                         break;
                     case 2:
-                        tab.setText("Verträge");
+                        tab.setText(R.string.vertraege);
                         break;
                 }
 

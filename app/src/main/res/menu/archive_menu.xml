@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/archivedBaumaschine"
-        android:title="archivierte Baumaschinen"
+        android:title="@string/baumachinenArchived"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/archivedKunde"
-        android:title="archivierte Kunden"
+        android:title="@string/kundenArchived"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/archivedVertrag"
-        android:title="archivierte Verträge"
+        android:title="@string/vertraegeArchived"
         app:showAsAction="ifRoom" />
 
 </menu>

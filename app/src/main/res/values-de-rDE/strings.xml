@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Baumaquip Mietprogramm</string>
+    <string name="baumachinenAdd">Baumaschine hinzufügen</string>
+    <string name="baumachinen">Baumaschinen</string>
+    <string name="baumachinenArchived">archivierte Baumaschinen</string>
     <string name="baumaschine_name">Baumaschine</string>
     <string name="baumaschine_amount">Anzahl</string>
     <string name="baumaschine_pricePerDay">Preis pro Tag eingeben</string>
@@ -21,6 +24,9 @@
 
 
     <!--Kunden Strings-->
+    <string name="kunden">Kunden</string>
+    <string name="kundenAdd">Kunden hinzufügen</string>
+    <string name="kundenArchived">archivierte Kunden</string>
     <string name="kunde_name">Kundenname einfügen</string>
     <string name="kunde_telefon_number">Telefonnummer einfügen</string>
     <string name="kunde_street_name">Straßennamen einfügen</string>
@@ -41,6 +47,9 @@
     <string name="empty_kunde_spinner">Bitte Kunde auswählen!</string>
 
     <!--Vertrag Strings-->
+    <string name="vertraege">Verträge</string>
+    <string name="vertraegeAdd">Vertrag hinzufügen</string>
+    <string name="vertraegeArchived">archived contracts</string>
     <string name="vertragDetailsTotalPrice">Gesamtpreis:</string>
     <string name="vertragDetailsDiscount">Rabatt:</string>
     <string name="vertragDetailsStart">Startdatum des Vertrags</string>
@@ -72,5 +81,10 @@
     <!--ToastMessages-->
     <string name="startDateBeforCurrentDate">Startdatum kann nicht in der Vergangenheit liegen!</string>
     <string name="startDateAfterEndDate">Startdatum kann nicht nach Enddatum sein!</string>
+
+    <!--FragmentString-->
+    <string name="emptyBaumaschineRecyclerView">Keine Maschine verfügbar!</string>
+    <string name="emptyKundeRecyclerView">Kein Kunde verfügbar!</string>
+    <string name="emptyContractRecyclerView">Kein Vertrag verfügbar!</string>
 
 </resources>

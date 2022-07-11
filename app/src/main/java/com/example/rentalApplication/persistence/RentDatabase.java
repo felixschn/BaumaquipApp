@@ -51,7 +51,7 @@ public abstract class RentDatabase extends RoomDatabase {
                             Executors.newSingleThreadExecutor().execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    getDatabase(context).baumaschinenDao().insertAll(Baumaschine.populateBaumaschinenData());
+                                    //getDatabase(context).baumaschinenDao().insertAll(Baumaschine.populateBaumaschinenData());
                                     getDatabase(context).kundenDao().insertAll(Kunde.populateKundeData());
                                 }
                             });

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,8 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
     private BaumaschinenViewModel baumaschinenViewModel;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private Baumaschine archiveBaumaschine;
+    private TextView emptyRecyclerView;
+    private BaumaschinenListAdapter baumaschinenListAdapter;
     private static final String TAG = "BaumaschinenFragment.java";
 
 
@@ -75,7 +78,6 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -85,12 +87,15 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
 
         View view = inflater.inflate(R.layout.fragment_baumaschinen, container, false);
 
+        emptyRecyclerView = view.findViewById(R.id.emptyBaumaschineRecyclerviewTextView);
+
+
         recyclerView = view.findViewById(R.id.baumaschineRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //Baumaschine baumaschine = new Baumaschine("test",1,10.00, 25.00,100.00, null,null, null);
         //mBaumaschine.add(baumaschine);
-        final BaumaschinenListAdapter baumaschinenListAdapter = new BaumaschinenListAdapter(this, this);
+        baumaschinenListAdapter = new BaumaschinenListAdapter(this, this);
         recyclerView.setAdapter(baumaschinenListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
@@ -112,7 +117,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
             }
         });
 
-
+        recyclerViewVisibility();
         return view;
     }
 
@@ -120,8 +125,8 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         Boolean isArchived = false;
         addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
         List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag(false);
-        for(int i = 0; i < getAllStuecklisteneintrag.size(); i++){
-            if(id == getAllStuecklisteneintrag.get(i).getIdBaumaschine()){
+        for (int i = 0; i < getAllStuecklisteneintrag.size(); i++) {
+            if (id == getAllStuecklisteneintrag.get(i).getIdBaumaschine()) {
                 Toast.makeText(getActivity(), R.string.not_removable, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -133,6 +138,17 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         Log.d(TAG, "ROW_ID in Fragment: " + archiveBaumaschine.getIdBaumaschine());
         archiveBaumaschine.setArchived(true);
         modifyBaumaschineViewModel.update(archiveBaumaschine);
+
+    }
+
+    public void recyclerViewVisibility() {
+        if (baumaschinenListAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyRecyclerView.setVisibility(View.VISIBLE);
+        } else{
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerView.setVisibility(View.GONE);
+        }
 
     }
 
