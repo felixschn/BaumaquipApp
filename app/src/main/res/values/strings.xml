@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Baumaquip Rental Program</string>
-    <string name="baumachinen">Machines</string>
-    <string name="baumachinenAdd">add machines</string>
+    <string name="baumaschinen">Machines</string>
+    <string name="baumaschinenAdd">add machines</string>
     <string name="baumachinenArchived">archived machines</string>
     <string name="baumaschine_name">enter machine</string>
     <string name="baumaschine_amount">enter amount</string>

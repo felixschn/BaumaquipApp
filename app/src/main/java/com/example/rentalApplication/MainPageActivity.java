@@ -22,14 +22,13 @@ import com.example.rentalApplication.ui.Kunde.ArchivedKundenActivity;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.ArchivedVertragActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainPageActivity extends AppCompatActivity {
 
     private ExtendedFloatingActionButton fab;
-    private FloatingActionButton mAddBaumaschineFab, mAddKundeFab, mAddVertragFab;
+    private ExtendedFloatingActionButton mAddBaumaschineFab, mAddKundeFab, mAddVertragFab;
     private TextView mAddBaumaschinenFabString, mAddKundeFabString, mAddVertragFabString;
     private Boolean isAllFabsVisible;
     private static final String TAG = "Main_Activity";
@@ -45,20 +44,20 @@ public class MainPageActivity extends AppCompatActivity {
         mAddKundeFab = findViewById(R.id.addKunde);
         mAddVertragFab = findViewById(R.id.addVertrag);
 
-        mAddBaumaschinenFabString = findViewById(R.id.addBaumaschineFabString);
+        /*mAddBaumaschinenFabString = findViewById(R.id.addBaumaschineFabString);
         mAddKundeFabString = findViewById(R.id.addKundenFabString);
-        mAddVertragFabString = findViewById(R.id.addVertragFabString);
+        mAddVertragFabString = findViewById(R.id.addVertragFabString);*/
 
-        mAddBaumaschinenFabString.setText(R.string.baumachinenAdd);
+        /*mAddBaumaschinenFabString.setText(R.string.baumaschinenAdd);
         mAddKundeFabString.setText(R.string.kundenAdd);
-        mAddVertragFabString.setText(R.string.vertraegeAdd);
+        mAddVertragFabString.setText(R.string.vertraegeAdd);*/
 
         mAddBaumaschineFab.setVisibility(View.GONE);
         mAddKundeFab.setVisibility(View.GONE);
         mAddVertragFab.setVisibility(View.GONE);
-        mAddBaumaschinenFabString.setVisibility(View.GONE);
+        /*mAddBaumaschinenFabString.setVisibility(View.GONE);
         mAddKundeFabString.setVisibility(View.GONE);
-        mAddVertragFabString.setVisibility(View.GONE);
+        mAddVertragFabString.setVisibility(View.GONE);*/
 
         isAllFabsVisible = false;
 
@@ -72,9 +71,9 @@ public class MainPageActivity extends AppCompatActivity {
                             mAddBaumaschineFab.show();
                             mAddKundeFab.show();
                             mAddVertragFab.show();
-                            mAddBaumaschinenFabString.setVisibility(View.VISIBLE);
+                            /*mAddBaumaschinenFabString.setVisibility(View.VISIBLE);
                             mAddKundeFabString.setVisibility(View.VISIBLE);
-                            mAddVertragFabString.setVisibility(View.VISIBLE);
+                            mAddVertragFabString.setVisibility(View.VISIBLE);*/
 
                             fab.extend();
                             isAllFabsVisible = true;
@@ -82,9 +81,9 @@ public class MainPageActivity extends AppCompatActivity {
                             mAddBaumaschineFab.hide();
                             mAddKundeFab.hide();
                             mAddVertragFab.hide();
-                            mAddBaumaschinenFabString.setVisibility(View.GONE);
+                            /*mAddBaumaschinenFabString.setVisibility(View.GONE);
                             mAddKundeFabString.setVisibility(View.GONE);
-                            mAddVertragFabString.setVisibility(View.GONE);
+                            mAddVertragFabString.setVisibility(View.GONE);*/
 
                             fab.shrink();
 
@@ -176,7 +175,7 @@ public class MainPageActivity extends AppCompatActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText(R.string.baumachinen);
+                        tab.setText(R.string.baumaschinen);
                         break;
                     case 1:
                         tab.setText(R.string.kunden);

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomExtendedFloating" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="android:minWidth">250dp</item>
+        <item name="minHeight">50dp</item>
+    </style>
+</resources>

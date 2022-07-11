@@ -29,12 +29,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tabLayout"
+        android:paddingTop="50dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        app:layout_constraintVertical_bias="0.038"
-        android:paddingBottom="10dp"
-        android:paddingTop="50dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="-53dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabViewPager"
@@ -43,76 +43,95 @@
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="36dp"
         android:clickable="true"
+        android:enabled="true"
+        android:stateListAnimator="@null"
+        app:backgroundTint="@color/baumaquip_main_color"
+        app:elevation="0dp"
         app:icon="@drawable/ic_button_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/baumaquip_main_color" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addBaumaschine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="24dp"
-        app:fabSize="normal"
+        android:clickable="true"
+        android:enabled="true"
+        android:stateListAnimator="@null"
+        android:text="@string/baumaschinenAdd"
+        style="@style/CustomExtendedFloating"
+        app:backgroundTint="@color/baumaquip_main_color"
+        app:elevation="0dp"
+        app:icon="@drawable/ic_baseline_construction_24"
         app:layout_constraintBottom_toTopOf="@+id/fabViewPager"
-        app:layout_constraintEnd_toEndOf="@+id/fabViewPager"
-        app:backgroundTint="@color/baumaquip_main_color" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/addBaumaschineFabString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Baumaschine hinzufügen"
+        android:stateListAnimator="@null"
         app:layout_constraintBottom_toBottomOf="@+id/addBaumaschine"
         app:layout_constraintEnd_toStartOf="@+id/addBaumaschine"
-        app:layout_constraintTop_toTopOf="@+id/addBaumaschine" />
+        app:layout_constraintTop_toTopOf="@+id/addBaumaschine" />-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addKunde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="24dp"
-        app:fabSize="normal"
+        android:clickable="true"
+        android:enabled="true"
+        android:stateListAnimator="@null"
+        android:text="@string/kundenAdd"
+        style="@style/CustomExtendedFloating"
+        app:backgroundTint="@color/baumaquip_main_color"
+        app:elevation="0dp"
+        app:icon="@drawable/ic_baseline_people_alt_24"
         app:layout_constraintBottom_toTopOf="@+id/addBaumaschine"
-        app:layout_constraintEnd_toEndOf="@+id/addBaumaschine"
-        app:layout_constraintStart_toStartOf="@+id/addBaumaschine"
-        app:backgroundTint="@color/baumaquip_main_color" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/addKundenFabString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Kunde hinzufügen"
         app:layout_constraintBottom_toBottomOf="@+id/addKunde"
         app:layout_constraintEnd_toStartOf="@+id/addKunde"
-        app:layout_constraintTop_toTopOf="@+id/addKunde" />
+        app:layout_constraintTop_toTopOf="@+id/addKunde" />-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addVertrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="24dp"
+        android:stateListAnimator="@null"
+        android:theme="@style/CustomExtendedFloating"
+        android:text="@string/vertraegeAdd"
+        style="@style/CustomExtendedFloating"
+        app:backgroundTint="@color/baumaquip_main_color"
+        app:elevation="0dp"
         app:fabSize="normal"
+        app:icon="@drawable/ic_baseline_insert_drive_file_24"
         app:layout_constraintBottom_toTopOf="@+id/addKunde"
-        app:layout_constraintEnd_toEndOf="@+id/addKunde"
-        app:layout_constraintStart_toStartOf="@+id/addKunde"
-        android:backgroundTint="@color/baumaquip_main_color"
-        android:insetTop="0dp"
-        android:insetBottom="0dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/addVertragFabString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Vertrag hinzufügen"
         app:layout_constraintBottom_toBottomOf="@+id/addVertrag"
         app:layout_constraintEnd_toStartOf="@+id/addVertrag"
-        app:layout_constraintTop_toTopOf="@+id/addVertrag" />
+        app:layout_constraintTop_toTopOf="@+id/addVertrag" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
