@@ -192,12 +192,18 @@
 
     </RelativeLayout>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addVertragButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="@string/button_save_vertrag"
+        android:clickable="true"
+        android:enabled="true"
+        android:stateListAnimator="@null"
+        style="@style/CustomExtendedFloating"
+        android:text="@string/vertraegeAdd"
+        app:icon="@drawable/ic_baseline_insert_drive_file_24"
+        app:backgroundTint="@color/baumaquip_main_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
