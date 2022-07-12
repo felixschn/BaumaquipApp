@@ -61,10 +61,7 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
         restoreBaumaschine = modifyBaumaschineViewModel.getBaumaschineById(id);
         restoreBaumaschine.setArchived(false);
         modifyBaumaschineViewModel.update(restoreBaumaschine);
-        if (modifyBaumaschineViewModel.getAnyBaumaschine() == null) {
-            finish();
-        }
-
+        finish();
     }
 
     @Override

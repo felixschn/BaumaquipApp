@@ -44,7 +44,6 @@ public class KundenRepository {
         new InsertAsyncTask(kundenDao).execute(kunde);
     }
 
-
     public void update(Kunde kunde) {
         new UpdateAsyncTask(kundenDao).execute(kunde);
     }

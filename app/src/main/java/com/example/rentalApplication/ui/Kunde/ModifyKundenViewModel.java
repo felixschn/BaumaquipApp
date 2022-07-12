@@ -27,5 +27,4 @@ public class ModifyKundenViewModel extends AndroidViewModel {
         //setting RowID that correct database entry is updated; because of creation of a new Kunden Object in update Method the RowID from the called Kunden Object is needed
         kundenRepository.update(kunde);
     }
-
 }

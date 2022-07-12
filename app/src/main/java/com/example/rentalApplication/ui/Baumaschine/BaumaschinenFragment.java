@@ -98,6 +98,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         baumaschinenListAdapter = new BaumaschinenListAdapter(this, this);
         recyclerView.setAdapter(baumaschinenListAdapter);
 
+
         baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
      /*   baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), allBaumaschinen -> {
 
@@ -112,12 +113,12 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
             @Override
             public void onChanged(List<Baumaschine> baumaschines) {
                 baumaschinenListAdapter.setBaumaschinen(baumaschines);
-
+                recyclerViewVisibility();
 
             }
         });
 
-        recyclerViewVisibility();
+
         return view;
     }
 
@@ -148,6 +149,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         } else{
             recyclerView.setVisibility(View.VISIBLE);
             emptyRecyclerView.setVisibility(View.GONE);
+
         }
 
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,8 @@ public class KundenFragment extends Fragment implements KundenClickListener {
     private KundenViewModel kundenViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
     private VertragViewModel vertragViewModel;
+    private KundenListAdapter kundenListAdapter;
+    private TextView emptyRecyclerView;
     private Kunde archivedkunde;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,12 +84,15 @@ public class KundenFragment extends Fragment implements KundenClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_kunden, container, false);
+
+        emptyRecyclerView = view.findViewById(R.id.emptyKundenRecyclerviewTextView);
+
         recyclerView = view.findViewById(R.id.kundenRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //Kunde testKunde = new Kunde("Berholz GmbH","012345678","berghol","08529", "Pausa", "0123456789", "Straßengeschäft", "Klaus Bergholz");
         //mKunde.add(testKunde);
-        final KundenListAdapter kundenListAdapter = new KundenListAdapter(this, this);
+        kundenListAdapter = new KundenListAdapter(this, this);
         recyclerView.setAdapter(kundenListAdapter);
         kundenViewModel = new ViewModelProvider(requireActivity()).get(KundenViewModel.class);
 
@@ -103,6 +109,7 @@ public class KundenFragment extends Fragment implements KundenClickListener {
             @Override
             public void onChanged(List<Kunde> kundes) {
                 kundenListAdapter.setKunden(kundes);
+                recyclerViewVisibility();
 
             }
         });
@@ -125,6 +132,18 @@ public class KundenFragment extends Fragment implements KundenClickListener {
         archivedkunde = modifyKundenViewModel.loadKundeById(id);
         archivedkunde.setArchived(true);
         modifyKundenViewModel.update(archivedkunde);
+
+    }
+
+    public void recyclerViewVisibility() {
+        if (kundenListAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyRecyclerView.setVisibility(View.VISIBLE);
+        } else{
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerView.setVisibility(View.GONE);
+
+        }
 
     }
 

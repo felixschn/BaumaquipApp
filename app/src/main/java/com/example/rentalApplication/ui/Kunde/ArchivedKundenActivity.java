@@ -64,9 +64,8 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
         restoreKunde = modifyKundenViewModel.loadKundeById(id);
         restoreKunde.setArchived(false);
         modifyKundenViewModel.update(restoreKunde);
-       /* if(kundenViewModel.() == null){
-            finish();
-        }*/
+        finish();
+
     }
 
     @Override

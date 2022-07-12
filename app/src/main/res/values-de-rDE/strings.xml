@@ -86,5 +86,7 @@
     <string name="emptyBaumaschineRecyclerView">Keine Maschine verfügbar!</string>
     <string name="emptyKundeRecyclerView">Kein Kunde verfügbar!</string>
     <string name="emptyContractRecyclerView">Kein Vertrag verfügbar!</string>
+    <string name="emptyKundenRecyclerViewRecyclerView">Keine Kunden verfügbar!</string>
+    <string name="emptyVertraegeRecyclerViewRecyclerView">No contracts available!</string>
 
 </resources>

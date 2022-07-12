@@ -82,11 +82,11 @@
     <string name="startDateAfterEndDate">Start date must be before end date!</string>
 
     <!--FragmentString-->
-    <string name="emptyBaumaschineRecyclerView">no machine available!</string>
-    <string name="emptyKundeRecyclerView">no customer available!</string>
-    <string name="emptyContractRecyclerView">no contract available!</string>
-
-
+    <string name="emptyBaumaschineRecyclerView">No machine available!</string>
+    <string name="emptyKundeRecyclerView">No customer available!</string>
+    <string name="emptyContractRecyclerView">No contract available!</string>
+    <string name="emptyKundenRecyclerViewRecyclerView">No customer available!</string>
+    <string name="emptyVertraegeRecyclerViewRecyclerView">No contracts available!</string>
 
 
 </resources>

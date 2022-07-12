@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -31,9 +32,11 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private VertragListAdapter vertragListAdapter;
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
+    private TextView emptyRecyclerView;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private ModifyVertragViewModel modifyVertragViewModel;
     private Vertrag archivedVertrag;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -44,7 +47,8 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private String mParam2;
 
     // Required empty public constructor
-    public VertragFragment() {}
+    public VertragFragment() {
+    }
 
 
     // TODO: Rename and change types and number of parameters
@@ -72,7 +76,9 @@ public class VertragFragment extends Fragment implements VertragClickListener {
 
         View view = inflater.inflate(R.layout.fragment_vertraege, container, false);
 
-        final VertragListAdapter vertragListAdapter = new VertragListAdapter(this, this);
+        vertragListAdapter = new VertragListAdapter(this, this);
+
+        emptyRecyclerView = view.findViewById(R.id.emptyVertraegeRecyclerviewTextView);
 
         recyclerView = view.findViewById(R.id.vertragRecyclerView);
         recyclerView.hasFixedSize();
@@ -89,6 +95,7 @@ public class VertragFragment extends Fragment implements VertragClickListener {
                     }
                  }*/
                 vertragListAdapter.setVertrag(vertrags);
+                recyclerViewVisibility();
             }
         });
         // Inflate the layout for this fragment
@@ -114,6 +121,17 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         }
         modifyVertragViewModel.update(archivedVertrag);
 
+    }
+
+    public void recyclerViewVisibility() {
+        if (vertragListAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerView.setVisibility(View.GONE);
+
+        }
     }
 
     @Override
