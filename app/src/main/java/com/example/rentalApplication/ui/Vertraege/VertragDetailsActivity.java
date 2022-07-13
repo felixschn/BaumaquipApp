@@ -40,13 +40,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class VertragDetailsActivity extends AppCompatActivity implements VertragDetailsClickListener {
     private static final String TAG = "VertragDetailsActivity.java";
@@ -68,8 +64,8 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     ImageButton generatePDFbtn;
 
     // declaring width and height for our PDF file.
-    private int pageHeight = mmToPostscript(297);
-    private int pagewidth = mmToPostscript(210);
+    private int pageHeight = mmToPoints(297);
+    private int pagewidth = mmToPoints(210);
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
 
@@ -92,7 +88,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsDiscount = findViewById(R.id.vertragDetailsDiscount);
         generatePDFbtn = findViewById(R.id.vertragDetailsPrint);
         if (checkPermission()) {
-            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Permission 'Write externalStorage' granted", Toast.LENGTH_SHORT).show();
         } else {
             requestPermission();
         }
@@ -104,7 +100,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         });
 
         recyclerView = findViewById(R.id.vertragDetailsRecyclerview);
-        recyclerView.hasFixedSize();
+        recyclerView.hasFixedSize();    //TODO
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         final VertragDetailsListAdapter vertragDetailsListAdapter = new VertragDetailsListAdapter(this, this);
@@ -119,41 +115,42 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
         baumaschineVertragDetailsList = new ArrayList<>();
         baumaschineContractAmount = new ArrayList<>();
-        if (intent != null) {
-            vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId", 0));
-            kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
-            for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
-                int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
-                Stuecklisteneintrag current = addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId);
-                try {
-                    baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
-                } catch (NullPointerException npe) {
-                    npe.printStackTrace();
-                    return;
-                }
-                baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
-                //TODO somethings wrong with stuecklisteneintraege which are archived but shown like they are not
-                if (current.isArchived()) {
-                    archivedStuecklisteneintragListFromVertrag.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId));
-                    vertragDetailsListAdapter.setBaumaschineVertragDetailsList(archivedStuecklisteneintragListFromVertrag, baumaschineVertragDetailsList, baumaschineContractAmount);
-
-                } else {
-                    stuecklisteneintragListFromVertrag.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId));
-
-
-                    vertragDetailsListAdapter.setBaumaschineVertragDetailsList(stuecklisteneintragListFromVertrag, baumaschineVertragDetailsList, baumaschineContractAmount);
-                }
-
-
-            }
-            String activityString = intent.getStringExtra("Class");
-            if (activityString.equals("ArchivedVertragListAdapter")) {
-                hideButton = true;
-            }
-        } else {
+        if (intent == null) {
             //TODO: catch if intent is null, e.g. close the activity
             return;
         }
+
+        vertrag = modifyVertragViewModel.loadVertragById(intent.getIntExtra("vertragRowId", 0));
+        kunde = modifyKundenViewModel.loadKundeById(vertrag.getIdKunde());
+        for (int i = 0; i < vertrag.getStuecklisteIds().size(); i++) {
+            int stuecklisteneintragId = vertrag.getStuecklisteIds().get(i);
+            Stuecklisteneintrag current = addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId);
+            try {
+                baumaschineContractAmount.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getAmount());
+            } catch (NullPointerException npe) {
+                npe.printStackTrace();
+                return;
+            }
+            baumaschineVertragDetailsList.add(modifyBaumaschineViewModel.getBaumaschineById(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId).getIdBaumaschine()));
+            //TODO somethings wrong with stuecklisteneintraege which are archived but shown like they are not
+            if (current.isArchived()) {
+                archivedStuecklisteneintragListFromVertrag.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId));
+                vertragDetailsListAdapter.setBaumaschineVertragDetailsList(archivedStuecklisteneintragListFromVertrag, baumaschineVertragDetailsList, baumaschineContractAmount);
+
+            } else {
+                stuecklisteneintragListFromVertrag.add(addStuecklisteneintragViewModel.stuecklisteneintragById(stuecklisteneintragId));
+
+
+                vertragDetailsListAdapter.setBaumaschineVertragDetailsList(stuecklisteneintragListFromVertrag, baumaschineVertragDetailsList, baumaschineContractAmount);
+            }
+
+
+        }
+        String activityString = intent.getStringExtra("Class");
+        if (activityString.equals("ArchivedVertragListAdapter")) {
+            hideButton = true;
+        }
+
         Log.d(TAG, "Vertrag Id: " + vertrag.getIdVertrag());
         vertragDetailsIdTextView.setText(String.valueOf(vertrag.getIdVertrag()));
         vertragDetailsKundeNameTextView.setText(kunde.getName());
@@ -222,61 +219,134 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         title.setColor(ContextCompat.getColor(this, R.color.baumaquip_main_color));
         description.setColor(ContextCompat.getColor(this, R.color.black));
         content.setColor(ContextCompat.getColor(this, R.color.black));
-        description.setTextSize(10);
-        content.setTextSize(10);
+        description.setTextSize(8);
+        content.setTextSize(8);
 
         // below line is used to draw text in our PDF file.
         // the first parameter is our text, second parameter
         // is position from start, third parameter is position from top
         // and then we are passing our variable of paint which is title.
         title.setTextSize(18);
-        canvas.drawText("MIETVERTRAG", mmToPostscript(90), mmToPostscript(50), title);
+        canvas.drawText("MIETVERTRAG", mmToPoints(90), mmToPoints(50), title);
         title.setTextSize(14);
 
         // block 1 = details costumer
-        int sb1 = 60;   // start block 1
-        int ds1 = 22;   // description start (distance from left border)
-        int vs1 = 60;   // value start (distance from left border)
-        int lineheight1 = 10;
-        int column1 = 80;
-        canvas.drawText("Angaben Mieter", mmToPostscript(ds1), mmToPostscript(sb1), title);
-        canvas.drawText("Name / Firma:",             mmToPostscript(ds1),        mmToPostscript(sb1+1*lineheight1), description);
-        canvas.drawText("Baumaquip",                 mmToPostscript(vs1),        mmToPostscript(sb1+1*lineheight1), content);      //TODO: value
-        canvas.drawText("Straße, Nr.:",              mmToPostscript(ds1),        mmToPostscript(sb1+2*lineheight1), description);
-        canvas.drawText("Fedor-Schnorr-Straße 7",    mmToPostscript(vs1),        mmToPostscript(sb1+2*lineheight1), content);      //TODO: value
-        canvas.drawText("PLZ, Ort",                  mmToPostscript(column1),    mmToPostscript(sb1+2*lineheight1), description);
-        canvas.drawText("08523 Plauen",              mmToPostscript(column1+vs1),mmToPostscript(sb1+2*lineheight1), content);      //TODO: value
-        canvas.drawText("Baustelle / Kostenstelle:", mmToPostscript(ds1),        mmToPostscript(sb1+3*lineheight1), description);
-        canvas.drawText("LoremIpsumLoremIpsum",      mmToPostscript(vs1),        mmToPostscript(sb1+3*lineheight1), content);      //TODO: value
-        canvas.drawText("Abholung von:",             mmToPostscript(column1),    mmToPostscript(sb1+3*lineheight1), description);
-        canvas.drawText("LoremIpsumLoremIpsum",      mmToPostscript(column1+vs1),mmToPostscript(sb1+3*lineheight1), content);      //TODO: value
+        int sb1 =   60;  // start block 1
+        int b1lh =   7;  // line height
+        int b1c1 =  20;  // description start (distance from left border)
+        int b1c2 =  60;  // value start (distance from left border)
+        int b1c3 = 105;
+        int b1c4 = 130;
+        canvas.drawText("Angaben Mieter", mmToPoints(b1c1), mmToPoints(sb1), title);
+        canvas.drawText("Name / Firma:", mmToPoints(b1c1), mmToPoints(sb1+1*b1lh), description);
+        canvas.drawText(kunde.getName(), mmToPoints(b1c2), mmToPoints(sb1+1*b1lh), content);
+        canvas.drawText("Straße, Nr.:", mmToPoints(b1c1), mmToPoints(sb1+2*b1lh), description);
+        canvas.drawText(kunde.getStreetName().concat(" ").concat(kunde.getStreetNumber()), mmToPoints(b1c2), mmToPoints(sb1+2*b1lh), content);
+        canvas.drawText("PLZ, Ort", mmToPoints(b1c3), mmToPoints(sb1+2*b1lh), description);
+        canvas.drawText(kunde.getZip().concat(" ").concat(kunde.getLocation()), mmToPoints(b1c4), mmToPoints(sb1+2*b1lh), content);
+        canvas.drawText("Baustelle / Kostenstelle:", mmToPoints(b1c1), mmToPoints(sb1+3*b1lh), description);
+        canvas.drawText(kunde.getConstructionSide(), mmToPoints(b1c2), mmToPoints(sb1+3*b1lh), content);        //TODO: Ist ConstructionSide eine Eigenschaft des Kunden oder des Vertrags?
+        canvas.drawText("Abholung von:", mmToPoints(b1c3), mmToPoints(sb1+3*b1lh), description);
+        canvas.drawText("LoremIpsumLoremIpsum", mmToPoints(b1c4), mmToPoints(sb1+3*b1lh), content);      //TODO: value
 
         // block 2 = details items
-        int sb2 = 93;   // start block 2
-        int ds2 = 22;   // description start (distance from left border)
-        int vs2 = 60;   // value start (distance from left border)
-        int lineheight = 10;
-        int column = 80;
-        canvas.drawText("Mietgegenstand", mmToPostscript(ds2), mmToPostscript(sb2), title);
+        int sb2  =  93;  // start block 2
+        int b2lh =   7;  // line height
+        int b2c1 =  20;  // description start (distance from left border)
+        int b2c2 =  b2c1 + 70;  // value start (distance from left border)
+        int b2c3 = b2c2 + 10;
+        int b2c4 = b2c3 + 20;
+        int b2c5 = b2c4 + 20;
+        int b2c6 = b2c5 + 30;
+        canvas.drawText("Mietgegenstand", mmToPoints(b2c1), mmToPoints(sb2), title);
+        //Table borders
+        for (int i = 0; i<11; i++) {
+            canvas.drawLine(mmToPoints(b2c1), mmToPoints(sb2 +2 +i*b2lh), mmToPoints(210 - b2c1), mmToPoints(sb2 +2 +i*b2lh), content);
+        }
+        canvas.drawLine(mmToPoints(b2c1), mmToPoints(sb2 +2), mmToPoints(b2c1), mmToPoints(sb2 +2 +10*b2lh), content);
+        canvas.drawLine(mmToPoints(b2c2), mmToPoints(sb2 +2), mmToPoints(b2c2), mmToPoints(sb2 +2 +10*b2lh), content);
+        canvas.drawLine(mmToPoints(b2c3), mmToPoints(sb2 +2), mmToPoints(b2c3), mmToPoints(sb2 +2 +10*b2lh), content);
+        canvas.drawLine(mmToPoints(b2c4), mmToPoints(sb2 +2), mmToPoints(b2c4), mmToPoints(sb2 +2 +10*b2lh), content);
+        canvas.drawLine(mmToPoints(b2c5), mmToPoints(sb2 +2), mmToPoints(b2c5), mmToPoints(sb2 +2 +10*b2lh), content);
+        canvas.drawLine(mmToPoints(b2c6), mmToPoints(sb2 +2), mmToPoints(b2c6), mmToPoints(sb2 +2 +10*b2lh), content);
+        canvas.drawLine(mmToPoints(210-b2c1), mmToPoints(sb2 +2), mmToPoints(210-b2c1), mmToPoints(sb2 +2 +10*b2lh), content);
+
+        //Table Header
+        canvas.drawText("Bezeichnung/Seriennummer", mmToPoints(b2c1+1), mmToPoints(sb2 +b2lh), content);
+        canvas.drawText("Menge", mmToPoints(b2c2+1), mmToPoints(sb2 +b2lh), content);
+        canvas.drawText("Betriebsstd", mmToPoints(b2c3+1), mmToPoints(sb2 +b2lh-2), content);
+        canvas.drawText("Übergabe", mmToPoints(b2c3+1), mmToPoints(sb2 +b2lh+1), content);
+        canvas.drawText("Betriebsstd", mmToPoints(b2c4+1), mmToPoints(sb2 +b2lh-2), content);
+        canvas.drawText("Rückgabe", mmToPoints(b2c4+1), mmToPoints(sb2 +b2lh+1), content);
+        canvas.drawText("Verschleiß", mmToPoints(b2c5+1), mmToPoints(sb2 +b2lh-2), content);
+        canvas.drawText("/ Dia", mmToPoints(b2c5+1), mmToPoints(sb2 +b2lh+1), content);
+        canvas.drawText("Versicherung", mmToPoints(b2c6+1), mmToPoints(sb2 +b2lh+1), content);
+        // for (int i = 2; i<11; i++) {
+        //     canvas.drawText("    ja / nein", mmToPoints(b2c6+1), mmToPoints(sb2 +i*b2lh), content);
+        // }
+
+        //Table data
+        for (int i = 0; i < stuecklisteneintragListFromVertrag.size(); i++){
+            String Maschinenname = modifyBaumaschineViewModel.getBaumaschineById(stuecklisteneintragListFromVertrag.get(i).getIdBaumaschine()).getMachineName(); //TODO: einfacher?
+            canvas.drawText(Maschinenname, mmToPoints(b2c1+1), mmToPoints(sb2 +(i+2)*b2lh), content);
+            canvas.drawText(stuecklisteneintragListFromVertrag.get(i).getAmount().toString(), mmToPoints(b2c2+1), mmToPoints(sb2 +(i+2)*b2lh), content);
+            //canvas.drawText(stuecklisteneintragListFromVertrag.get(i).getOperatingHours_begin().toString(), mmToPoints(b2c3+1), mmToPoints(sb2 +(i+2)*b2lh), content); //TODO: NullPointerException wenn nicht vorhanden -> per hand?
+            String insurance = (stuecklisteneintragListFromVertrag.get(i).getInsurance()) ? "ja" : "nein";
+            canvas.drawText(insurance, mmToPoints(b2c6+1), mmToPoints(sb2 +(i+2)*b2lh), content);
+        }
+
+
+        //block 3
+        int sb3  = 175;  // start block 3
+        int b3lh =   7;  // line height
+        int b3c1 =  20;  // description start (distance from left border)
+        canvas.drawText("folgende Kosten werden in Rechnung gestellt:", mmToPoints(b3c1), mmToPoints(sb3), description);
+        canvas.drawText("☐ Mietpreis   ☐ Reinigung bei Rückgabe   ☐ Betankung bei Rückgabe   ☐ Transport", mmToPoints(b3c1), mmToPoints(sb3+b3lh), description);
+        canvas.drawText("Es wird eine unverzinsliche Kaution in Höhe von _______________ vereinbart.", mmToPoints(b3c1), mmToPoints(sb3+2*b3lh), description);
 
 
 
-        canvas.drawText("Besondere Vereinbarung", mmToPostscript(22), mmToPostscript(210), title);
-        canvas.drawText("Übergabe (siehe Übergabeprotokoll)", mmToPostscript(22), mmToPostscript(235), title);
-        canvas.drawText("Rückgabe (siehe Übergabeprotokoll)", mmToPostscript(22), mmToPostscript(252), title);
-        canvas.drawText("A portal for IT professionals.", 209, 100, title);
-        canvas.drawText("Geeks for Geeks", 209, 80, title);
 
-        // similarly we are creating another text and in this
-        // we are aligning this text to center of our PDF file.
-        title.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-        title.setColor(ContextCompat.getColor(this, R.color.purple_200));
-        title.setTextSize(15);
 
-        // below line is used for setting
-        // our text to center of PDF.
-        title.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("This is sample document which we have created.", 396, 560, title);
+
+
+        // block 5 = Special agreements
+        int sb5  = 200;  // start block 3
+        int b5lh =   7;  // line height
+        int b5c1 =  20;  // description start (distance from left border)
+        canvas.drawText("Besondere Vereinbarung", mmToPoints(b5c1), mmToPoints(sb5), title);
+        canvas.drawText("Eine Einweisung zur Maschine hat der Abholer erhalten. Ihm wurde angeboten die Bedienungsanleitung mitzunehmen.", mmToPoints(b5c1), mmToPoints(sb5+b5lh), description);
+        canvas.drawLine(mmToPoints(b5c1), mmToPoints(sb5+2*b5lh), mmToPoints(175), mmToPoints(sb5+2*b5lh), content);
+
+        // block 6 = handover
+        int sb6  = 235;  // start block 6
+        int b6lh =   5;  // line height
+        int b6c1 =  20;  // description start (distance from left border)
+        canvas.drawText("Übergabe (siehe Übergabeprotokoll)", mmToPoints(b6c1), mmToPoints(sb6), title);
+        canvas.drawLine(mmToPoints( 35), mmToPoints(sb6+2*b6lh), mmToPoints( 75), mmToPoints(sb6+2*b6lh), content);
+        canvas.drawText("Ort, Datum", mmToPoints( 35), mmToPoints(sb6+3*b6lh), content);
+        canvas.drawLine(mmToPoints( 85), mmToPoints(sb6+2*b6lh), mmToPoints(125), mmToPoints(sb6+2*b6lh), content);
+        canvas.drawText("Unterschrift Vermieter", mmToPoints( 85), mmToPoints(sb6+3*b6lh), content);
+        canvas.drawLine(mmToPoints(135), mmToPoints(sb6+2*b6lh), mmToPoints(175), mmToPoints(sb6+2*b6lh), content);
+        canvas.drawText("Unterschrift Mieter", mmToPoints(135), mmToPoints(sb6+3*b6lh), content);
+
+        // block 7 = return
+        int sb7  = 256;  // start block 7
+        int b7lh =   5;  // line height
+        int b7c1 =  20;  // description start (distance from left border)
+        canvas.drawText("Rückgabe (siehe Übergabeprotokoll)", mmToPoints(b7c1), mmToPoints(sb7), title);
+        canvas.drawLine(mmToPoints( 35), mmToPoints(sb7+2*b6lh), mmToPoints( 75), mmToPoints(sb7+2*b7lh), content);
+        canvas.drawText("Ort, Datum", mmToPoints( 35), mmToPoints(sb7+3*b7lh), content);
+        canvas.drawLine(mmToPoints( 85), mmToPoints(sb7+2*b7lh), mmToPoints(125), mmToPoints(sb7+2*b7lh), content);
+        canvas.drawText("Unterschrift Vermieter", mmToPoints( 85), mmToPoints(sb7+3*b7lh), content);
+        canvas.drawLine(mmToPoints(135), mmToPoints(sb7+2*b7lh), mmToPoints(175), mmToPoints(sb7+2*b7lh), content);
+        canvas.drawText("Unterschrift Mieter", mmToPoints(135), mmToPoints(sb7+3*b7lh), content);
+
+        // borders  TODO: remove this block
+        canvas.drawLine(mmToPoints(0), mmToPoints(42), mmToPoints(210), mmToPoints(42), title);
+        canvas.drawText("HEADER", mmToPoints(22), mmToPoints(40), title);
+        canvas.drawLine(mmToPoints(0), mmToPoints(271), mmToPoints(210), mmToPoints(271), title);
+        canvas.drawText("FOOTER", mmToPoints(22), mmToPoints(280), title);
 
         // after adding all attributes to our
         // PDF file we will be finishing our page.
@@ -285,8 +355,10 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         // below line is used to set the name of our PDF file and its path.
         File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)  + "/contracts");
         if (!dir.exists())
-            if(!dir.mkdir())
+            if(!dir.mkdir()) {
+                Toast.makeText(VertragDetailsActivity.this, "Path not found - PDF file NOT generated.", Toast.LENGTH_SHORT).show();
                 return; //TODO: Pfad konnte nicht erstellt werden
+            }
         File file = new File(dir, "contract" + System.currentTimeMillis() / 1000L + ".pdf");
         if (!file.exists()) { //sollte nicht mehr vorkommen, da contract mit Zeitstempel
             try {
@@ -305,7 +377,8 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
             e.printStackTrace();
             Toast.makeText(VertragDetailsActivity.this, "PDF file NOT generated.", Toast.LENGTH_SHORT).show();
         }
-        // after storing our pdf to that location we are closing our PDF file.
+        // after storing our pdf to that
+        // location we are closing our PDF file.
         pdfDocument.close();
     }
 
@@ -333,16 +406,16 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
                 boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                 if (writeStorage && readStorage) {
-                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission 'writeExternalStorage' Granted.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission 'writeExternalStorage' Denined.", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         }
     }
 
-    private int mmToPostscript(int mm){
+    private int mmToPoints(int mm){
         BigDecimal mmb = new BigDecimal(mm);
         return mmb.divide(new BigDecimal("25.4"), 6, RoundingMode.HALF_UP)
                     .multiply(new BigDecimal(72))
