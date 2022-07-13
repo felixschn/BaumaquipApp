@@ -1,6 +1,8 @@
 package com.example.rentalApplication.ui.Vertraege;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -24,6 +26,9 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
     private Vertrag restoreVertrag;
     private Stuecklisteneintrag stuecklisteneintrag;
 
+    private TextView emptyRecyclerView;
+    public ArchivedVertragListAdapter archivedVertragListAdapter;
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -32,7 +37,8 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final ArchivedVertragListAdapter archivedVertragListAdapter = new ArchivedVertragListAdapter(this, this);
+        emptyRecyclerView = findViewById(R.id.emptyArchivedVertraegeRecyclerviewTextView);
+        archivedVertragListAdapter = new ArchivedVertragListAdapter(this, this);
         recyclerView.setAdapter(archivedVertragListAdapter);
 
         vertragViewModel = new ViewModelProvider(this).get(VertragViewModel.class);
@@ -40,6 +46,7 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
             @Override
             public void onChanged(List<Vertrag> vertrags) {
                 archivedVertragListAdapter.setVertrag(vertrags);
+                recyclerViewVisibilityArchived();
             }
         });
 
@@ -57,6 +64,17 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
         restoreVertrag = modifyVertragViewModel.loadVertragById(id);
         restoreVertrag.setArchived(false);
         modifyVertragViewModel.update(restoreVertrag);
+    }
+
+    public void recyclerViewVisibilityArchived() {
+        if (archivedVertragListAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerView.setVisibility(View.GONE);
+
+        }
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.example.rentalApplication.ui.Baumaschine;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +29,8 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private Baumaschine restoreBaumaschine;
+    private ArchivedBaumaschineListAdapter archivedBaumaschineListAdapter;
+    private TextView emptyRecyclerView;
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -35,13 +40,21 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        emptyRecyclerView = findViewById(R.id.emptyArchivedBaumaschinenRecyclerviewTextView);
         //creating new Adapter for the recyclerview and within this adapter send an instance of this activity, that the adapter can call this activities delete method
-        final ArchivedBaumaschineListAdapter archivedBaumaschineListAdapter = new ArchivedBaumaschineListAdapter(this, this);
+        archivedBaumaschineListAdapter = new ArchivedBaumaschineListAdapter(this, this);
         recyclerView.setAdapter(archivedBaumaschineListAdapter);
 
         baumaschinenViewModel = new ViewModelProvider(this).get(BaumaschinenViewModel.class);
-        baumaschinenViewModel.getAllArchivedBaumaschine().observe(this, baumaschines -> archivedBaumaschineListAdapter.setBaumaschinen(baumaschines));
+        baumaschinenViewModel.getAllArchivedBaumaschine().observe(this, new Observer<List<Baumaschine>>() {
+            @Override
+            public void onChanged(List<Baumaschine> baumaschines) {
+                archivedBaumaschineListAdapter.setBaumaschinen(baumaschines);
+                recyclerViewVisibility();
+            }
+        });
     }
+
 
     public void deleteBaumaschine(Baumaschine baumaschine) {
         Boolean isArchived = true;
@@ -62,6 +75,17 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
         restoreBaumaschine.setArchived(false);
         modifyBaumaschineViewModel.update(restoreBaumaschine);
         finish();
+    }
+
+    public void recyclerViewVisibility() {
+        if (archivedBaumaschineListAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerView.setVisibility(View.GONE);
+
+        }
     }
 
     @Override

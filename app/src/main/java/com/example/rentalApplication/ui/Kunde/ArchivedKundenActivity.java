@@ -1,6 +1,8 @@
 package com.example.rentalApplication.ui.Kunde;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,6 +26,8 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
     private ModifyKundenViewModel modifyKundenViewModel;
     private VertragViewModel vertragViewModel;
     private Kunde restoreKunde;
+    private TextView emptyRecyclerView;
+    private ArchivedKundenListAdapter archivedKundenListAdapter;
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +37,9 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final ArchivedKundenListAdapter archivedKundenListAdapter = new ArchivedKundenListAdapter(this, this);
+        emptyRecyclerView = findViewById(R.id.emptyArchivedKundenRecyclerviewTextView);
+
+        archivedKundenListAdapter = new ArchivedKundenListAdapter(this, this);
         recyclerView.setAdapter(archivedKundenListAdapter);
 
         kundenViewModel = new ViewModelProvider(this).get(KundenViewModel.class);
@@ -42,6 +48,7 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
             @Override
             public void onChanged(List<Kunde> kundes) {
                 archivedKundenListAdapter.setKunden(kundes);
+                recyclerViewVisibility();
             }
 
         });
@@ -66,6 +73,17 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
         modifyKundenViewModel.update(restoreKunde);
         finish();
 
+    }
+
+    public void recyclerViewVisibility() {
+        if (archivedKundenListAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyRecyclerView.setVisibility(View.GONE);
+
+        }
     }
 
     @Override

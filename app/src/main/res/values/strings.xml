@@ -20,6 +20,7 @@
     <string name="degree_of_wear">degree of wear</string>
     <string name="not_removable">machine not removable due to dependencies</string>
     <string name="empty_baumaschine_spinner">please select machine</string>
+    <string name="emptyArchivedBaumaschinenRecyclerViewRecyclerView">No archived machines available!</string>
 
 
     <!--Kunden Strings-->
@@ -44,6 +45,8 @@
     <string name="email">email: </string>
     <string name="kunde">customer:</string>
     <string name="empty_kunde_spinner">please select customer</string>
+    <string name="emptyArchivedKundenRecyclerViewRecyclerView">No archived customers available!</string>
+
 
     <!--Vertrag Strings-->
     <string name="vertraege">Contracts</string>
@@ -56,6 +59,7 @@
     <string name="endBeforeBegin">end date cannot be before start date</string>
     <string name="startBefore">start date cannot be before today\'s date</string>
     <string name="vertragId">contract id:</string>
+    <string name="emptyArchivedVertraegeRecyclerViewRecyclerView">No archived contracts available</string>
 
     <!--Stuecklisteneintrag Strings-->
     <string name="removeStuecklisteneintrag">last machine is not removable, remove contract instead</string>
@@ -71,7 +75,7 @@
     <string name="cancelDialog">Cancel</string>
 
     <!--AddVertragStrings-->
-    <string name="emptyRecyclerView">No machine selected</string>
+    <string name="emptyRecyclerView">No machine selected!</string>
     <string name="announceRecyclerView"><b>selected machines</b></string>
     <string name="insurance">insured</string>
     <string name="startDate">start date:</string>
@@ -87,6 +91,8 @@
     <string name="emptyContractRecyclerView">No contract available!</string>
     <string name="emptyKundenRecyclerViewRecyclerView">No customer available!</string>
     <string name="emptyVertraegeRecyclerViewRecyclerView">No contracts available!</string>
+    <string name="pdf">PDF</string>
+
 
 
 </resources>

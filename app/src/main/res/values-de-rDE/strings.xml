@@ -21,6 +21,7 @@
     <string name="degree_of_wear">Zustand</string>
     <string name="not_removable">Aufgrund von Abhängigkeiten, kann die Maschine nicht gelöscht werden</string>
     <string name="empty_baumaschine_spinner">Bitte Baumaschine auswählen</string>
+    <string name="emptyArchivedBaumaschinenRecyclerViewRecyclerView">Keine archivierten Baumaschinen verfügbar!</string>
 
 
     <!--Kunden Strings-->
@@ -45,18 +46,20 @@
     <string name="email">Email: </string>
     <string name="kunde">Kunde:</string>
     <string name="empty_kunde_spinner">Bitte Kunde auswählen!</string>
+    <string name="emptyArchivedKundenRecyclerViewRecyclerView">Keine archivierten Kunden verfügbar!</string>
 
     <!--Vertrag Strings-->
     <string name="vertraege">Verträge</string>
     <string name="vertraegeAdd">Vertrag hinzufügen</string>
-    <string name="vertraegeArchived">archived contracts</string>
+    <string name="vertraegeArchived">archivierte Verträge</string>
     <string name="vertragDetailsTotalPrice">Gesamtpreis:</string>
     <string name="vertragDetailsDiscount">Rabatt:</string>
-    <string name="vertragDetailsStart">Startdatum des Vertrags</string>
-    <string name="vertragDetailsEnd">Ablaufdatum des Vertrags</string>
+    <string name="vertragDetailsStart">Startdatum des Vertrags:</string>
+    <string name="vertragDetailsEnd">Ablaufdatum des Vertrags:</string>
     <string name="endBeforeBegin">Enddatum kann nicht vor Startdatum liegen</string>
     <string name="startBefore">Startdatum kann nicht vor dem heutigen Datum liegen</string>
     <string name="vertragId">Vertrag-ID:</string>
+    <string name="emptyArchivedVertraegeRecyclerViewRecyclerView">Keine archivierten Verträge verfügbar!</string>
 
     <!--Stuecklisteneintrag Strings-->
     <string name="removeStuecklisteneintrag">Letzte Maschine nicht entfernbar, kompletten Vertrag löschen!</string>
@@ -72,7 +75,7 @@
     <string name="cancelDialog">Abbrechen</string>
 
     <!--AddVertragStrings-->
-    <string name="emptyRecyclerView">Keine Baumaschine ausgewählt</string>
+    <string name="emptyRecyclerView">Keine Baumaschine ausgewählt!</string>
     <string name="announceRecyclerView">Ausgewählte Baumaschinen</string>
     <string name="insurance">versichert</string>
     <string name="startDate">Startdatum:</string>
@@ -87,6 +90,8 @@
     <string name="emptyKundeRecyclerView">Kein Kunde verfügbar!</string>
     <string name="emptyContractRecyclerView">Kein Vertrag verfügbar!</string>
     <string name="emptyKundenRecyclerViewRecyclerView">Keine Kunden verfügbar!</string>
-    <string name="emptyVertraegeRecyclerViewRecyclerView">No contracts available!</string>
+    <string name="emptyVertraegeRecyclerViewRecyclerView">Keine Verträge verfügbar!</string>
+    <string name="pdf">PDF</string>
+
 
 </resources>

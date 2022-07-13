@@ -57,16 +57,24 @@
             app:layout_constraintStart_toEndOf="@+id/vertragDetailsKunde"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/vertragDetailsPrint"
-            style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/ic_baseline_print_24"
+            android:layout_marginEnd="60dp"
+            android:clickable="true"
+            android:enabled="true"
+            android:text="@string/pdf"
+            app:backgroundTint="@color/baumaquip_main_color"
+            app:elevation="0dp"
+            app:fabSize="normal"
+            app:icon="@drawable/ic_baseline_insert_drive_file_24"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/vertragDetailsKundeId"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.666" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,8 +100,8 @@
             android:id="@+id/vertragDetailsStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="224dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="200dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -112,8 +120,8 @@
             android:id="@+id/vertragDetailsEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginStart="224dp"
+            android:layout_marginTop="68dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

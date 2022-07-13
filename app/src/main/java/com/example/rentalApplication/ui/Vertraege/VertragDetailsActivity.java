@@ -35,6 +35,8 @@ import com.example.rentalApplication.models.Vertrag;
 import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
 import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,8 +62,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private List<Stuecklisteneintrag> stuecklisteneintragListFromVertrag = new ArrayList<>();
     private List<Stuecklisteneintrag> archivedStuecklisteneintragListFromVertrag = new ArrayList<>();
-
-    ImageButton generatePDFbtn;
+    private ExtendedFloatingActionButton generatePDFbtn;
 
     // declaring width and height for our PDF file.
     private int pageHeight = mmToPoints(297);

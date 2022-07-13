@@ -45,6 +45,8 @@ import com.example.rentalApplication.ui.Vertraege.Spinner.CustomBaumaschinenAdap
 import com.example.rentalApplication.ui.Vertraege.Spinner.CustomKundeAdapter;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
@@ -65,7 +67,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private LocalDate begin, end;
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
-    private ImageButton increaseButton, decreaseButton, addBaumaschinenListButton;
+    private FloatingActionButton increaseButton, decreaseButton, addBaumaschinenListButton;
     private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView, sumOfRent;
     int amountInt, maxAmount;
     private CustomBaumaschinenAdapter customBaumaschinenAdapter;
