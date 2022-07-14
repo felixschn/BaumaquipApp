@@ -423,11 +423,11 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                     addVertragViewModel.insert(new Vertrag(stuecklisteIds, selectedKundeFromSpinner.getIdKunde(), begin, end, sumWithoutDiscount, discountFromSum));
                     finish();
                 } else {
-                    Toast.makeText(this, "Bitte Baumaschine(n) auswählen!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.select_machines, Toast.LENGTH_SHORT).show();
                 }
 
             } else {
-                Toast.makeText(this, "Bitte Start und Enddatum wählen!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.select_date, Toast.LENGTH_SHORT).show();
             }
 
         }

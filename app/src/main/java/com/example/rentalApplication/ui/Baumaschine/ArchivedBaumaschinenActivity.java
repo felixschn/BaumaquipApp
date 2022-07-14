@@ -62,7 +62,7 @@ public class ArchivedBaumaschinenActivity extends AppCompatActivity implements B
         List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag(isArchived);
         for (int i = 0; i < getAllStuecklisteneintrag.size(); i++) {
             if (baumaschine.getIdBaumaschine() == getAllStuecklisteneintrag.get(i).getIdBaumaschine()) {
-                Toast.makeText(this, R.string.not_removable, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.not_removable_machine, Toast.LENGTH_SHORT).show();
                 return;
             }
         }

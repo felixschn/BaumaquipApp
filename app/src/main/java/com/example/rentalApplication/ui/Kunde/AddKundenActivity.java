@@ -90,7 +90,7 @@ public class AddKundenActivity extends AppCompatActivity {
 
         addKundenViewModel = new ViewModelProvider(this).get(AddKundenViewModel.class);
         if (kundenName.trim().isEmpty() || kundenTelefonNumber.trim().isEmpty() || kundenEmail.trim().isEmpty() || kundenStreetName.trim().isEmpty() || kundenStreetNumber.trim().isEmpty() || kundenZip.trim().isEmpty() || kundenLocation.trim().isEmpty() || kundenConstructionSide.trim().isEmpty() || kundenContactPerson.trim().isEmpty()) {
-            Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             return;
         }
         addKundenViewModel.insert(new Kunde(kundenName, kundenTelefonNumber, kundenEmail, kundenStreetName, kundenStreetNumber, kundenZip, kundenLocation, kundenConstructionSide, kundenContactPerson));
@@ -110,7 +110,7 @@ public class AddKundenActivity extends AppCompatActivity {
 
         //make sure, that every field is filled
         if (kundenName.trim().isEmpty() || kundenTelefonNumber.trim().isEmpty() || kundenEmail.trim().isEmpty() || kundenStreetName.trim().isEmpty() || kundenStreetNumber.trim().isEmpty() || kundenZip.trim().isEmpty() || kundenLocation.trim().isEmpty() || kundenConstructionSide.trim().isEmpty() || kundenContactPerson.trim().isEmpty()) {
-            Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             return;
         }
         Kunde kunde = modifyKundenViewModel.loadKundeById(intent.getExtras().getInt("kundeRowId"));

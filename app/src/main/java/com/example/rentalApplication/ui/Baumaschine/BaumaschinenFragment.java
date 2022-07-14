@@ -128,7 +128,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag(false);
         for (int i = 0; i < getAllStuecklisteneintrag.size(); i++) {
             if (id == getAllStuecklisteneintrag.get(i).getIdBaumaschine()) {
-                Toast.makeText(getActivity(), R.string.not_removable, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.not_removable_customer, Toast.LENGTH_LONG).show();
                 return;
             }
         }

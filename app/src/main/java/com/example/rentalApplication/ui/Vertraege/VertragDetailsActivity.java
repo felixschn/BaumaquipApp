@@ -302,7 +302,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         int b3lh =   7;  // line height
         int b3c1 =  20;  // description start (distance from left border)
         canvas.drawText("folgende Kosten werden in Rechnung gestellt:", mmToPoints(b3c1), mmToPoints(sb3), description);
-        canvas.drawText("☐ Mietpreis   ☐ Reinigung bei Rückgabe   ☐ Betankung bei Rückgabe   ☐ Transport", mmToPoints(b3c1), mmToPoints(sb3+b3lh), description);
+        canvas.drawText("☐ Mietpreis      ☐ Reinigung bei Rückgabe      ☐ Betankung bei Rückgabe      ☐ Transport", mmToPoints(b3c1), mmToPoints(sb3+b3lh), description);
         canvas.drawText("Es wird eine unverzinsliche Kaution in Höhe von _______________ vereinbart.", mmToPoints(b3c1), mmToPoints(sb3+2*b3lh), description);
 
 
@@ -343,7 +343,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         canvas.drawLine(mmToPoints(135), mmToPoints(sb7+2*b7lh), mmToPoints(175), mmToPoints(sb7+2*b7lh), content);
         canvas.drawText("Unterschrift Mieter", mmToPoints(135), mmToPoints(sb7+3*b7lh), content);
 
-        // borders  TODO: remove this block
+        // borders  TODO: remove this block in final version
         canvas.drawLine(mmToPoints(0), mmToPoints(42), mmToPoints(210), mmToPoints(42), title);
         canvas.drawText("HEADER", mmToPoints(22), mmToPoints(40), title);
         canvas.drawLine(mmToPoints(0), mmToPoints(271), mmToPoints(210), mmToPoints(271), title);
@@ -361,7 +361,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
                 return; //TODO: Pfad konnte nicht erstellt werden
             }
         File file = new File(dir, "contract" + System.currentTimeMillis() / 1000L + ".pdf");
-        if (!file.exists()) { //sollte nicht mehr vorkommen, da contract mit Zeitstempel
+        if (!file.exists()) { //TODO: sollte nicht mehr vorkommen, da contract mit Zeitstempel
             try {
                 file.createNewFile();
                 Log.e(TAG, "savePdfFileToStorage: " + "file created" + file.getName() + "path: " + file.getPath());

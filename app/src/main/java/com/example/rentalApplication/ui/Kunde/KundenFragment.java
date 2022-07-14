@@ -122,7 +122,7 @@ public class KundenFragment extends Fragment implements KundenClickListener {
         List<Vertrag> getAllExistingVertrag = vertragViewModel.getAllExistingVertrag();
         for(int i = 0; i < getAllExistingVertrag.size(); i++){
             if(id == getAllExistingVertrag.get(i).getIdKunde()){
-                Toast.makeText(getActivity(), R.string.not_removable, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.not_removable_customer, Toast.LENGTH_LONG).show();
                 return;
 
             }

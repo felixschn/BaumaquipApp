@@ -96,7 +96,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         }
         if (maschineAlreadyListed) {
             Log.d(TAG, "Maschine bereits vorhanden");
-            Toast.makeText(context.getApplicationContext(), "Maschine bereits in Liste vorhanden!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(), R.string.machine_already_listed, Toast.LENGTH_SHORT).show();
             return;
         }
 

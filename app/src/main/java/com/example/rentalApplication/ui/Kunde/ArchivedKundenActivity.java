@@ -59,7 +59,7 @@ public class ArchivedKundenActivity extends AppCompatActivity implements KundenC
         List<Vertrag> getAllExistingVertrag = vertragViewModel.getAllExistingVertrag();
         for (int i = 0; i < getAllExistingVertrag.size(); i++) {
             if (kunde.getIdKunde() == getAllExistingVertrag.get(i).getIdKunde()) {
-                Toast.makeText(this, R.string.not_removable, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.not_removable_customer, Toast.LENGTH_LONG).show();
                 return;
             }
             kundenViewModel.delete(kunde);

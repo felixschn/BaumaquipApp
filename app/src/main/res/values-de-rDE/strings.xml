@@ -19,9 +19,14 @@
     <string name="operating_hours">Betriebsstunden</string>
     <string name="amount_of_gas">Tank-Füllstand</string>
     <string name="degree_of_wear">Zustand</string>
-    <string name="not_removable">Aufgrund von Abhängigkeiten, kann die Maschine nicht gelöscht werden</string>
+    <string name="not_removable_machine">Aufgrund von Abhängigkeiten, kann die Maschine nicht gelöscht werden</string>
+    <string name="not_removable_customer">Aufgrund von Abhängigkeiten, kann der Kunde nicht gelöscht werden</string>
     <string name="empty_baumaschine_spinner">Bitte Baumaschine auswählen</string>
     <string name="emptyArchivedBaumaschinenRecyclerViewRecyclerView">Keine archivierten Baumaschinen verfügbar!</string>
+    <string name="fill_all_fields">Bitte alle Felder ausfüllen!</string>
+    <string name="machine_already_listed">Maschine bereits in Liste vorhanden!</string>
+    <string name="select_machines">Bitte Baumaschine(n) auswählen!</string>
+    <string name="select_date">Bitte Start und Enddatum wählen!</string>
 
 
     <!--Kunden Strings-->

@@ -18,10 +18,14 @@
     <string name="operating_hours">operating hours</string>
     <string name="amount_of_gas">amount of gas</string>
     <string name="degree_of_wear">degree of wear</string>
-    <string name="not_removable">machine not removable due to dependencies</string>
+    <string name="not_removable_machine">machine not removable due to dependencies</string>
+    <string name="not_removable_customer">customer not removable due to dependencies</string>
     <string name="empty_baumaschine_spinner">please select machine</string>
     <string name="emptyArchivedBaumaschinenRecyclerViewRecyclerView">No archived machines available!</string>
-
+    <string name="fill_all_fields">Please fill in all fields</string>
+    <string name="machine_already_listed">Machine already present in list!</string>
+    <string name="select_machines">Please select machine(s)!</string>
+    <string name="select_date">Please select start and end date!</string>
 
     <!--Kunden Strings-->
     <string name="kunden">Customers</string>

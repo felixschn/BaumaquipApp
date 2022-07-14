@@ -54,6 +54,8 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         addBaumaschinenDegreeOfWear.setEnabled(false);
         addBaumaschinenAmountOfGas.setEnabled(false);
 
+        addBaumaschinenButton.setText(R.string.button_add);
+
         addBaumaschinenAnzahlEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -116,6 +118,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                 if (loadBaumaschineById.getDegreeOfWear() != null) {
                     addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
                 }
+                addBaumaschinenButton.setText(R.string.button_save);
 
                 //when there is only one machine, disable functions to alter amount and other params
                 if (editableBaumaschineAmount == 1) {
@@ -165,7 +168,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
 
         addBaumaschinenViewModel = new ViewModelProvider(this).get(AddBaumaschinenViewModel.class);
         if (baumaschinenName.trim().isEmpty() || baumaschinenAnzahl.trim().isEmpty() || baumaschinenPricePerDay.trim().isEmpty() || baumaschinenPricePerWeekend.trim().isEmpty() || baumaschinenPricePerMonth.trim().isEmpty()) {
-            Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -195,7 +198,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
         String baumaschinenAmountOfGas = addBaumaschinenAmountOfGas.getText().toString();
 
         if (baumaschinenName.trim().isEmpty() || baumaschinenAnzahl.trim().isEmpty() || baumaschinenPricePerDay.trim().isEmpty() || baumaschinenPricePerWeekend.trim().isEmpty() || baumaschinenPricePerMonth.trim().isEmpty()) {
-            Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             return;
         }
         Integer anzahl = Integer.parseInt(baumaschinenAnzahl);
