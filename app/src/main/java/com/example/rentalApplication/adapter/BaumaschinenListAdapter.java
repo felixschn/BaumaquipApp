@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
+import com.example.rentalApplication.ui.Baumaschine.BaumaschineRentedAmountChangedListener;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenClickListener;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
+
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -50,10 +53,12 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(BaumaschinenViewHolder holder, int position) {
+
         if (baumaschineList != null) {
             Baumaschine current = baumaschineList.get(position);
             holder.baumaschineName.setText(current.getMachineName());
             holder.baumaschineAnzahl.setText(current.getAmount().toString());
+            holder.currentlyRented.setText(baumaschinenFragment.getAmountOfCurrentlyRentedMachine(current.getIdBaumaschine()).toString());
             holder.baumaschinePreisPerDay.setText(current.getPricePerDay().toString());
             holder.baumaschinePreisPerWeekend.setText(current.getPricePerWeekend().toString());
             holder.baumaschinePreisPerMonth.setText(current.getPricePerMonth().toString());
@@ -100,9 +105,12 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
     }
 
 
+
+
     class BaumaschinenViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView baumaschineName;
         private final TextView baumaschineAnzahl;
+        private final TextView currentlyRented;
         private final TextView baumaschinePreisPerDay;
         private final TextView baumaschinePreisPerWeekend;
         private final TextView baumaschinePreisPerMonth;
@@ -119,6 +127,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             listenerRef = new WeakReference<>(baumaschinenClickListener);
             baumaschineName = itemView.findViewById(R.id.baumaschineName);
             baumaschineAnzahl = itemView.findViewById(R.id.baumaschineAnzahl);
+            currentlyRented = itemView.findViewById(R.id.currentlyRent);
             baumaschinePreisPerDay = itemView.findViewById(R.id.baumaschinePreisPerDay);
             baumaschinePreisPerWeekend = itemView.findViewById(R.id.baumaschinePreisPerWeekend);
             baumaschinePreisPerMonth = itemView.findViewById(R.id.baumaschinePreisPerMonth);

@@ -27,6 +27,7 @@
     <string name="machine_already_listed">Maschine bereits in Liste vorhanden!</string>
     <string name="select_machines">Bitte Baumaschine(n) auswählen!</string>
     <string name="select_date">Bitte Start und Enddatum wählen!</string>
+    <string name="currentlyRent">aktuell verliehen:</string>
 
 
     <!--Kunden Strings-->

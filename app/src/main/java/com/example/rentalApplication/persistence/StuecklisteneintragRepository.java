@@ -8,6 +8,7 @@ import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AsyncTaskStuecklisteneintragIdResponse;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -61,6 +62,18 @@ public class StuecklisteneintragRepository {
         return null;
     }
 
+    public Integer getAmountOfCurrentlyRentedMachine(int id) {
+        Integer baumaschineId = id;
+        List<Integer> currentList = new ArrayList<>();
+        try {
+            //asynctask returns a list of Integers; sum up all values of the list
+            return new AmountofCurrentlyRentedAsyncTask(stuecklisteneintragDao).execute(baumaschineId).get().stream().mapToInt(Integer::intValue).sum();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id) {
         try {
             return new StuecklisteneintragForDateAsyncTask(stuecklisteneintragDao, start, end, id).execute().get();
@@ -74,8 +87,7 @@ public class StuecklisteneintragRepository {
         try {
             if (!isArchived) {
                 return new AllStuecklisteneintragAsyncTask(stuecklisteneintragDao, isArchived).execute().get();
-            }
-            else{
+            } else {
                 return new AllStuecklisteneintragAsyncTask(stuecklisteneintragDao, isArchived).execute().get();
             }
         } catch (ExecutionException | InterruptedException e) {
@@ -116,6 +128,19 @@ public class StuecklisteneintragRepository {
         @Override
         protected Stuecklisteneintrag doInBackground(Integer... integers) {
             return mAsyncTaskDao.getStuecklisteneintragById(integers[0]);
+        }
+    }
+
+    private static class AmountofCurrentlyRentedAsyncTask extends AsyncTask<Integer, Void, List<Integer>> {
+        private StuecklisteneintragDao mAsyncTaskDao;
+
+        public AmountofCurrentlyRentedAsyncTask(StuecklisteneintragDao dao) {
+            this.mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Integer> doInBackground(Integer... integers) {
+            return mAsyncTaskDao.getAmountOfCurrentlyRentedMachines(integers[0]);
         }
     }
 

@@ -42,7 +42,7 @@
                 android:id="@+id/textBaumaschinenAnzahl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="650dp"
+                android:layout_marginStart="350dp"
                 android:gravity="center"
                 android:text="@string/amount"
                 app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayout"
@@ -53,13 +53,33 @@
                 android:id="@+id/baumaschineAnzahl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="750dp"
+                android:layout_marginStart="500dp"
                 android:layout_weight="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@sample/baumaschinenAnzahl" />
+
+
+            <TextView
+                android:id="@+id/textCurrentlyRent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="650dp"
+                android:text="@string/currentlyRent"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/currentlyRent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="800dp"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <include layout="@layout/modify_delete_buttons" />
 
@@ -171,7 +191,7 @@
                     android:id="@+id/baumschineAmountOfGas"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="550dp"
+                    android:layout_marginStart="500dp"
                     android:layout_marginTop="@dimen/space_between_text"
                     android:text="200"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"

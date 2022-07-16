@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.persistence.StuecklisteneintragRepository;
@@ -43,13 +42,16 @@ public class AddStuecklisteneintragViewModel extends AndroidViewModel {
         return stuecklisteneintragRepository.getStuecklisteneintragById(id);
     }
 
-
     public List<Stuecklisteneintrag> getStuecklisteneintragForDate(LocalDate start, LocalDate end, int id) {
         return stuecklisteneintragRepository.getStuecklisteneintragForDate(start, end, id);
     }
 
     public List<Stuecklisteneintrag> getAllStuecklisteneintrag(Boolean isArchived) {
         return stuecklisteneintragRepository.getAllStuecklisteneintag(isArchived);
+    }
+
+    public Integer AmountOfCurrentlyRentedMachine(int id){
+        return stuecklisteneintragRepository.getAmountOfCurrentlyRentedMachine(id);
     }
 
 }

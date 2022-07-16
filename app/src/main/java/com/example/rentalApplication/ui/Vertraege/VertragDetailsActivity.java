@@ -89,7 +89,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsDiscount = findViewById(R.id.vertragDetailsDiscount);
         generatePDFbtn = findViewById(R.id.vertragDetailsPrint);
         if (checkPermission()) {
-            Toast.makeText(this, "Permission 'Write externalStorage' granted", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permission 'Write externalStorage' granted", Toast.LENGTH_SHORT).show();
         } else {
             requestPermission();
         }

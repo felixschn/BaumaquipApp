@@ -39,6 +39,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
     private RecyclerView recyclerView;
     private BaumaschinenViewModel baumaschinenViewModel;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
+    private BaumaschineRentedAmountChangedListener baumaschineRentedAmountChangedListener;
     private Baumaschine archiveBaumaschine;
     private TextView emptyRecyclerView;
     private BaumaschinenListAdapter baumaschinenListAdapter;
@@ -98,7 +99,7 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
         baumaschinenListAdapter = new BaumaschinenListAdapter(this, this);
         recyclerView.setAdapter(baumaschinenListAdapter);
 
-
+        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
         baumaschinenViewModel = new ViewModelProvider(requireActivity()).get(BaumaschinenViewModel.class);
      /*   baumaschinenViewModel.getAllBaumaschinen().observe(getViewLifecycleOwner(), allBaumaschinen -> {
 
@@ -124,7 +125,6 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
 
     public void archiveBaumaschine(int id) {
         Boolean isArchived = false;
-        addStuecklisteneintragViewModel = new ViewModelProvider(this).get(AddStuecklisteneintragViewModel.class);
         List<Stuecklisteneintrag> getAllStuecklisteneintrag = addStuecklisteneintragViewModel.getAllStuecklisteneintrag(false);
         for (int i = 0; i < getAllStuecklisteneintrag.size(); i++) {
             if (id == getAllStuecklisteneintrag.get(i).getIdBaumaschine()) {
@@ -152,6 +152,14 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
 
         }
 
+    }
+
+    public Integer getAmountOfCurrentlyRentedMachine(int id){
+        return addStuecklisteneintragViewModel.AmountOfCurrentlyRentedMachine(id);
+    }
+
+    public void setBaumaschineRentedAmountChangedListener(BaumaschineRentedAmountChangedListener baumaschineRentedAmountChangedListener){
+        this.baumaschineRentedAmountChangedListener = baumaschineRentedAmountChangedListener;
     }
 
     @Override

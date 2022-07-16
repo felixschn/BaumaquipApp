@@ -68,7 +68,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
     private FloatingActionButton increaseButton, decreaseButton, addBaumaschinenListButton;
-    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView, sumOfRent;
+    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView, sumOfRent, discountTextView;
     int amountInt, maxAmount;
     private CustomBaumaschinenAdapter customBaumaschinenAdapter;
     private RecyclerView recyclerView;
@@ -226,9 +226,11 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         recyclerViewVisibility();
 
+        discountTextView = findViewById(R.id.textViewDiscount);
         sumOfRent = findViewById(R.id.textSumOfRent);
         discountOfRent = findViewById(R.id.editTextDiscountofRent);
         switchDiscountMode = findViewById(R.id.switchDiscountMode);
+        discountTextView.setVisibility(View.INVISIBLE);
         sumOfRent.setVisibility(View.INVISIBLE);
         discountOfRent.setVisibility(View.INVISIBLE);
         switchDiscountMode.setVisibility(View.INVISIBLE);
@@ -402,8 +404,6 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 } else {
                     return;
                 }
-
-
             }
 
             Log.d(TAG, "Größe der ID-Liste: " + stuecklisteIds.size());
@@ -444,8 +444,9 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             recyclerView.setVisibility(View.VISIBLE);
             announceRecyclerView.setVisibility(View.VISIBLE);
             emptyRecyclerViewTextView.setVisibility(View.GONE);
-            sumOfRent.setText(calcSumOfRent().toString());
+            sumOfRent.setText(String.format("%s€", calcSumOfRent().toString()));
             sumOfRent.setVisibility(View.VISIBLE);
+            discountTextView.setVisibility(View.VISIBLE);
             discountOfRent.setText("0");
             discountOfRent.setVisibility(View.VISIBLE);
             switchDiscountMode.setVisibility(View.VISIBLE);
@@ -512,7 +513,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             discountFromSum = new BigDecimal(String.valueOf(sumWithoutDiscount.subtract(bigDeciamlsumOfRent)));
         }
 
-        sumOfRent.setText(bigDeciamlsumOfRent.toString());
+        sumOfRent.setText(String.format("%s€", bigDeciamlsumOfRent.toString()));
 
 
         return bigDeciamlsumOfRent;
