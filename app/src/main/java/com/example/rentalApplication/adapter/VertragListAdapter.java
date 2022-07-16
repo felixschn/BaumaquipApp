@@ -128,6 +128,7 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
             modifyButton.setOnClickListener(this);
+            modifyButton.setImageResource(R.drawable.ic_baseline_search_24);
 
 
         }

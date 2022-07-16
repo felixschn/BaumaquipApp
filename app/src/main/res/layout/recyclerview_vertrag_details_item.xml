@@ -128,7 +128,7 @@
                     android:id="@+id/baumaschineVertragDetailsDegreeOfWear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="148dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="40dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toStartOf="parent"
