@@ -65,6 +65,8 @@
     <string name="startBefore">Startdatum kann nicht vor dem heutigen Datum liegen</string>
     <string name="vertragId">Vertrag-ID:</string>
     <string name="emptyArchivedVertraegeRecyclerViewRecyclerView">Keine archivierten Verträge verfügbar!</string>
+    <string name="vertragIdShowTextView">Vertrag ID:</string>
+    <string name="vertragKundeShowTextView">Kunde:</string>
 
     <!--Stuecklisteneintrag Strings-->
     <string name="removeStuecklisteneintrag">Letzte Maschine nicht entfernbar, kompletten Vertrag löschen!</string>
@@ -97,6 +99,7 @@
     <string name="emptyKundenRecyclerViewRecyclerView">Keine Kunden verfügbar!</string>
     <string name="emptyVertraegeRecyclerViewRecyclerView">Keine Verträge verfügbar!</string>
     <string name="pdf">PDF</string>
+
 
 
 </resources>

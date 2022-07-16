@@ -132,7 +132,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             baumaschineDegreeOfWear = itemView.findViewById(R.id.baumaschineDegreeOfWear);
             baumaschineOperatingHours = itemView.findViewById(R.id.baumaschineOperatingHours);
             modifyButton = itemView.findViewById(R.id.modifyButton);
-            modifyButton.setImageResource(R.drawable.ic_baseline_add_24);
+            modifyButton.setImageResource(R.drawable.ic_baseline_restore_page_24);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             listenerRef = new WeakReference<>(baumaschinenClickListener);
 

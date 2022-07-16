@@ -14,11 +14,13 @@ import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.ArchivedVertragListAdapter;
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
 import java.util.List;
 
 public class ArchivedVertragActivity extends AddVertragActivity implements VertragClickListener {
+    public ModifyKundenViewModel modifyKundenViewModel;
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
 
@@ -36,10 +38,12 @@ public class ArchivedVertragActivity extends AddVertragActivity implements Vertr
         recyclerView = findViewById(R.id.archivedVertragRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        modifyKundenViewModel = new ViewModelProvider(this).get(ModifyKundenViewModel.class);
         emptyRecyclerView = findViewById(R.id.emptyArchivedVertraegeRecyclerviewTextView);
         archivedVertragListAdapter = new ArchivedVertragListAdapter(this, this);
         recyclerView.setAdapter(archivedVertragListAdapter);
+
+
 
         vertragViewModel = new ViewModelProvider(this).get(VertragViewModel.class);
         vertragViewModel.getAllArchivedVertrag().observe(this, new Observer<List<Vertrag>>() {

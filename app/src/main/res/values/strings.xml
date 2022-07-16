@@ -11,13 +11,13 @@
     <string name="baumaschine_operatingHours">enter operating hours</string>
     <string name="baumaschine_degreeOfWear">enter degree of wear</string>
     <string name="baumaschine_amountOfGas">enter amount of gas</string>
-    <string name="price_per_day">price per day</string>
-    <string name="price_per_weekend">price per weekend</string>
-    <string name="price_per_month">price per month</string>
-    <string name="amount">amount</string>
-    <string name="operating_hours">operating hours</string>
-    <string name="amount_of_gas">amount of gas</string>
-    <string name="degree_of_wear">degree of wear</string>
+    <string name="price_per_day">price per day:</string>
+    <string name="price_per_weekend">price per weekend:</string>
+    <string name="price_per_month">price per month:</string>
+    <string name="amount">amount:</string>
+    <string name="operating_hours">operating hours:</string>
+    <string name="amount_of_gas">amount of gas:</string>
+    <string name="degree_of_wear">degree of wear:</string>
     <string name="not_removable_machine">machine not removable due to dependencies</string>
     <string name="not_removable_customer">customer not removable due to dependencies</string>
     <string name="empty_baumaschine_spinner">please select machine</string>
@@ -64,6 +64,8 @@
     <string name="startBefore">start date cannot be before today\'s date</string>
     <string name="vertragId">contract id:</string>
     <string name="emptyArchivedVertraegeRecyclerViewRecyclerView">No archived contracts available</string>
+    <string name="vertragIdShowTextView">contract ID:</string>
+    <string name="vertragKundeShowTextView">customer:</string>
 
     <!--Stuecklisteneintrag Strings-->
     <string name="removeStuecklisteneintrag">last machine is not removable, remove contract instead</string>

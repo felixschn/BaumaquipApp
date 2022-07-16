@@ -59,16 +59,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textKundenZip"
+                android:id="@+id/kundenZip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="700dp"
+                android:layout_marginStart="850dp"
                 android:layout_weight="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutKunde"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="00000" />
+
+            <TextView
+                android:id="@+id/textKundenZip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="700dp"
+                android:text="@string/zip"
+                app:layout_constraintBottom_toTopOf="@+id/expandableConstraintLayoutKunde"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <include layout="@layout/modify_delete_buttons" />
 
@@ -77,6 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textKundeName">
@@ -146,7 +157,7 @@
                     android:id="@+id/textKundeEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="750dp"
+                    android:layout_marginStart="850dp"
                     android:layout_weight="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +194,7 @@
                     android:layout_marginStart="350dp"
 
                     android:layout_marginTop="@dimen/space_between_text"
-                    android:text="@string/construction_side"
+                    android:text="@string/contact_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textKundeStreetNumber" />
 

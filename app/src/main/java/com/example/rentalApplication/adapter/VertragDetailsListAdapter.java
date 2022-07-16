@@ -60,6 +60,28 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
         holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
 
+        holder.baumaschineVertragDetailsOperatingHours.setEnabled(false);
+        holder.baumaschineVertragDetailsOperatingHours.setText("-");
+        holder.baumschineVertragDetailsAmountOfGas.setEnabled(false);
+        holder.baumschineVertragDetailsAmountOfGas.setText("-");
+        holder.baumaschineVertragDetailsDegreeOfWear.setEnabled(false);
+        holder.baumaschineVertragDetailsDegreeOfWear.setText("-");
+
+        if(current.getOperatingHours() != null){
+            holder.baumaschineVertragDetailsOperatingHours.setEnabled(true);
+            holder.baumaschineVertragDetailsOperatingHours.setText(current.getOperatingHours().toString());
+        }
+
+        if(current.getAmountOfGas() != null){
+            holder.baumschineVertragDetailsAmountOfGas.setEnabled(true);
+            holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
+        }
+
+        if(current.getDegreeOfWear() != null){
+            holder.baumaschineVertragDetailsDegreeOfWear.setEnabled(true);
+            holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
+        }
+
 
         boolean isExpanded = baumaschineVertragDetailsList.get(position).getExpanded();
         holder.expandableConstraintLayoutVertagDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);

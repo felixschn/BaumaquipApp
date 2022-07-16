@@ -10,10 +10,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.ArchivedVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.VertragClickListener;
 import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
@@ -31,11 +33,14 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
     private final VertragClickListener vertragClickListener;
     private Context context;
     private ArchivedVertragActivity archivedVertragActivity;
+    private ModifyKundenViewModel modifyKundenViewModel;
+
 
 
     public ArchivedVertragListAdapter(VertragClickListener listener, ArchivedVertragActivity archivedVertragActivity) {
         this.vertragClickListener = listener;
         this.archivedVertragActivity = archivedVertragActivity;
+        this.modifyKundenViewModel = archivedVertragActivity.modifyKundenViewModel;
     }
 
     @NonNull
@@ -52,7 +57,10 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
         if (vertragList != null) {
             Vertrag current = vertragList.get(position);
             holder.archiveVertragId.setText(String.valueOf(current.getIdVertrag()));
-            holder.archivedVertragKunde.setText(String.valueOf(current.getIdKunde()));
+            archivedVertragActivity.
+            modifyKundenViewModel = new ViewModelProvider((ArchivedVertragActivity)context).get(ModifyKundenViewModel.class);
+            String kundenName = modifyKundenViewModel.loadKundeById(current.getIdKunde()).getName();
+            holder.archivedVertragKunde.setText(kundenName);
             holder.archivedVertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
             holder.archivedVertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
 
@@ -109,6 +117,7 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
             modifyButton.setOnClickListener(this);
+            modifyButton.setImageResource(R.drawable.ic_baseline_search_24);
 
 
         }

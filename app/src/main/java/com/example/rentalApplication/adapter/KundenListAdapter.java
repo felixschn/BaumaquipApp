@@ -98,7 +98,7 @@ public class KundenListAdapter extends RecyclerView.Adapter<KundenListAdapter.Ku
             kundenName = itemView.findViewById(R.id.textKundeName);
             kundenStrasse = itemView.findViewById(R.id.textKundeStreetName);
             kundenStrassenNummer = itemView.findViewById(R.id.textKundeStreetNumber);
-            kundenZip = itemView.findViewById(R.id.textKundenZip);
+            kundenZip = itemView.findViewById(R.id.kundenZip);
             kundenOrt = itemView.findViewById(R.id.textKundeLocation);
             kundenTelefonnummer = itemView.findViewById(R.id.textKundeTelefonNumber);
             kundenEmail = itemView.findViewById(R.id.textKundeEmail);
