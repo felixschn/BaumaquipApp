@@ -476,7 +476,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             price = selectedBaumaschineFromSpinner.getPricePerDay().multiply(BigDecimal.valueOf(rental_period));
 
         }
-        return price;
+        return price.multiply(BigDecimal.valueOf(getSelectedBaumaschinenAmount()));
     }
 
     public BigDecimal calcSumOfRent() {
