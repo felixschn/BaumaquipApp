@@ -7,5 +7,6 @@
     <dimen name="space_between_text">10dp</dimen>
     <dimen name="space_between_text_and_number">10dp</dimen>
     <dimen name="space_between_text_and_header">10dp</dimen>
+    <dimen name="baumaschinen_recyclerview_item_marginStart_2">550dp</dimen>
 
 </resources>

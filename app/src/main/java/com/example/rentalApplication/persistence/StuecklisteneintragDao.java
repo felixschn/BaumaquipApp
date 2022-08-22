@@ -38,6 +38,6 @@ public interface StuecklisteneintragDao {
     @Query("SELECT *, rowid FROM Stuecklisteneintrag WHERE archived = 1")
     List<Stuecklisteneintrag> getAllArchivedStuecklisteneintrag();
 
-    @Query("SELECT amount FROM Stuecklisteneintrag WHERE idBaumaschine = :id ")
+    @Query("SELECT amount FROM Stuecklisteneintrag WHERE idBaumaschine = :id AND archived = 0")
     List<Integer> getAmountOfCurrentlyRentedMachines(int id);
 }

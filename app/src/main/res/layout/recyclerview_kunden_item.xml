@@ -87,16 +87,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textKundeName">
 
                 <TextView
                     android:id="@+id/textShowKundeStreetName"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     android:text="@string/street"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -107,9 +107,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="150dp"
                     android:text="Zum Paradis"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textShowKundeStreetName" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textKundeStreetNumber"
@@ -117,6 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toEndOf="@+id/textKundeStreetName"
                     app:layout_constraintTop_toTopOf="parent"
@@ -129,6 +131,7 @@
                     android:layout_marginStart="350dp"
                     android:layout_weight="1"
                     android:text="@string/telefon_number"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,6 +140,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="500dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     android:layout_weight="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -148,6 +152,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="700dp"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     android:layout_weight="1"
                     android:text="@string/email"
                     app:layout_constraintStart_toStartOf="parent"
@@ -157,6 +162,7 @@
                     android:id="@+id/textKundeEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_between_text_and_header"
                     android:layout_marginStart="850dp"
                     android:layout_weight="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
