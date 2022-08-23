@@ -1,6 +1,9 @@
 package com.example.rentalApplication.ui.Vertraege;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rentalApplication.MainPageActivity;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.adapter.VertragListAdapter;
+import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
+import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 
 import java.util.ArrayList;
@@ -35,7 +42,10 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private TextView emptyRecyclerView;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
     private ModifyVertragViewModel modifyVertragViewModel;
+    private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private Vertrag archivedVertrag;
+    private static String TAG = "VertragFragment.java";
+    private Context context;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,7 +85,7 @@ public class VertragFragment extends Fragment implements VertragClickListener {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_vertraege, container, false);
-
+        context = this.getContext();
         vertragListAdapter = new VertragListAdapter(this, this);
 
         emptyRecyclerView = view.findViewById(R.id.emptyVertraegeRecyclerviewTextView);
@@ -84,6 +94,7 @@ public class VertragFragment extends Fragment implements VertragClickListener {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(vertragListAdapter);
+        modifyBaumaschineViewModel = new ViewModelProvider(requireActivity()).get(ModifyBaumaschineViewModel.class);
         vertragViewModel = new ViewModelProvider(requireActivity()).get(VertragViewModel.class);
         vertragViewModel.getAllVertrag().observe(getViewLifecycleOwner(), new Observer<List<Vertrag>>() {
             @Override
@@ -115,6 +126,16 @@ public class VertragFragment extends Fragment implements VertragClickListener {
                 Stuecklisteneintrag current = addStuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i));
                 //stuecklisteneintragViewModel.delete(stuecklisteneintragViewModel.stuecklisteneintragById(deleteStuecklisteneintragList.get(i)));
                 current.setArchived(true);
+
+                Log.d(TAG, "Modify Button clicked!");
+                Baumaschine modifyBaumaschine = modifyBaumaschineViewModel.getBaumaschineById(current.getIdBaumaschine());
+                Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + modifyBaumaschine.getIdBaumaschine());
+                if(modifyBaumaschine.getAmount() == 1) {
+                    Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
+                    modifyBaumaschineIntent.putExtra("baumaschineneRowId", modifyBaumaschine.getIdBaumaschine());
+                    modifyBaumaschineIntent.putExtra("Class", "VertragFragment");
+                    context.startActivity(modifyBaumaschineIntent);
+                }
                 addStuecklisteneintragViewModel.update(current);
             }
             archivedVertrag.setStuecklisteIds(new ArrayList<>());

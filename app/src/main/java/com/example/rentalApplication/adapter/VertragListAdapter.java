@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentalApplication.R;
+import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.models.Converters;
 import com.example.rentalApplication.models.Vertrag;
+import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenViewModel;
 import com.example.rentalApplication.ui.Kunde.KundenViewModel;
 import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
@@ -152,6 +155,7 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
                 builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
                 AlertDialog deleteAlert = builder.create();
                 deleteAlert.show();
+
 
             } else {
                 notifyItemChanged(getAdapterPosition());

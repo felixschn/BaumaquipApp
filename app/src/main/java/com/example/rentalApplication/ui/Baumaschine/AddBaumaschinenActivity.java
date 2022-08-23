@@ -132,6 +132,48 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
 
             }
 
+            if (activityString.equals("VertragFragment")) {
+                Log.d(TAG, "Intent Ergebnis RowID" + intent.getExtras().getInt("baumaschineneRowId"));
+
+                //create new modifyBaumaschinenViewModel, to pass the additional parameter id, a ModifyBaumaschineViewModelFactory was created and is used
+                //retrieve the id from the intent
+                modifyBaumaschineViewModel = new ViewModelProvider(this).get(ModifyBaumaschineViewModel.class);
+                loadBaumaschineById = modifyBaumaschineViewModel.getBaumaschineById(intent.getExtras().getInt("baumaschineneRowId"));
+                int editableBaumaschineAmount = loadBaumaschineById.getAmount();
+                addBaumaschinenNameEditText.setText(loadBaumaschineById.getMachineName());
+                addBaumaschinenAnzahlEditText.setText(Integer.toString(editableBaumaschineAmount));
+                addBaumaschinenPricePerDayEditText.setText(loadBaumaschineById.getPricePerDay().toString());
+                addBaumaschinenPricePerWeekendEditText.setText(loadBaumaschineById.getPricePerWeekend().toString());
+                addBaumaschinenPricePerMonthEditText.setText(loadBaumaschineById.getPricePerMonth().toString());
+
+                //check if machine has entries for parameters
+                if (loadBaumaschineById.getOperatingHours() != null) {
+                    addBaumaschinenOperatingHours.setText(loadBaumaschineById.getOperatingHours().toString());
+                }
+                if (loadBaumaschineById.getAmountOfGas() != null) {
+                    addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getOperatingHours().toString());
+                }
+                if (loadBaumaschineById.getDegreeOfWear() != null) {
+                    addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
+                }
+                addBaumaschinenButton.setText(R.string.button_save);
+
+                //when there is only one machine, disable functions to alter amount and other params
+                if (editableBaumaschineAmount == 1) {
+                    addBaumaschinenAnzahlEditText.setFocusable(false);
+                    addBaumaschinenAnzahlEditText.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+                    addBaumaschinenNameEditText.setEnabled(false);
+                    addBaumaschinenPricePerDayEditText.setEnabled(false);
+                    addBaumaschinenPricePerWeekendEditText.setEnabled(false);
+                    addBaumaschinenPricePerMonthEditText.setEnabled(false);
+                    addBaumaschinenAnzahlEditText.setEnabled(false);
+                    addBaumaschinenOperatingHours.setEnabled(true);
+                    addBaumaschinenAmountOfGas.setEnabled(true);
+                    addBaumaschinenDegreeOfWear.setEnabled(true);
+                }
+
+            }
+
 
         }
         /*listen from which activity AddBaumaschinenActivity was called and adapt to context with different methods*/
@@ -142,6 +184,9 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                     insertNewBaumaschine();
                 }
                 if (intent.getStringExtra("Class").equals("BaumaschinenListAdapter")) {
+                    updateBaumaschine();
+                }
+                if(intent.getStringExtra("Class").equals("VertragFragment")){
                     updateBaumaschine();
                 }
             }
