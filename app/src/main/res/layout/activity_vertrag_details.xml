@@ -127,17 +127,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/vertragDetailsSumText"
+            android:id="@+id/vertragDetailsPriceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="400dp"
             android:layout_marginTop="20dp"
-            android:text="@string/vertragDetailsTotalPrice"
+            android:text="@string/vertragDetailsPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/vertragDetailsSum"
+            android:id="@+id/vertragDetailsPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="550dp"
@@ -162,6 +162,25 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="550dp"
             android:layout_marginTop="70dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/vertragDetailsSumText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="650dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/vertragDetailsTotalPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/vertragDetailsSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="800dp"
+            android:layout_marginTop="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

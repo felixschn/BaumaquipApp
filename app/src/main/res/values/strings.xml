@@ -57,7 +57,8 @@
     <string name="vertraege">Contracts</string>
     <string name="vertraegeAdd">add contract</string>
     <string name="vertraegeArchived">archived contracts</string>
-    <string name="vertragDetailsTotalPrice">total price:</string>
+    <string name="vertragDetailsPrice">price:</string>
+    <string name="vertragDetailsTotalPrice">sum:</string>
     <string name="vertragDetailsDiscount">discount:</string>
     <string name="vertragDetailsStart">start of contract:</string>
     <string name="vertragDetailsEnd">end of contract:</string>

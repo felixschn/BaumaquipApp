@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import com.example.rentalApplication.ui.Baumaschine.ModifyBaumaschineViewModel;
 import com.example.rentalApplication.ui.Kunde.ModifyKundenViewModel;
 import com.example.rentalApplication.ui.Vertraege.Stuecklisteneintrag.AddStuecklisteneintragViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,7 +53,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private Kunde kunde;
     private List<Baumaschine> baumaschineVertragDetailsList;
     private List<Integer> baumaschineContractAmount;
-    private TextView vertragDetailsTextView, vertragDetailsIdTextView, vertragDetailsKundeTextView, vertragDetailsKundeNameTextView, vertragDetailsStartDateTextTextView, vertragDetailsStartDateTextView, vertragDetailsEndDateTextTextView, vertragDetailsEndDateTextView, vertragDetailsSumTextView, vertragDetailsSum, vertragDetailsDiscountText, vertragDetailsDiscount;
+    private TextView vertragDetailsTextView, vertragDetailsIdTextView, vertragDetailsKundeTextView, vertragDetailsKundeNameTextView, vertragDetailsStartDateTextTextView, vertragDetailsStartDateTextView, vertragDetailsEndDateTextTextView, vertragDetailsEndDateTextView, vertragDetailsPriceTextView, vertragDetailsPrice, vertragDetailsDiscountText, vertragDetailsDiscount, vertragDetailsSum, vertragDetailsSumText;
     private ModifyVertragViewModel modifyVertragViewModel;
     private ModifyKundenViewModel modifyKundenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
@@ -83,10 +81,12 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsStartDateTextView = findViewById(R.id.vertragDetailsStartDate);
         vertragDetailsEndDateTextTextView = findViewById(R.id.vertragDetailsEndDateText);
         vertragDetailsEndDateTextView = findViewById(R.id.vertragDetailsEndDate);
-        vertragDetailsSumTextView = findViewById(R.id.vertragDetailsSumText);
-        vertragDetailsSum = findViewById(R.id.vertragDetailsSum);
+        vertragDetailsPriceTextView = findViewById(R.id.vertragDetailsPriceText);
+        vertragDetailsPrice = findViewById(R.id.vertragDetailsPrice);
         vertragDetailsDiscountText = findViewById(R.id.vertragDetailsDiscountText);
         vertragDetailsDiscount = findViewById(R.id.vertragDetailsDiscount);
+        vertragDetailsSumText = findViewById(R.id.vertragDetailsSumText);
+        vertragDetailsSum = findViewById(R.id.vertragDetailsSum);
         generatePDFbtn = findViewById(R.id.vertragDetailsPrint);
         if (checkPermission()) {
             //Toast.makeText(this, "Permission 'Write externalStorage' granted", Toast.LENGTH_SHORT).show();
@@ -157,8 +157,9 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         vertragDetailsKundeNameTextView.setText(kunde.getName());
         vertragDetailsStartDateTextView.setText(vertrag.getBeginnVertrag().toString());
         vertragDetailsEndDateTextView.setText(vertrag.getEndeVertrag().toString());
-        vertragDetailsSum.setText(String.format("%s€", vertrag.getSumOfRent()));
+        vertragDetailsPrice.setText(String.format("%s€", vertrag.getSumOfRent()));
         vertragDetailsDiscount.setText(String.format("%s€", vertrag.getDiscountOfRent()));
+        vertragDetailsSum.setText(String.format("%s€", vertrag.getSumOfRent().subtract(vertrag.getDiscountOfRent())));
 
 
     }
