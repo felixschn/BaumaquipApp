@@ -267,11 +267,10 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 switchOn = isChecked;
-                if(isChecked){
+                if (isChecked) {
                     switchDiscountMode.setText("%");
                     clearDiscount();
-                }
-                else{
+                } else {
                     switchDiscountMode.setText("€");
                     clearDiscount();
                 }
@@ -410,11 +409,11 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
             /* check if the beginnVertrag & endeVertrag field is filled*/
             if (!beginnVertrag.getText().toString().matches("") && !endeVertrag.getText().toString().matches("")) {
-                if(baumaschinenSpinner.getSelectedItem() == null){
+                if (baumaschinenSpinner.getSelectedItem() == null) {
                     Toast.makeText(this, R.string.empty_baumaschine_spinner, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(kundenSpinner.getSelectedItem() == null){
+                if (kundenSpinner.getSelectedItem() == null) {
                     Toast.makeText(this, R.string.empty_kunde_spinner, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -528,6 +527,22 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         int maxRentingAmountPerDay = 0;
         int maxRentingAmount = 0;
 
+        if (DAYS.between(begin, end) == 0) {
+            for (int i = 0; i < existingStuecklisteneintrageForBaumaschine.size(); i++) {
+                if ((existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isBefore(begin.plusDays(0)) ||
+                        existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isEqual(begin.plusDays(0))) &&
+                        (existingStuecklisteneintrageForBaumaschine.get(i).getEndDate().isAfter(begin.plusDays(0)) ||
+                                existingStuecklisteneintrageForBaumaschine.get(i).getEndDate().isEqual(begin.plusDays(0)))) {
+
+                    maxRentingAmountPerDay = maxRentingAmountPerDay + existingStuecklisteneintrageForBaumaschine.get(i).getAmount();
+                }
+
+            }
+            maxRentingAmount = max(maxRentingAmountPerDay, maxRentingAmount);
+            maxRentingAmountPerDay = 0;
+
+        }
+
         for (int j = 0; j < (DAYS.between(begin, end)); j++) {
             for (int i = 0; i < existingStuecklisteneintrageForBaumaschine.size(); i++) {
                 if ((existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isBefore(begin.plusDays(j)) ||
@@ -539,6 +554,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 }
 
             }
+
             maxRentingAmount = max(maxRentingAmountPerDay, maxRentingAmount);
             maxRentingAmountPerDay = 0;
         }
