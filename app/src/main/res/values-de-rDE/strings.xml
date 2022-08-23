@@ -6,19 +6,19 @@
     <string name="baumachinenArchived">archivierte Baumaschinen</string>
     <string name="baumaschine_name">Baumaschine</string>
     <string name="baumaschine_amount">Anzahl</string>
-    <string name="baumaschine_pricePerDay">Preis pro Tag eingeben</string>
-    <string name="baumaschine_pricePerWeekend">Preis pro Wochenende eingeben</string>
-    <string name="baumaschine_pricePerMonth">Preis pro Monat eingeben</string>
-    <string name="baumaschine_operatingHours">Betriebsstunden eingeben</string>
-    <string name="baumaschine_degreeOfWear">Abnutzungszustand eingeben</string>
-    <string name="baumaschine_amountOfGas">Tank-Füllstand eingeben</string>
-    <string name="price_per_day">Preis pro Tag</string>
-    <string name="price_per_weekend">Preis pro Wochenende</string>
-    <string name="price_per_month">Preis pro Monat</string>
-    <string name="amount">Anzahl</string>
-    <string name="operating_hours">Betriebsstunden</string>
-    <string name="amount_of_gas">Tank-Füllstand</string>
-    <string name="degree_of_wear">Zustand</string>
+    <string name="baumaschine_pricePerDay">Preis pro Tag eingeben:</string>
+    <string name="baumaschine_pricePerWeekend">Preis pro Wochenende eingeben:</string>
+    <string name="baumaschine_pricePerMonth">Preis pro Monat eingeben:</string>
+    <string name="baumaschine_operatingHours">Betriebsstunden eingeben:</string>
+    <string name="baumaschine_degreeOfWear">Abnutzungszustand eingeben:</string>
+    <string name="baumaschine_amountOfGas">Tank-Füllstand eingeben:</string>
+    <string name="price_per_day">Preis pro Tag:</string>
+    <string name="price_per_weekend">Preis pro Wochenende:</string>
+    <string name="price_per_month">Preis pro Monat:</string>
+    <string name="amount">Anzahl:</string>
+    <string name="operating_hours">Betriebsstunden:</string>
+    <string name="amount_of_gas">Tank-Füllstand:</string>
+    <string name="degree_of_wear">Zustand:</string>
     <string name="not_removable_machine">Aufgrund von Abhängigkeiten, kann die Maschine nicht gelöscht werden</string>
     <string name="not_removable_customer">Aufgrund von Abhängigkeiten, kann der Kunde nicht gelöscht werden</string>
     <string name="empty_baumaschine_spinner">Bitte Baumaschine auswählen</string>
@@ -32,7 +32,7 @@
 
     <!--Kunden Strings-->
     <string name="kunden">Kunden</string>
-    <string name="kundenAdd">Kunden hinzufügen</string>
+    <string name="kundenAdd">Kunde</string>
     <string name="kundenArchived">archivierte Kunden</string>
     <string name="kunde_name">Kundenname einfügen</string>
     <string name="kunde_telefon_number">Telefonnummer einfügen</string>

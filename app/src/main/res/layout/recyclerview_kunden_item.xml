@@ -35,7 +35,7 @@
                 android:layout_marginStart="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Bergolz Kinder GmbH" />
+                />
 
             <TextView
                 android:id="@+id/textShowKundeLocation"
@@ -170,6 +170,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="bergholz@gmx.de" />
 
+
                 <TextView
                     android:id="@+id/textShowKundeConstructionSide"
                     android:layout_width="0dp"
@@ -180,7 +181,6 @@
                     app:layout_constraintStart_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textShowKundeStreetName" />
-
 
                 <TextView
                     android:id="@+id/textKundeConstructionSide"
@@ -199,10 +199,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="350dp"
 
-                    android:layout_marginTop="@dimen/space_between_text"
+                    android:layout_marginTop="10dp"
                     android:text="@string/contact_person"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textKundeStreetNumber" />
+                    app:layout_constraintTop_toBottomOf="@+id/textShowKundeTelefonNumber" />
 
                 <TextView
                     android:id="@+id/textKundeContactPerson"

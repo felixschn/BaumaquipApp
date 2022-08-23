@@ -9,24 +9,35 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Viewpager_test">
-        <activity android:name=".ui.Kunde.AddKundenActivity" />
-        <activity android:name=".ui.Vertraege.AddVertragActivity" />
-        <activity android:name=".ui.Baumaschine.AddBaumaschinenActivity" />
-        <activity android:name=".ui.Baumaschine.ArchivedBaumaschinenActivity" />
-        <activity android:name=".ui.Kunde.ArchivedKundenActivity" />
-        <activity android:name=".ui.Vertraege.ArchivedVertragActivity" />
-        <activity android:name=".ui.Vertraege.VertragDetailsActivity" />
+        android:theme="@style/Theme.BaumaquipRentalApp">
+
+        <activity android:name=".ui.Kunde.AddKundenActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".ui.Vertraege.AddVertragActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.Baumaschine.AddBaumaschinenActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.Baumaschine.ArchivedBaumaschinenActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.Kunde.ArchivedKundenActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.Vertraege.ArchivedVertragActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.Vertraege.VertragDetailsActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".MainPageActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Viewpager_test">
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.BaumaquipRentalApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

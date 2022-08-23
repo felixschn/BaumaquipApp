@@ -72,7 +72,7 @@ public class VertragListAdapter extends RecyclerView.Adapter<VertragListAdapter.
             holder.vertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
             holder.vertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
 
-            if(LocalDate.now().equals(current.getEndeVertrag().minusDays(2))){
+            if(current.getEndeVertrag().isBefore(LocalDate.now().plusDays(2))){
                 holder.vertragEndeLeihe.setBackgroundColor(ContextCompat.getColor(context, R.color.baumaquip_main_color));
             }
             if(current.getEndeVertrag().isBefore(LocalDate.now())){

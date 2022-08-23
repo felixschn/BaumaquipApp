@@ -59,8 +59,6 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
             if(((AddVertragActivity)context).getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, baumaschineList.get(i)) == 0){
                 baumaschineList.remove(i);
             }*/
-
-
         this.baumaschineList = baumaschineList;
         notifyDataSetChanged();
     }

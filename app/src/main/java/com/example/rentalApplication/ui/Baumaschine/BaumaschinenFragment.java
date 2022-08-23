@@ -166,4 +166,9 @@ public class BaumaschinenFragment extends Fragment implements BaumaschinenClickL
     public void onPositionClicked(int position) {
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        baumaschinenListAdapter.notifyDataSetChanged();
+    }
 }
