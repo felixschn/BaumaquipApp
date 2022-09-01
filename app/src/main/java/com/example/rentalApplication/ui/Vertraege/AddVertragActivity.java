@@ -228,7 +228,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
         recyclerViewVisibility();
 
         discountTextView = findViewById(R.id.textViewDiscount);
-        sumOfRent = findViewById(R.id.textSumOfRent);
+        sumOfRent = findViewById(R.id.sumOfRent);
         discountOfRent = findViewById(R.id.editTextDiscountofRent);
         switchDiscountMode = findViewById(R.id.switchDiscountMode);
         discountTextView.setVisibility(View.INVISIBLE);
