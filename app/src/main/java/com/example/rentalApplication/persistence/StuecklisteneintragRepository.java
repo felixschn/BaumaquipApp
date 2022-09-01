@@ -133,7 +133,7 @@ public class StuecklisteneintragRepository {
 
     private static class AmountofCurrentlyRentedAsyncTask extends AsyncTask<Integer, Void, List<Integer>> {
         private final StuecklisteneintragDao mAsyncTaskDao;
-        private LocalDate today = LocalDate.now();
+        private final LocalDate today = LocalDate.now();
 
         public AmountofCurrentlyRentedAsyncTask(StuecklisteneintragDao dao) {
             this.mAsyncTaskDao = dao;
