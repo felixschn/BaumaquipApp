@@ -101,5 +101,9 @@
     <string name="emptyVertraegeRecyclerViewRecyclerView">No contracts available!</string>
     <string name="pdf">PDF</string>
 
+    <!--Permissions-->
+    <string name="permission_granted">Permission granted!</string>
+    <string name="permission_denied">Permission denied!</string>
+
 
 </resources>

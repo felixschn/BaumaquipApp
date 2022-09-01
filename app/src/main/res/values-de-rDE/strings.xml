@@ -102,6 +102,10 @@
     <string name="emptyVertraegeRecyclerViewRecyclerView">Keine Verträge verfügbar!</string>
     <string name="pdf">PDF</string>
 
+    <!--Permissions-->
+    <string name="permission_granted">Berechtigung erteilt!</string>
+    <string name="permission_denied">Berechtigung verweigert!</string>
+
 
 
 </resources>

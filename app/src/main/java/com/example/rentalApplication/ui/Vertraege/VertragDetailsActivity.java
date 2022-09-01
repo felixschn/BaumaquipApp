@@ -408,9 +408,9 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
                 boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                 if (writeStorage && readStorage) {
-                    Toast.makeText(this, "Permission 'writeExternalStorage' Granted.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, this.getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission 'writeExternalStorage' Denined.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, this.getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
