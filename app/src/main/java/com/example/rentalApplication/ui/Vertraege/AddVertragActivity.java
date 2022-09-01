@@ -162,7 +162,6 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                     begin = LocalDate.now();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.startDateBeforCurrentDate), Toast.LENGTH_SHORT).show();
                 }
-                ;
                 if (begin.isAfter(end)) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.startDateAfterEndDate), Toast.LENGTH_SHORT).show();
                     end = begin.plusDays(1);
@@ -173,6 +172,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
                 beginnVertrag.setText(Converters.localDateToString(begin));
                 customBaumaschinenAdapter.notifyDataSetChanged();
+                buttonVisibility();
             }
         };
 
@@ -186,6 +186,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 }
                 customBaumaschinenAdapter.notifyDataSetChanged();
                 endeVertrag.setText(Converters.localDateToString(end));
+                buttonVisibility();
             }
         };
 
@@ -285,16 +286,19 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private void buttonVisibility() {
         amountTextView.setVisibility(View.VISIBLE);
         addBaumaschinenListButton.setVisibility(View.VISIBLE);
+        maxAmount = getAvailableBaumaschinenAmount(addStuecklisteneintragViewModel, selectedBaumaschineFromSpinner);
         if (amountInt >= maxAmount) {
             increaseButton.setVisibility(View.INVISIBLE);
         } else {
             increaseButton.setVisibility(View.VISIBLE);
         }
+
         if (amountInt == 1) {
             decreaseButton.setVisibility(View.INVISIBLE);
         } else {
             decreaseButton.setVisibility(View.VISIBLE);
         }
+
         if (amountInt > maxAmount) {
             addBaumaschinenListButton.setVisibility(View.INVISIBLE);
             amountTextView.setVisibility(View.INVISIBLE);
@@ -543,7 +547,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         }
 
-        for (int j = 0; j < (DAYS.between(begin, end)); j++) {
+        for (int j = 0; j <= (DAYS.between(begin, end)); j++) {
             for (int i = 0; i < existingStuecklisteneintrageForBaumaschine.size(); i++) {
                 if ((existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isBefore(begin.plusDays(j)) ||
                         existingStuecklisteneintrageForBaumaschine.get(i).getBeginDate().isEqual(begin.plusDays(j))) &&
@@ -618,7 +622,8 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     }
 
     public class InputFilterMaxSum implements InputFilter {
-        private int minValue, maxValue;
+        private final int minValue;
+        private final int maxValue;
 
         public InputFilterMaxSum(int minValue, int maxValue) {
             this.minValue = minValue;
