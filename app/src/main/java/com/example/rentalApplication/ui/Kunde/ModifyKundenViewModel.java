@@ -11,7 +11,7 @@ import com.example.rentalApplication.persistence.KundenRepository;
 //ViewModel to get the opportunity to change Kunden in the Database
 
 public class ModifyKundenViewModel extends AndroidViewModel {
-    private KundenRepository kundenRepository;
+    private final KundenRepository kundenRepository;
     private static final String TAG = "ModifyKundenViewModel";
 
     public ModifyKundenViewModel(@NonNull Application application) {

@@ -19,7 +19,7 @@ public class Vertrag {
     public int idVertrag;
 
     @TypeConverters(Converters.class)
-    private List<Integer> stuecklisteIds;
+    private final List<Integer> stuecklisteIds;
 
     @NonNull
     private int idKunde;

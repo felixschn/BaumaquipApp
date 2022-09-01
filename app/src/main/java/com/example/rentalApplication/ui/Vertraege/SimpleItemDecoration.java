@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 
 public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
-    private Drawable drawable;
+    private final Drawable drawable;
 
     SimpleItemDecoration(Context context) {
         drawable = ContextCompat.getDrawable(context, R.drawable.line_divider);

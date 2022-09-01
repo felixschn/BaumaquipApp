@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class KundenViewModel extends AndroidViewModel {
-    private KundenRepository kundenRepository;
+    private final KundenRepository kundenRepository;
     private final LiveData<List<Kunde>> allKunden;
     private final LiveData<List<Kunde>> allArchivedKunden;
 

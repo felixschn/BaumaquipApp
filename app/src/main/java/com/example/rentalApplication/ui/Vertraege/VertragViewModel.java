@@ -12,7 +12,7 @@ import com.example.rentalApplication.persistence.VertragRepository;
 import java.util.List;
 
 public class VertragViewModel extends AndroidViewModel {
-    private VertragRepository vertragRepository;
+    private final VertragRepository vertragRepository;
     private final LiveData<List<Vertrag>> allVertrag;
     private final LiveData<List<Vertrag>> allArchivedVertrag;
 

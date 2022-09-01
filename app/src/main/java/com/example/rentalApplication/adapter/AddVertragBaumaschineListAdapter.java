@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,14 +32,10 @@ import java.util.List;
 
 public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVertragBaumaschineListAdapter.AddVertragViewHolder> {
     private static final String TAG = "no machine left";
-    private static final String selectedAdded = "added machine";
-    private static final String selectedRemoved = "removed machine";
-    private int selectedPos = RecyclerView.NO_POSITION;
-    private List<Stuecklisteneintrag> stueckliste = new ArrayList<>();
+    private final List<Stuecklisteneintrag> stueckliste = new ArrayList<>();
     private final VertragBaumaschinenListClickListener listener;
-    private Context context;
+    private final Context context;
     private Application application;
-    private final BigDecimal sumRentPrice = new BigDecimal("0");
     private final BaumaschinenRepository baumaschinenRepository = BaumaschinenRepository.getInstance(application);
 
     public AddVertragBaumaschineListAdapter(Application application, VertragBaumaschinenListClickListener listener, Context context) {
@@ -56,7 +51,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         return new AddVertragViewHolder(itemView, listener, new CustomEditTextListener());
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull AddVertragBaumaschineListAdapter.AddVertragViewHolder holder, int position) {
         if (stueckliste != null) {
@@ -68,13 +62,10 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             which is accessible through ((AddVertragActivity)context)*/
             int selectedAmount = stueckliste.get(position).getAmount();
             holder.amountBaumaschine.setText(String.valueOf(selectedAmount));
-
             holder.customEditTextListener.updatePosition(holder.getAdapterPosition());
             holder.priceForRent.setText(stueckliste.get(holder.getAdapterPosition()).getPrice().toString().trim() + '€');
-
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -94,6 +85,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
                 break;
             }
         }
+
         if (maschineAlreadyListed) {
             Log.d(TAG, "Maschine bereits vorhanden");
             Toast.makeText(context.getApplicationContext(), R.string.machine_already_listed, Toast.LENGTH_SHORT).show();
@@ -107,7 +99,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
 
         stueckliste.add(new Stuecklisteneintrag(baumaschine.getIdBaumaschine(), ((AddVertragActivity) context).getSelectedBaumaschinenAmount(), ((AddVertragActivity) context).calcPriceForRent(), ((AddVertragActivity) context).getBeginnVertrag(), ((AddVertragActivity) context).getEndeVertrag(), application));
         notifyDataSetChanged();
-
     }
 
     public void removeAddVertragBaumaschine(int position) {
@@ -126,8 +117,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             stueckliste.clear();
             notifyItemRangeRemoved(0, stueckliste.size());
         }
-
-
     }
 
     public List<Stuecklisteneintrag> getStueckliste() {
@@ -142,7 +131,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         private final ImageButton deleteButton;
         private final ImageButton modifyButton;
         private final CheckBox insuranceCheckbox;
-        private WeakReference<VertragBaumaschinenListClickListener> listenerRef;
+        private final WeakReference<VertragBaumaschinenListClickListener> listenerRef;
         public CustomEditTextListener customEditTextListener;
 
         public AddVertragViewHolder(@NonNull View itemView, VertragBaumaschinenListClickListener vertragBaumaschinenListClickListener, CustomEditTextListener customEditTextListener) {
@@ -157,9 +146,9 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             priceForRent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                 }
             });
+
             deleteButton = itemView.findViewById(R.id.deleteButton);
             modifyButton = itemView.findViewById(R.id.modifyButton);
             insuranceCheckbox = itemView.findViewById(R.id.insuranceCheckBox);
@@ -168,9 +157,6 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             deleteButton.setOnClickListener(this);
             modifyButton.setVisibility(View.GONE);
             insuranceCheckbox.setOnClickListener(this);
-            //sumRentPrice.add(((AddVertragActivity)context).calcPriceForRent());
-            //Log.d(TAG, "Summe Preis des VertragssumRentPrice" + sumRentPrice.toString());
-
         }
 
         @Override
@@ -180,14 +166,11 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
                 removeAddVertragBaumaschine(getAdapterPosition());
                 //clear the checkbox if an already deleted Baumaschine is set again in Stueckliste
                 insuranceCheckbox.setChecked(false);
-
-
             }
+
             if (v.getId() == insuranceCheckbox.getId()) {
                 stueckliste.get(getAdapterPosition()).setInsurance(true);
             }
-
-
         }
     }
 
@@ -203,28 +186,21 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
             //stueckliste.get(position).setPrice(((AddVertragActivity) context).calcPriceForRent());
             try {
                 ((AddVertragActivity) context).clearDiscount();
-            } catch (Resources.NotFoundException nf) {
-
+            } catch (Resources.NotFoundException ignored) {
             }
-
-
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             try {
                 stueckliste.get(position).setPrice(new BigDecimal(s.toString().replace("€", "")));
-            } catch (NumberFormatException nf) {
+            } catch (NumberFormatException ignored) {
             }
             ((AddVertragActivity) context).calcSumOfRent();
-
-
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-
-
         }
     }
 }
@@ -232,9 +208,7 @@ public class AddVertragBaumaschineListAdapter extends RecyclerView.Adapter<AddVe
         - adding an interface variable to the adapter class (in this case: mBaumaschinenListListener)
         - also expand the constructor of the adapter class with an parameter of this interface (in this case:     public AddVertragBaumaschineListAdapter(IGetBaumaschinenFromAdapter mBaumaschinenListListener) {
         - also create an Instance of the interface in the ViewHolder and expand the constructor as well
-    }
-
-    */
+*/
 
 
 

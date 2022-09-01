@@ -12,7 +12,7 @@ import com.example.rentalApplication.persistence.BaumaschinenRepository;
 import java.util.List;
 
 public class BaumaschinenViewModel extends AndroidViewModel {
-    private BaumaschinenRepository baumaschinenRepository;
+    private final BaumaschinenRepository baumaschinenRepository;
     private final LiveData<List<Baumaschine>> allBaumaschinen;
     private final LiveData<List<Baumaschine>> allArchivedBaumaschinen;
     private final LiveData<List<Baumaschine>> allBaumaschinenForSpinner;

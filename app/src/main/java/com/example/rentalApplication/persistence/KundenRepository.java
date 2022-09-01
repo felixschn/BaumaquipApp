@@ -14,9 +14,9 @@ import java.util.concurrent.ExecutionException;
 
 public class KundenRepository {
     private static KundenRepository INSTANCE = null;
-    private KundenDao kundenDao;
-    private LiveData<List<Kunde>> allKunden;
-    private LiveData<List<Kunde>> allArchivedKunden;
+    private final KundenDao kundenDao;
+    private final LiveData<List<Kunde>> allKunden;
+    private final LiveData<List<Kunde>> allArchivedKunden;
 
     private KundenRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
@@ -64,7 +64,7 @@ public class KundenRepository {
 
 
     private static class InsertAsyncTask extends AsyncTask<Kunde, Void, Void> {
-        private KundenDao mAsyncTaskDao;
+        private final KundenDao mAsyncTaskDao;
 
         InsertAsyncTask(KundenDao dao) {
             this.mAsyncTaskDao = dao;
@@ -83,7 +83,7 @@ public class KundenRepository {
     }
 
         private static class UpdateAsyncTask extends AsyncTask<Kunde, Void, Void> {
-            private KundenDao mAsyncTaskDao;
+            private final KundenDao mAsyncTaskDao;
 
             public UpdateAsyncTask(KundenDao kundenDao) {
                 this.mAsyncTaskDao = kundenDao;
@@ -97,7 +97,7 @@ public class KundenRepository {
         }
 
         private static class ModifyAsyncTask extends AsyncTask<Integer, Void, Kunde> {
-            private KundenDao mAsyncTaskDao;
+            private final KundenDao mAsyncTaskDao;
 
             public ModifyAsyncTask(KundenDao mAsyncTaskDao) {
                 this.mAsyncTaskDao = mAsyncTaskDao;
@@ -111,7 +111,7 @@ public class KundenRepository {
         }
 
         private class DeleteAsyncTask extends AsyncTask<Kunde, Void, Void> {
-            private KundenDao mAsyncTaskDao;
+            private final KundenDao mAsyncTaskDao;
 
             public DeleteAsyncTask(KundenDao mAsyncTaskDao) {
                 this.mAsyncTaskDao = mAsyncTaskDao;

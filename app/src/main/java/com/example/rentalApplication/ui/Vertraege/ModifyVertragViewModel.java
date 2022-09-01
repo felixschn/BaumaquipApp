@@ -11,7 +11,7 @@ import com.example.rentalApplication.persistence.VertragRepository;
 import java.util.concurrent.ExecutionException;
 
 public class ModifyVertragViewModel extends AndroidViewModel {
-    private VertragRepository vertragRepository;
+    private final VertragRepository vertragRepository;
     private static final String TAG = "ModifyVertragViewModel";
 
     public ModifyVertragViewModel(@NonNull Application application){

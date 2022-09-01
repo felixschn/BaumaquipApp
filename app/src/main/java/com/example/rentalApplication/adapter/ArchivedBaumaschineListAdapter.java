@@ -61,17 +61,17 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             holder.baumaschineDegreeOfWear.setEnabled(false);
             holder.baumaschineDegreeOfWear.setText("-");
 
-
             if (current.getOperatingHours() != null) {
                 holder.baumaschineOperatingHours.setEnabled(true);
                 holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
-
             }
-            if(current.getAmountOfGas() != null){
+
+            if (current.getAmountOfGas() != null) {
                 holder.baumaschineAmountOfGas.setEnabled(true);
                 holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
             }
-            if(current.getDegreeOfWear() != null){
+
+            if (current.getDegreeOfWear() != null) {
                 holder.baumaschineDegreeOfWear.setEnabled(true);
                 holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
             }
@@ -79,10 +79,7 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             boolean isExpanded = baumaschineList.get(position).getExpanded();
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-
-
         }
-
     }
 
     @Override
@@ -104,7 +101,6 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
 
     }
 
-
     class ArchivedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView baumaschineName;
         private final TextView baumaschineAnzahl;
@@ -118,7 +114,6 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
         private final ImageButton deleteButton;
         private final ConstraintLayout expandableConstraintLayout;
         private final WeakReference<BaumaschinenClickListener> listenerRef;
-
 
         public ArchivedViewHolder(@NonNull View itemView, BaumaschinenClickListener baumaschinenClickListener) {
             super(itemView);
@@ -139,7 +134,6 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
             itemView.setOnClickListener(this);
             modifyButton.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
-
         }
 
         @Override
@@ -163,12 +157,10 @@ public class ArchivedBaumaschineListAdapter extends RecyclerView.Adapter<Archive
                 baumaschine.setExpanded(!baumaschine.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
+
             listenerRef.get().onPositionClicked(getAdapterPosition());
-
-
         }
     }
-
 }
 
 

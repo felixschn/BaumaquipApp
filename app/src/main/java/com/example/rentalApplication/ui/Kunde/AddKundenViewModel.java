@@ -11,7 +11,7 @@ import com.example.rentalApplication.persistence.KundenRepository;
 import java.util.concurrent.ExecutionException;
 
 public class AddKundenViewModel extends AndroidViewModel {
-    private KundenRepository kundenRepository;
+    private final KundenRepository kundenRepository;
 
     public AddKundenViewModel(@NonNull Application application) {
         super(application);

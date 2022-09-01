@@ -278,7 +278,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
 
 
     public class InputFilterMinAmount implements InputFilter {
-        private int minValue;
+        private final int minValue;
 
         public InputFilterMinAmount(int minValue) {
             this.minValue = minValue;

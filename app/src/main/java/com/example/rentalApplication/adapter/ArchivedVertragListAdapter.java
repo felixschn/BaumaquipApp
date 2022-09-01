@@ -32,10 +32,8 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
     private List<Vertrag> vertragList = new ArrayList<>();
     private final VertragClickListener vertragClickListener;
     private Context context;
-    private ArchivedVertragActivity archivedVertragActivity;
-    private ModifyKundenViewModel modifyKundenViewModel;
-
-
+    private final ArchivedVertragActivity archivedVertragActivity;
+    private final ModifyKundenViewModel modifyKundenViewModel;
 
     public ArchivedVertragListAdapter(VertragClickListener listener, ArchivedVertragActivity archivedVertragActivity) {
         this.vertragClickListener = listener;
@@ -53,17 +51,14 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
 
     @Override
     public void onBindViewHolder(@NonNull ArchivedVertragListAdapter.ArchivedVertragViewHolder holder, int position) {
-        //kundenViewModel = new ViewModelProvider().get(BaumaschinenViewModel.class);
         if (vertragList != null) {
             Vertrag current = vertragList.get(position);
             holder.archiveVertragId.setText(String.valueOf(current.getIdVertrag()));
-            archivedVertragActivity.
-            modifyKundenViewModel = new ViewModelProvider((ArchivedVertragActivity)context).get(ModifyKundenViewModel.class);
+            archivedVertragActivity.modifyKundenViewModel = new ViewModelProvider((ArchivedVertragActivity) context).get(ModifyKundenViewModel.class);
             String kundenName = modifyKundenViewModel.loadKundeById(current.getIdKunde()).getName();
             holder.archivedVertragKunde.setText(kundenName);
             holder.archivedVertragStartLeihe.setText(setDate(current.getBeginnVertrag()));
             holder.archivedVertragEndeLeihe.setText(setDate(current.getEndeVertrag()));
-
         }
     }
 
@@ -90,7 +85,6 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
     public void deleteVertrag(Vertrag vertrag) {
         archivedVertragActivity.deleteArchivedVertrag(vertrag);
     }
-    //public void restoreVertrag(int id){archivedVertragActivity.restoreVertrag(id);}
 
     class ArchivedVertragViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView archiveVertragId;
@@ -99,8 +93,7 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
         private final TextView archivedVertragEndeLeihe;
         private final ImageButton deleteButton;
         private final ImageButton modifyButton;
-        private WeakReference<VertragClickListener> listenerRef;
-
+        private final WeakReference<VertragClickListener> listenerRef;
 
         public ArchivedVertragViewHolder(@NonNull View itemView, VertragClickListener vertragClickListener) {
             super(itemView);
@@ -118,8 +111,6 @@ public class ArchivedVertragListAdapter extends RecyclerView.Adapter<ArchivedVer
             deleteButton.setOnClickListener(this);
             modifyButton.setOnClickListener(this);
             modifyButton.setImageResource(R.drawable.ic_baseline_search_24);
-
-
         }
 
         @Override

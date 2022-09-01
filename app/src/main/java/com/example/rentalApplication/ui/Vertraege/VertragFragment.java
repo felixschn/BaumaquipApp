@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class VertragFragment extends Fragment implements VertragClickListener {
 
-    private ArrayList<Vertrag> mVertrag = new ArrayList<>();
+    private final ArrayList<Vertrag> mVertrag = new ArrayList<>();
     private VertragListAdapter vertragListAdapter;
     private RecyclerView recyclerView;
     private VertragViewModel vertragViewModel;
@@ -44,7 +44,7 @@ public class VertragFragment extends Fragment implements VertragClickListener {
     private ModifyVertragViewModel modifyVertragViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private Vertrag archivedVertrag;
-    private static String TAG = "VertragFragment.java";
+    private static final String TAG = "VertragFragment.java";
     private Context context;
 
     // TODO: Rename parameter arguments, choose names that match

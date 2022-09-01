@@ -60,8 +60,8 @@ public class CustomKundeAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.custom_spinner_kunde, null);
         TextView name = (TextView) view.findViewById(R.id.customSpinnerKundeName);
         TextView location = (TextView) view.findViewById(R.id.customSpinnerKundeLocation);
-        name.setText(current.getName().toString());
-        location.setText(current.getLocation().toString());
+        name.setText(current.getName());
+        location.setText(current.getLocation());
         return view;
     }
 }

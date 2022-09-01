@@ -16,11 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rentalApplication.R;
 import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.ui.Baumaschine.AddBaumaschinenActivity;
-import com.example.rentalApplication.ui.Baumaschine.BaumaschineRentedAmountChangedListener;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenClickListener;
 import com.example.rentalApplication.ui.Baumaschine.BaumaschinenFragment;
-
-import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -32,10 +29,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
     private List<Baumaschine> baumaschineList = new ArrayList<>();
     private Context context;
     private BaumaschinenListAdapter baumaschinenListAdapter;
-    private static String TAG = "BaumaschinenListAdapter.java";
-    private BaumaschinenFragment baumaschinenFragment;
+    private static final String TAG = "BaumaschinenListAdapter.java";
+    private final BaumaschinenFragment baumaschinenFragment;
     private final BaumaschinenClickListener listener;
-
 
     public BaumaschinenListAdapter(BaumaschinenFragment baumaschinenFragment, BaumaschinenClickListener listener) {
         this.baumaschinenFragment = baumaschinenFragment;
@@ -72,13 +68,14 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             if (current.getOperatingHours() != null) {
                 holder.baumaschineOperatingHours.setEnabled(true);
                 holder.baumaschineOperatingHours.setText(current.getOperatingHours().toString());
-
             }
-            if(current.getAmountOfGas() != null){
+
+            if (current.getAmountOfGas() != null) {
                 holder.baumaschineAmountOfGas.setEnabled(true);
                 holder.baumaschineAmountOfGas.setText(current.getAmountOfGas());
             }
-            if(current.getDegreeOfWear() != null){
+
+            if (current.getDegreeOfWear() != null) {
                 holder.baumaschineDegreeOfWear.setEnabled(true);
                 holder.baumaschineDegreeOfWear.setText(current.getDegreeOfWear());
             }
@@ -87,7 +84,6 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             //set Visibility to visible when isExpanded = true and to invisible when isExpanded is false
             holder.expandableConstraintLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         }
-
     }
 
     @Override
@@ -104,9 +100,6 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         notifyDataSetChanged();
     }
 
-
-
-
     class BaumaschinenViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView baumaschineName;
         private final TextView baumaschineAnzahl;
@@ -120,7 +113,7 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
         private final ImageButton modifyButton;
         private final ImageButton deleteButton;
         private final ConstraintLayout expandableConstraintLayout;
-        private WeakReference<BaumaschinenClickListener> listenerRef;
+        private final WeakReference<BaumaschinenClickListener> listenerRef;
 
         public BaumaschinenViewHolder(@NonNull View itemView, BaumaschinenClickListener baumaschinenClickListener) {
             super(itemView);
@@ -138,45 +131,9 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
             modifyButton = itemView.findViewById(R.id.modifyButton);
             deleteButton = itemView.findViewById(R.id.deleteButton);
 
-
             itemView.setOnClickListener(this);
             modifyButton.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
-
-           /* //create OnClickListener to baumaschineName expand the recyclerview after userclick on the name
-            baumaschineName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                    baumaschine.setExpanded(!baumaschine.getExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
-
-            modifyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Modify Button clicked!");
-                    Baumaschine baumaschine = baumaschineList.get(getAdapterPosition());
-                    Log.d("BaumaschinenListAdapter.java", "RowID Baumaschine: " + baumaschine.getRowid());
-                    Intent modifyBaumaschineIntent = new Intent(context, AddBaumaschinenActivity.class);
-                    modifyBaumaschineIntent.putExtra("baumaschineneRowId", baumaschine.getRowid());
-                    modifyBaumaschineIntent.putExtra("Class", "BaumaschinenListAdapter");
-                    context.startActivity(modifyBaumaschineIntent);
-
-                }
-            });
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Delete Button clicked");
-                    int position = getAdapterPosition();
-                    baumaschinenFragment.archiveBaumaschine(baumaschineList.get(getAdapterPosition()).getRowid());
-                    removeBaumaschine(getAdapterPosition());
-
-
-                }
-            });*/
         }
 
         public void removeBaumaschine(int position) {
@@ -207,11 +164,8 @@ public class BaumaschinenListAdapter extends RecyclerView.Adapter<BaumaschinenLi
                 baumaschineList.get(getAdapterPosition()).setExpanded(!baumaschine.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
+
             listenerRef.get().onPositionClicked(getAdapterPosition());
-
-
         }
     }
-
-
 }

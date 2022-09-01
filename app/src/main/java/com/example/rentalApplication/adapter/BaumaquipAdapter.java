@@ -25,7 +25,6 @@ public class BaumaquipAdapter extends FragmentStateAdapter {
                 return new KundenFragment();
             default:
                 return new VertragFragment();
-
         }
     }
 

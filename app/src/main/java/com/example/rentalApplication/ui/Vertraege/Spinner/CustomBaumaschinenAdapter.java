@@ -22,7 +22,7 @@ public class CustomBaumaschinenAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     private List<Baumaschine> baumaschineList = new ArrayList<>();
-    private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
+    private final AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
 
 
     public CustomBaumaschinenAdapter(Context context) {

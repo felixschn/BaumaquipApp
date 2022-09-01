@@ -32,7 +32,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
     private List<Stuecklisteneintrag> stuecklisteneintragVertragDetailsList;
     private List<Integer> baumaschineContractAmount;
     private Context context;
-    private VertragDetailsActivity vertragDetailsActivity;
+    private final VertragDetailsActivity vertragDetailsActivity;
     private final VertragDetailsClickListener vertragDetailsClickListener;
     private Baumaschine currentBaumaschine;
     private Vertrag vertrag;
@@ -59,7 +59,6 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         holder.baumaschineVertragDetailsOperatingHours.setText(String.valueOf(current.getOperatingHours()));
         holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
         holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
-
         holder.baumaschineVertragDetailsOperatingHours.setEnabled(false);
         holder.baumaschineVertragDetailsOperatingHours.setText("-");
         holder.baumschineVertragDetailsAmountOfGas.setEnabled(false);
@@ -67,26 +66,24 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         holder.baumaschineVertragDetailsDegreeOfWear.setEnabled(false);
         holder.baumaschineVertragDetailsDegreeOfWear.setText("-");
 
-        if(current.getOperatingHours() != null){
+        if (current.getOperatingHours() != null) {
             holder.baumaschineVertragDetailsOperatingHours.setEnabled(true);
             holder.baumaschineVertragDetailsOperatingHours.setText(current.getOperatingHours().toString());
         }
 
-        if(current.getAmountOfGas() != null){
+        if (current.getAmountOfGas() != null) {
             holder.baumschineVertragDetailsAmountOfGas.setEnabled(true);
             holder.baumschineVertragDetailsAmountOfGas.setText(current.getAmountOfGas());
         }
 
-        if(current.getDegreeOfWear() != null){
+        if (current.getDegreeOfWear() != null) {
             holder.baumaschineVertragDetailsDegreeOfWear.setEnabled(true);
             holder.baumaschineVertragDetailsDegreeOfWear.setText(current.getDegreeOfWear());
         }
 
-
         boolean isExpanded = baumaschineVertragDetailsList.get(position).getExpanded();
         holder.expandableConstraintLayoutVertagDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
     }
-
 
     @Override
     public int getItemCount() {
@@ -107,11 +104,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         private final TextView vertragDetailsBaumaschineName;
         private final TextView textVertragDetailsBaumaschinenAnzahl;
         private final TextView vertragDetailsBaumaschineAnzahl;
-
-
         private final ImageButton deleteButtonVertragDetails;
         private final ImageButton modifyButtonVertragDetails;
-
         private final ConstraintLayout expandableConstraintLayoutVertagDetails;
         private final TextView textVertragDetailsOperatingHours;
         private final TextView baumaschineVertragDetailsOperatingHours;
@@ -119,9 +113,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
         private final TextView baumschineVertragDetailsAmountOfGas;
         private final TextView textVertragDetailsDegreeOfWear;
         private final TextView baumaschineVertragDetailsDegreeOfWear;
-
         private final WeakReference<VertragDetailsClickListener> listenerRef;
-
 
         public VertragDetailsViewHolder(@NonNull View itemView, VertragDetailsClickListener vertragDetailsClickListener) {
             super(itemView);
@@ -129,11 +121,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
             vertragDetailsBaumaschineName = itemView.findViewById(R.id.vertragDetailsBaumaschineName);
             textVertragDetailsBaumaschinenAnzahl = itemView.findViewById(R.id.textVertragDetailsBaumaschinenAnzahl);
             vertragDetailsBaumaschineAnzahl = itemView.findViewById(R.id.vertragDetailsBaumaschineAnzahl);
-
-
             deleteButtonVertragDetails = itemView.findViewById(R.id.deleteButton);
             modifyButtonVertragDetails = itemView.findViewById(R.id.modifyButton);
-
             expandableConstraintLayoutVertagDetails = itemView.findViewById(R.id.expandableConstraintLayoutVertagDetails);
             textVertragDetailsOperatingHours = itemView.findViewById(R.id.textVertragDetailsOperatingHours);
             baumaschineVertragDetailsOperatingHours = itemView.findViewById(R.id.baumaschineVertragDetailsOperatingHours);
@@ -144,14 +133,14 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
 
             itemView.setOnClickListener(this);
             deleteButtonVertragDetails.setOnClickListener(this);
+
             if (((VertragDetailsActivity) context).hideButtonStatus()) {
                 deleteButtonVertragDetails.setVisibility(View.GONE);
             } else {
                 deleteButtonVertragDetails.setVisibility(View.VISIBLE);
             }
+
             modifyButtonVertragDetails.setVisibility(View.GONE);
-
-
         }
 
         @Override
@@ -178,8 +167,7 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
                     stuecklisteneintragVertragDetailsList.remove(getAdapterPosition());
                     baumaschineVertragDetailsList.remove(baumaschine);
                     notifyItemRemoved(getAdapterPosition());
-                }
-                else{
+                } else {
                     Toast.makeText(context, R.string.removeStuecklisteneintrag, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -188,8 +176,8 @@ public class VertragDetailsListAdapter extends RecyclerView.Adapter<VertragDetai
                 baumaschine.setExpanded(!baumaschine.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
-            listenerRef.get().onPositionClicked(getAdapterPosition());
 
+            listenerRef.get().onPositionClicked(getAdapterPosition());
         }
     }
 }

@@ -58,13 +58,13 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
     private ModifyKundenViewModel modifyKundenViewModel;
     private ModifyBaumaschineViewModel modifyBaumaschineViewModel;
     private AddStuecklisteneintragViewModel addStuecklisteneintragViewModel;
-    private List<Stuecklisteneintrag> stuecklisteneintragListFromVertrag = new ArrayList<>();
-    private List<Stuecklisteneintrag> archivedStuecklisteneintragListFromVertrag = new ArrayList<>();
+    private final List<Stuecklisteneintrag> stuecklisteneintragListFromVertrag = new ArrayList<>();
+    private final List<Stuecklisteneintrag> archivedStuecklisteneintragListFromVertrag = new ArrayList<>();
     private ExtendedFloatingActionButton generatePDFbtn;
 
     // declaring width and height for our PDF file.
-    private int pageHeight = mmToPoints(297);
-    private int pagewidth = mmToPoints(210);
+    private final int pageHeight = mmToPoints(297);
+    private final int pagewidth = mmToPoints(210);
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
 

@@ -13,9 +13,9 @@ import java.util.concurrent.ExecutionException;
 
 public class VertragRepository {
     private static VertragRepository INSTANCE = null;
-    private VertragDao vertragDao;
-    private LiveData<List<Vertrag>> allVertrag;
-    private LiveData<List<Vertrag>> allArchivedVertrag;
+    private final VertragDao vertragDao;
+    private final LiveData<List<Vertrag>> allVertrag;
+    private final LiveData<List<Vertrag>> allArchivedVertrag;
 
     private VertragRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
@@ -72,7 +72,7 @@ public class VertragRepository {
 
 
     private static class InsertAsyncTask extends AsyncTask<Vertrag, Void, Void> {
-        private VertragDao mAsyncTaskDao;
+        private final VertragDao mAsyncTaskDao;
 
         InsertAsyncTask(VertragDao dao) {
             this.mAsyncTaskDao = dao;
@@ -86,7 +86,7 @@ public class VertragRepository {
     }
 
     private static class ModifyAsyncTask extends AsyncTask<Integer, Void, Vertrag> {
-        private VertragDao mAsyncTaskDao;
+        private final VertragDao mAsyncTaskDao;
 
         ModifyAsyncTask(VertragDao mAsyncTaskDao) {
             this.mAsyncTaskDao = mAsyncTaskDao;
@@ -100,7 +100,7 @@ public class VertragRepository {
     }
 
     private static class DeleteAsyncTask extends AsyncTask<Vertrag, Void, Void> {
-        private VertragDao mAsyncTaskDao;
+        private final VertragDao mAsyncTaskDao;
 
         DeleteAsyncTask(VertragDao vertragDao) {
             this.mAsyncTaskDao = vertragDao;
@@ -114,7 +114,7 @@ public class VertragRepository {
     }
 
     private static class UpdateAsyncTask extends AsyncTask<Vertrag, Void, Void> {
-        private VertragDao mAsynTaskDao;
+        private final VertragDao mAsynTaskDao;
 
         UpdateAsyncTask(VertragDao vertragDao) {
             this.mAsynTaskDao = vertragDao;
@@ -128,7 +128,7 @@ public class VertragRepository {
     }
 
     private static class AllExistingVertragAsyncTask extends AsyncTask<Void, Void, List<Vertrag>> {
-        private VertragDao mAsyncTaskDoa;
+        private final VertragDao mAsyncTaskDoa;
 
         public AllExistingVertragAsyncTask(VertragDao mAsyncTaskDoa) {
             this.mAsyncTaskDoa = mAsyncTaskDoa;

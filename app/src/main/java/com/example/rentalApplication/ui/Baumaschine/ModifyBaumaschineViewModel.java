@@ -10,7 +10,7 @@ import com.example.rentalApplication.models.Baumaschine;
 import com.example.rentalApplication.persistence.BaumaschinenRepository;
 
 public class ModifyBaumaschineViewModel extends AndroidViewModel {
-    private BaumaschinenRepository baumaschinenRepository;
+    private final BaumaschinenRepository baumaschinenRepository;
     private static final String TAG = "ModifyBaumaschineViewModel";
 
     public ModifyBaumaschineViewModel(@NonNull Application application) {

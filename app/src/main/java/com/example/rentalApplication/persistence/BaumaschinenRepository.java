@@ -13,12 +13,12 @@ import java.util.concurrent.ExecutionException;
 public class BaumaschinenRepository {
     private static BaumaschinenRepository INSTANCE = null;
 
-    private BaumaschinenDao baumaschinenDao;
-    private LiveData<List<Baumaschine>> allBaumaschinen;
-    private LiveData<List<Baumaschine>> allBaumaschinenForSpinner;
-    private LiveData<List<Baumaschine>> allArchivedBaumaschinen;
+    private final BaumaschinenDao baumaschinenDao;
+    private final LiveData<List<Baumaschine>> allBaumaschinen;
+    private final LiveData<List<Baumaschine>> allBaumaschinenForSpinner;
+    private final LiveData<List<Baumaschine>> allArchivedBaumaschinen;
     private Baumaschine anyBaumaschine;
-    private String DB_NAME = "rent_db";
+    private final String DB_NAME = "rent_db";
 
     private BaumaschinenRepository(Application application) {
         RentDatabase db = RentDatabase.getDatabase(application);
@@ -27,8 +27,6 @@ public class BaumaschinenRepository {
         allBaumaschinenForSpinner = baumaschinenDao.getAllBaumaschinenForSpinner();
         allArchivedBaumaschinen = baumaschinenDao.getAllArchivedBaumaschinen();
     }
-
-    ;
 
     public static synchronized BaumaschinenRepository getInstance(Application application) {
         if (null == INSTANCE) {
@@ -84,7 +82,7 @@ public class BaumaschinenRepository {
     }
 
     private static class InsertAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
-        private BaumaschinenDao mAsyncTaskDao;
+        private final BaumaschinenDao mAsyncTaskDao;
 
         InsertAsyncTask(BaumaschinenDao dao) {
             this.mAsyncTaskDao = dao;
@@ -98,7 +96,7 @@ public class BaumaschinenRepository {
     }
 
     private static class UpdateAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
-        private BaumaschinenDao mAsyncTaskDao;
+        private final BaumaschinenDao mAsyncTaskDao;
 
         UpdateAsyncTask(BaumaschinenDao dao) {
             this.mAsyncTaskDao = dao;
@@ -112,7 +110,7 @@ public class BaumaschinenRepository {
     }
 
     private static class DeleteAsyncTask extends AsyncTask<Baumaschine, Void, Void> {
-        private BaumaschinenDao mAsyncTaskDao;
+        private final BaumaschinenDao mAsyncTaskDao;
 
         DeleteAsyncTask(BaumaschinenDao dao) {
             this.mAsyncTaskDao = dao;
@@ -127,7 +125,7 @@ public class BaumaschinenRepository {
 
 
     private static class ModifyAsyncTask extends AsyncTask<Integer, Void, Baumaschine> {
-        private BaumaschinenDao mAsyncTaskDao;
+        private final BaumaschinenDao mAsyncTaskDao;
 
         ModifyAsyncTask(BaumaschinenDao dao) {
             this.mAsyncTaskDao = dao;

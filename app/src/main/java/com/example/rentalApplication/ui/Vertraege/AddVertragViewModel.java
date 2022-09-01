@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AddVertragViewModel extends AndroidViewModel {
-    private VertragRepository vertragRepository;
+    private final VertragRepository vertragRepository;
     private final LiveData<List<Vertrag>> allVertrag;
 
     public AddVertragViewModel(@NonNull Application application) {

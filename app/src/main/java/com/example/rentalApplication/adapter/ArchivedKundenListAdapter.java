@@ -39,7 +39,6 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
         context = parent.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.recyclerview_kunden_item, parent, false);
         return new ArchivedKundenListAdapter.ArchivedKundeViewHolder(itemView, kundenClickListener);
-
     }
 
     @Override
@@ -81,7 +80,6 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
         archivedKundenActivity.deleteKunde(kunde);
     }
 
-
     class ArchivedKundeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView kundenName;
         private final TextView kundenStrasse;
@@ -117,39 +115,6 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
             itemView.setOnClickListener(this);
             modifyButtonKunde.setOnClickListener(this);
             deleteButtonKunde.setOnClickListener(this);
-
-            /*kundenName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Kunde kunde = kundeList.get(getAdapterPosition());
-                    kunde.setExpanded(!kunde.getExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
-
-            modifyButtonKunde.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Kunde kunde = kundeList.get(getAdapterPosition());
-                    archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getRowid());
-                }
-            });
-
-            deleteButtonKunde.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Kunde kunde = kundeList.get(getAdapterPosition());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage(context.getResources().getString(R.string.alertDialog));
-                    builder.setCancelable(true);
-                    builder.setPositiveButton(context.getResources().getString(R.string.okDialog), (dialog, which) -> deleteKunde(kunde));
-                    builder.setNegativeButton(context.getResources().getString(R.string.cancelDialog), (dialog, which) -> dialog.cancel());
-                    AlertDialog deleteAlert = builder.create();
-                    deleteAlert.show();
-
-
-                }
-            });*/
         }
 
         @Override
@@ -159,6 +124,7 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
             if (v.getId() == modifyButtonKunde.getId()) {
                 archivedKundenActivity.restoreKunde(kundeList.get(getAdapterPosition()).getIdKunde());
             }
+
             if (v.getId() == deleteButtonKunde.getId()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getResources().getString(R.string.alertDialog));
@@ -171,6 +137,7 @@ public class ArchivedKundenListAdapter extends RecyclerView.Adapter<ArchivedKund
                 kunde.setExpanded(!kunde.getExpanded());
                 notifyItemChanged(getAdapterPosition());
             }
+
             listenerRef.get().onPositionClicked(getAdapterPosition());
         }
     }
