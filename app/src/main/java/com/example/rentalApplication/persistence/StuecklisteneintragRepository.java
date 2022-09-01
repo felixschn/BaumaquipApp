@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 public class StuecklisteneintragRepository {
     private static StuecklisteneintragRepository INSTANCE = null;
-    private StuecklisteneintragDao stuecklisteneintragDao;
+    private final StuecklisteneintragDao stuecklisteneintragDao;
     private AsyncTaskStuecklisteneintragIdResponse asyncTaskStuecklisteneintragIdResponse;
 
     private StuecklisteneintragRepository(Application application) {
@@ -98,7 +98,7 @@ public class StuecklisteneintragRepository {
 
 
     private static class InsertAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Long> {
-        private StuecklisteneintragDao mAsyncTaskDao;
+        private final StuecklisteneintragDao mAsyncTaskDao;
 
         public long insertId;
 
@@ -119,7 +119,7 @@ public class StuecklisteneintragRepository {
     }
 
     private static class StuecklisteneintragByIdAsyncTask extends AsyncTask<Integer, Void, Stuecklisteneintrag> {
-        private StuecklisteneintragDao mAsyncTaskDao;
+        private final StuecklisteneintragDao mAsyncTaskDao;
 
         StuecklisteneintragByIdAsyncTask(StuecklisteneintragDao dao) {
             this.mAsyncTaskDao = dao;
@@ -132,7 +132,8 @@ public class StuecklisteneintragRepository {
     }
 
     private static class AmountofCurrentlyRentedAsyncTask extends AsyncTask<Integer, Void, List<Integer>> {
-        private StuecklisteneintragDao mAsyncTaskDao;
+        private final StuecklisteneintragDao mAsyncTaskDao;
+        private LocalDate today = LocalDate.now();
 
         public AmountofCurrentlyRentedAsyncTask(StuecklisteneintragDao dao) {
             this.mAsyncTaskDao = dao;
@@ -140,12 +141,12 @@ public class StuecklisteneintragRepository {
 
         @Override
         protected List<Integer> doInBackground(Integer... integers) {
-            return mAsyncTaskDao.getAmountOfCurrentlyRentedMachines(integers[0]);
+            return mAsyncTaskDao.getAmountOfCurrentlyRentedMachines(integers[0], today);
         }
     }
 
     private static class UpdateAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Void> {
-        private StuecklisteneintragDao mAsyncTaskDao;
+        private final StuecklisteneintragDao mAsyncTaskDao;
 
         public UpdateAsyncTask(StuecklisteneintragDao stuecklisteneintragDao) {
             this.mAsyncTaskDao = stuecklisteneintragDao;
@@ -159,7 +160,7 @@ public class StuecklisteneintragRepository {
     }
 
     private static class ModifyAsyncTask extends AsyncTask<Integer, Void, List<Stuecklisteneintrag>> {
-        private StuecklisteneintragDao mAsyncTaskDao;
+        private final StuecklisteneintragDao mAsyncTaskDao;
 
         ModifyAsyncTask(StuecklisteneintragDao stuecklisteneintragDao) {
             this.mAsyncTaskDao = stuecklisteneintragDao;
@@ -172,7 +173,7 @@ public class StuecklisteneintragRepository {
     }
 
     private static class DeleteAsyncTask extends AsyncTask<Stuecklisteneintrag, Void, Void> {
-        private StuecklisteneintragDao mAsyncTaskDao;
+        private final StuecklisteneintragDao mAsyncTaskDao;
 
         DeleteAsyncTask(StuecklisteneintragDao stuecklisteneintragDao) {
             this.mAsyncTaskDao = stuecklisteneintragDao;
@@ -186,9 +187,10 @@ public class StuecklisteneintragRepository {
     }
 
     private static class StuecklisteneintragForDateAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>> {
-        private StuecklisteneintragDao mAsyncTaskDao;
-        private LocalDate start, end;
-        private int id;
+        private final StuecklisteneintragDao mAsyncTaskDao;
+        private final LocalDate start;
+        private final LocalDate end;
+        private final int id;
 
         public StuecklisteneintragForDateAsyncTask(StuecklisteneintragDao mAsyncDao, LocalDate start, LocalDate end, int id) {
             this.mAsyncTaskDao = mAsyncDao;
@@ -204,8 +206,8 @@ public class StuecklisteneintragRepository {
     }
 
     private static class AllStuecklisteneintragAsyncTask extends AsyncTask<Void, Void, List<Stuecklisteneintrag>> {
-        private StuecklisteneintragDao mAsyncTaskDao;
-        private Boolean isArchived;
+        private final StuecklisteneintragDao mAsyncTaskDao;
+        private final Boolean isArchived;
 
         public AllStuecklisteneintragAsyncTask(StuecklisteneintragDao mAsyncTaskDao, Boolean isArchived) {
             this.mAsyncTaskDao = mAsyncTaskDao;
