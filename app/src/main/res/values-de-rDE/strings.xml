@@ -89,6 +89,7 @@
     <string name="insurance">versichert</string>
     <string name="startDate">Startdatum:</string>
     <string name="endDate">Ablaufdatum:</string>
+    <string name="sumOfRent">Summe:</string>
 
     <!--ToastMessages-->
     <string name="startDateBeforCurrentDate">Startdatum kann nicht in der Vergangenheit liegen!</string>

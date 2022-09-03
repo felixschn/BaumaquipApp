@@ -68,7 +68,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
     private Button addVertragButton;
     private static final String TAG = "AddVertragActivity";
     private FloatingActionButton increaseButton, decreaseButton, addBaumaschinenListButton;
-    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView, sumOfRent, discountTextView;
+    private TextView amountTextView, emptyRecyclerViewTextView, announceRecyclerView, sumOfRent, discountTextView, textSumOfRent;
     int amountInt, maxAmount;
     private CustomBaumaschinenAdapter customBaumaschinenAdapter;
     private RecyclerView recyclerView;
@@ -197,6 +197,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 new DatePickerDialog(AddVertragActivity.this, dateBeginnLeihe, begin.getYear(), begin.getMonthValue() - 1, begin.getDayOfMonth()).show();
                 addVertragBaumaschineListAdapter.clearAddVertragBaumaschinenRecyclerView();
                 sumOfRent.setVisibility(View.INVISIBLE);
+                textSumOfRent.setVisibility(View.INVISIBLE);
                 discountOfRent.setVisibility(View.INVISIBLE);
                 switchDiscountMode.setVisibility(View.INVISIBLE);
                 recyclerViewVisibility();
@@ -209,6 +210,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
                 new DatePickerDialog(AddVertragActivity.this, dateEndeLeihe, end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth()).show();
                 addVertragBaumaschineListAdapter.clearAddVertragBaumaschinenRecyclerView();
                 sumOfRent.setVisibility(View.INVISIBLE);
+                textSumOfRent.setVisibility(View.INVISIBLE);
                 discountOfRent.setVisibility(View.INVISIBLE);
                 switchDiscountMode.setVisibility(View.INVISIBLE);
                 recyclerViewVisibility();
@@ -229,10 +231,12 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
 
         discountTextView = findViewById(R.id.textViewDiscount);
         sumOfRent = findViewById(R.id.sumOfRent);
+        textSumOfRent = findViewById(R.id.textSumOfRent);
         discountOfRent = findViewById(R.id.editTextDiscountofRent);
         switchDiscountMode = findViewById(R.id.switchDiscountMode);
         discountTextView.setVisibility(View.INVISIBLE);
         sumOfRent.setVisibility(View.INVISIBLE);
+        textSumOfRent.setVisibility(View.INVISIBLE);
         discountOfRent.setVisibility(View.INVISIBLE);
         switchDiscountMode.setVisibility(View.INVISIBLE);
 
@@ -449,6 +453,7 @@ public class AddVertragActivity extends AppCompatActivity implements AdapterView
             emptyRecyclerViewTextView.setVisibility(View.GONE);
             sumOfRent.setText(String.format("%s€", calcSumOfRent().toString()));
             sumOfRent.setVisibility(View.VISIBLE);
+            textSumOfRent.setVisibility(View.VISIBLE);
             discountTextView.setVisibility(View.VISIBLE);
             discountOfRent.setText("0");
             discountOfRent.setVisibility(View.VISIBLE);
