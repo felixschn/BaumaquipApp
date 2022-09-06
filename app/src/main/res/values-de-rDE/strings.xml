@@ -11,7 +11,7 @@
     <string name="baumaschine_pricePerMonth">Preis pro Monat eingeben:</string>
     <string name="baumaschine_operatingHours">Betriebsstunden eingeben:</string>
     <string name="baumaschine_degreeOfWear">Abnutzungszustand eingeben:</string>
-    <string name="baumaschine_amountOfGas">Tank-Füllstand eingeben:</string>
+    <string name="baumaschine_amountOfGas">Tank-Füllstand eingeben (in %):</string>
     <string name="price_per_day">Preis pro Tag:</string>
     <string name="price_per_weekend">Preis pro Wochenende:</string>
     <string name="price_per_month">Preis pro Monat:</string>
