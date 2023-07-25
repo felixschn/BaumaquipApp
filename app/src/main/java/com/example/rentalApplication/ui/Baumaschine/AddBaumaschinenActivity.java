@@ -113,7 +113,7 @@ public class AddBaumaschinenActivity extends AppCompatActivity {
                     addBaumaschinenOperatingHours.setText(loadBaumaschineById.getOperatingHours().toString());
                 }
                 if (loadBaumaschineById.getAmountOfGas() != null) {
-                    addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getOperatingHours().toString());
+                    addBaumaschinenAmountOfGas.setText(loadBaumaschineById.getAmountOfGas().toString());
                 }
                 if (loadBaumaschineById.getDegreeOfWear() != null) {
                     addBaumaschinenDegreeOfWear.setText(loadBaumaschineById.getDegreeOfWear());
