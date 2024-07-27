@@ -249,7 +249,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         canvas.drawText("Baustelle / Kostenstelle:", mmToPoints(b1c1), mmToPoints(sb1+3*b1lh), description);
         canvas.drawText(kunde.getConstructionSide(), mmToPoints(b1c2), mmToPoints(sb1+3*b1lh), content);        //TODO: Ist ConstructionSide eine Eigenschaft des Kunden oder des Vertrags?
         canvas.drawText("Abholung von:", mmToPoints(b1c3), mmToPoints(sb1+3*b1lh), description);
-        canvas.drawText("LoremIpsumLoremIpsum", mmToPoints(b1c4), mmToPoints(sb1+3*b1lh), content);      //TODO: value
+        canvas.drawText(kunde.getContactPerson(), mmToPoints(b1c4), mmToPoints(sb1+3*b1lh), content);      //TODO: value
 
         // block 2 = details items
         int sb2  =  93;  // start block 2
@@ -344,11 +344,7 @@ public class VertragDetailsActivity extends AppCompatActivity implements Vertrag
         canvas.drawLine(mmToPoints(135), mmToPoints(sb7+2*b7lh), mmToPoints(175), mmToPoints(sb7+2*b7lh), content);
         canvas.drawText("Unterschrift Mieter", mmToPoints(135), mmToPoints(sb7+3*b7lh), content);
 
-        // borders  TODO: remove this block in final version
-        canvas.drawLine(mmToPoints(0), mmToPoints(42), mmToPoints(210), mmToPoints(42), title);
-        canvas.drawText("HEADER", mmToPoints(22), mmToPoints(40), title);
-        canvas.drawLine(mmToPoints(0), mmToPoints(271), mmToPoints(210), mmToPoints(271), title);
-        canvas.drawText("FOOTER", mmToPoints(22), mmToPoints(280), title);
+
 
         // after adding all attributes to our
         // PDF file we will be finishing our page.

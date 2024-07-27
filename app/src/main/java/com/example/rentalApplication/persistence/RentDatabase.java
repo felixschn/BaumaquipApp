@@ -2,6 +2,7 @@ package com.example.rentalApplication.persistence;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -16,6 +17,11 @@ import com.example.rentalApplication.models.Kunde;
 import com.example.rentalApplication.models.Stuecklisteneintrag;
 import com.example.rentalApplication.models.Vertrag;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -51,8 +57,10 @@ public abstract class RentDatabase extends RoomDatabase {
                             Executors.newSingleThreadExecutor().execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    getDatabase(context).baumaschinenDao().insertAll(Baumaschine.populateBaumaschinenData());
-                                    getDatabase(context).kundenDao().insertAll(Kunde.populateKundeData());
+
+
+                                    //getDatabase(context).baumaschinenDao().insertAll(Baumaschine.populateBaumaschinenData());
+                                    //getDatabase(context).kundenDao().insertAll(Kunde.populateKundeData());
                                 }
                             });
                         }
@@ -63,6 +71,8 @@ public abstract class RentDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+
 
 /*    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override

@@ -1,16 +1,24 @@
 package com.example.rentalApplication;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.rentalApplication.adapter.BaumaquipAdapter;
@@ -21,9 +29,17 @@ import com.example.rentalApplication.ui.Kunde.AddKundenActivity;
 import com.example.rentalApplication.ui.Kunde.ArchivedKundenActivity;
 import com.example.rentalApplication.ui.Vertraege.AddVertragActivity;
 import com.example.rentalApplication.ui.Vertraege.ArchivedVertragActivity;
+import com.example.rentalApplication.ui.Vertraege.VertragDetailsActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -35,8 +51,10 @@ public class MainPageActivity extends AppCompatActivity {
     public static int ADD_BAUMASCHINEN_ACTIVITY_REQUEST_CODE = 1;
     public static RentDatabase rentDatabase;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
         fab = findViewById(R.id.fabViewPager);
@@ -188,6 +206,13 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
+        try {
+            backupDatabase();
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -196,6 +221,32 @@ public class MainPageActivity extends AppCompatActivity {
         inflater.inflate(R.menu.archive_menu, menu);
         return true;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+
+                                           @NonNull String[] permissions,
+
+                                           @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                backupDatabase();
+
+            } else {
+
+                System.out.println("TEST");
+
+            }
+
+        }
+
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -217,6 +268,106 @@ public class MainPageActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    public static void copyFile(File src, File dst) throws IOException
+    {
+        FileChannel inChannel = new FileInputStream(src).getChannel();
+        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        try
+        {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        }
+        finally
+        {
+            if (inChannel != null)
+                inChannel.close();
+            if (outChannel != null)
+                outChannel.close();
+        }
+    }
+    /*private static void backupDatabase(Context context){
+        try {
+            File db_source = new File("/data/data/com.example.baumaquip_rental/databases/rent_database");
+            File db_source_shm = new File("/data/data/com.example.baumaquip_rental/databases/rent_database-shm");
+            File db_source_wal = new File("/data/data/com.example.baumaquip_rental/databases/rent_database-wal");
+            File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)  + "/rental_db_backup");
+
+            *//*if (!dir.exists())
+                if(!dir.mkdir()) {
+                    Toast.makeText(context, "Path not found", Toast.LENGTH_SHORT).show();
+                    return; //TODO: Pfad konnte nicht erstellt werden
+                }*//*
+           *//*File dst_rent_database = new File(dir, "rent_database");
+            File dst_rent_database_shm = new File(dir, "rent_database-shm");
+            File dst_rent_database_wal = new File(dir, "rent_database-wal");*//*
+
+            File dst_rent_database = new File("/data/data/com.example.baumaquip_rental/rent_database");
+            File dst_rent_database_shm = new File("/data/data/com.example.baumaquip_rental/rent_database-shm");
+            File dst_rent_database_wal = new File("/data/data/com.example.baumaquip_rental/rent_database-wal");
+
+
+            copyFile(db_source, dst_rent_database);
+            copyFile(db_source_shm, dst_rent_database_shm);
+            copyFile(db_source_wal, dst_rent_database_wal);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
+    private void backupDatabase(){
+        try{
+            File internalStorage = getFilesDir();
+            File data = Environment.getDataDirectory();
+
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+            if(true){
+                String currentDBPath = "/data/" + "com.example.baumaquip_rental" + "/databases/" + "rent_database";
+                String backupDBPath = "rentDatabaseBackup.db";
+
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(internalStorage, backupDBPath);
+
+                if(currentDB.exists()){
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+            //data/data/com.example.baumaquip_rental/databases/rent_database
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void restoreDatabase(Context context){
+        try {
+            /*File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)  + "/rental_db_backup");
+            File db_source = new File(dir, "rent_database");
+            File db_source_shm = new File(dir, "rent_database-shm");
+            File db_source_wal = new File(dir, "rent_database-wal");*/
+
+            File db_source = new File("/data/data/com.example.baumaquip_rental/rent_database");
+            File db_source_shm = new File("/data/data/com.example.baumaquip_rental/rent_database-shm");
+            File db_source_wal = new File("/data/data/com.example.baumaquip_rental/rent_database-wal");
+
+
+            File dir_db = new File("/storage/emulated/0/Documents/rental_db_backup");
+            File dst_rent_database = new File("/data/data/com.example.baumaquip_rental/databases/rent_database");
+            File dst_rent_database_shm = new File("/data/data/com.example.baumaquip_rental/databases/rent_database-shm");
+            File dst_rent_database_wal = new File("/data/data/com.example.baumaquip_rental/databases/rent_database-wal");
+
+            copyFile(db_source, dst_rent_database);
+            copyFile(db_source_shm, dst_rent_database_shm);
+            copyFile(db_source_wal, dst_rent_database_wal);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
